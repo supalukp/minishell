@@ -6,12 +6,17 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:45:37 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/21 13:43:45 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:28:25 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
 typedef enum e_type
 {
@@ -42,8 +47,7 @@ typedef struct s_branch
 
 typedef struct s_program
 {
-	
-	//branch_count include the pipes and sign
+	// branch_count include the pipes and sign
 	int				branch_count;
 	t_branch		*first_branch;
 
