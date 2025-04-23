@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 18:26:49 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/23 10:42:04 by spunyapr         ###   ########.fr       */
+/*   Created: 2024/11/27 14:20:32 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/02/06 13:22:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int main (int ac, char **av)
+size_t	ft_strlen(const char *s)
 {
+	size_t	i;
 
-    t_program *data;
-    // Parsing
-    /*  
-        transform input to token
-        store it in t_program *
-    */
-    
-    // Execution
-    main_execution(data);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 18:26:49 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/23 10:42:04 by spunyapr         ###   ########.fr       */
+/*   Created: 2024/11/27 15:06:03 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/02/11 13:06:54 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int main (int ac, char **av)
+void	*ft_memset(void *s, int c, size_t n)
 {
+	unsigned char	*p;
 
-    t_program *data;
-    // Parsing
-    /*  
-        transform input to token
-        store it in t_program *
-    */
-    
-    // Execution
-    main_execution(data);
+	p = s;
+	while (n > 0)
+	{
+		*p = c;
+		n--;
+		p++;
+	}
+	return (s);
 }

@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 18:26:49 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/23 10:42:04 by spunyapr         ###   ########.fr       */
+/*   Created: 2024/11/07 10:05:45 by rose              #+#    #+#             */
+/*   Updated: 2025/02/11 13:08:43 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int main (int ac, char **av)
+char	*ft_strrchr(const char *s, int c)
 {
+	int	len;
 
-    t_program *data;
-    // Parsing
-    /*  
-        transform input to token
-        store it in t_program *
-    */
-    
-    // Execution
-    main_execution(data);
+	len = ft_strlen(s);
+	while (s[len] != (unsigned char)c && len)
+		len--;
+	if (s[len] == (unsigned char)c)
+		return ((char *)s + len);
+	else
+		return (NULL);
 }

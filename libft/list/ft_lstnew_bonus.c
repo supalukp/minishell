@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 18:26:49 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/23 10:42:04 by spunyapr         ###   ########.fr       */
+/*   Created: 2024/11/27 15:49:01 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/02/11 13:06:29 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int main (int ac, char **av)
+t_list	*ft_lstnew(void *content)
 {
+	t_list	*head;
 
-    t_program *data;
-    // Parsing
-    /*  
-        transform input to token
-        store it in t_program *
-    */
-    
-    // Execution
-    main_execution(data);
+	head = NULL;
+	head = (t_list *)malloc(sizeof(t_list));
+	if (head == NULL)
+		return (NULL);
+	head->content = content;
+	head->next = NULL;
+	return (head);
 }

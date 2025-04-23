@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 18:26:49 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/23 10:42:04 by spunyapr         ###   ########.fr       */
+/*   Created: 2024/11/27 15:49:20 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/02/11 13:06:46 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int main (int ac, char **av)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
+	size_t				i;
+	unsigned const char	*p;
+	unsigned const char	*t;
 
-    t_program *data;
-    // Parsing
-    /*  
-        transform input to token
-        store it in t_program *
-    */
-    
-    // Execution
-    main_execution(data);
+	i = 0;
+	p = s1;
+	t = s2;
+	if (n == 0)
+		return (0);
+	while (p[i] == t[i] && i < (n - 1))
+	{
+		i++;
+	}
+	return ((unsigned char)p[i] - (unsigned char)t[i]);
 }

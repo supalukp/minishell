@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 18:26:49 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/23 10:42:04 by spunyapr         ###   ########.fr       */
+/*   Created: 2024/11/27 15:48:06 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/02/11 13:06:39 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
+#include <stdint.h>
 
-int main (int ac, char **av)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
+	int		i;
+	int		space;
+	char	*result;
 
-    t_program *data;
-    // Parsing
-    /*  
-        transform input to token
-        store it in t_program *
-    */
-    
-    // Execution
-    main_execution(data);
+	i = 0;
+	if (nmemb != 0 && (SIZE_MAX / nmemb) < size)
+		return (NULL);
+	space = nmemb * size;
+	result = malloc(space);
+	if (result == NULL)
+		return (NULL);
+	while (i < space)
+	{
+		result[i] = 0;
+		i++;
+	}
+	return ((void *)result);
 }
