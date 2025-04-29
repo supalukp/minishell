@@ -1,5 +1,19 @@
 # Structures
 
+// CURRENT
+
+typedef struct s_token
+{
+	char		*name; // "ls -a";
+	enum_type	type; // CMD;
+	int			operator; // 0;
+	struct s_token	*left;
+	struct s_token	*right;
+}
+
+// OLD
+
+
 typedef enum e_type
 {
 	CMD,
