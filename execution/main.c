@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 15:38:06 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/02/11 13:06:36 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/04/22 18:26:49 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/04/29 15:25:14 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
-
-// ft_bzero function is replace value in the n bytes by zero('\0')
-
-void	ft_bzero(void *s, size_t n)
+int main (int ac, char **av)
 {
-	unsigned char	*p;
 
-	p = s;
-	while (n > 0)
-	{
-		*p = '\0';
-		n--;
-		p++;
-	}
+    t_program *data;
+    // Parsing
+    /*  
+        transform input to token
+        store it in t_program *
+    */
+    
+    // Execution
+    main_execution(data);
 }

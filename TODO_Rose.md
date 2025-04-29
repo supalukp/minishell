@@ -37,5 +37,3 @@ https://www.reddit.com/r/C_Programming/comments/lzq2t2/how_to_make_an_ast_in_c/
 # Example cmd
 (ls no_file && echo "Found" > found.txt || echo "Not found" > not_found.txt) && echo "Done" > done.txt
 
-
-
