@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/30 16:04:00 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:47:05 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ void	pipe_simple_input(t_token *tree); // ls-al | wc -l
 /* -------------------------------------------------------------------------- */
 
 int	main_execution(t_token *tree);
+void init_env(t_env **env_lst, char **env);
+void free_env_list(t_env **env_lst);
 
 #endif

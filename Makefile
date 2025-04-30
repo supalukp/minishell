@@ -38,12 +38,13 @@ COLOUR_BRIGHT_CYAN=\033[1;36m
 OBJ_DIR = build
 INC_DIR = inc
 PARS_DIR = parsing
+EXEC_DIR = execution
 
 # **************************************************************************** #
 # *********************************HEADERS************************************ #
 # **************************************************************************** #
 
-HEADERS =	${INC_DIR}/functions.h \
+HEADERS =	${INC_DIR}/execution.h \
 			${INC_DIR}/headings.h \
 			${INC_DIR}/structures.h \
 
@@ -51,19 +52,8 @@ HEADERS =	${INC_DIR}/functions.h \
 # ********************************SRC FILES*********************************** #
 # **************************************************************************** #
 
-FILES = main.c \
-		# ${PARS_DIR}/sort.c \
-		# ${PARS_DIR}/forward.c \
-		# ${PARS_DIR}/back.c \
-		# ${PARS_DIR}/back_up.c \
-		# ${PARS_DIR}/back_down.c \
-		# ${PARS_DIR}/funct_choice.c \
-		# ${PARS_DIR}/view.c \
-		# ${PARS_DIR}/push.c \
-		# ${PARS_DIR}/rotate.c \
-		# ${PARS_DIR}/swap.c \
-		# ${PARS_DIR}/free.c \
-		# ${PARS_DIR}/optimize_funct.c \
+FILES = ${EXEC_DIR}/main.c \
+		${EXEC_DIR}/env_init.c
 
 OBJ = ${FILES:$(PARS_DIR)/%.c=$(OBJ_DIR)/%.o}
 
