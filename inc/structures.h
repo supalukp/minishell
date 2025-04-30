@@ -6,12 +6,15 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/04/29 15:20:42 by syukna           ###   ########.fr       */
+/*   Updated: 2025/04/30 10:57:06 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
+
+# include "headings.h"
+# include <stdbool.h>
 
 typedef enum e_type
 {
@@ -29,11 +32,11 @@ typedef enum e_type
 
 typedef struct s_token
 {
-	char		*name;
-	t_type	type;
-	int			operator;
-	struct s_token	*left;
-	struct s_token	*right;
+	char		*name; // "&&"
+	t_type	type; // AND
+	bool		operator; // 1
+	struct s_token	*left; // token "ls -a"
+	struct s_token	*right; // NULL
 }			t_token;
 
 #endif
