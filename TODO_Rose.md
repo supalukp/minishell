@@ -1,10 +1,18 @@
+# Today TDL
+[] main execution function
+[] pipe_process()
+[] simple_command()
+[] list how each process should do
+
+
 
 # TO DO LIST
 
-[ ] execution_each_branch();
-[ ] build in funtions
-[ ] How to handle || && when execute
-[ ] Handle parenthesis ()
+[] execution_each_branch();
+[] build in funtions
+[] How to handle || && when execute
+[] Handle parenthesis ()
+[] store environment viriable
 
 # Step
 1. split branch cmd / redirect / pipe
