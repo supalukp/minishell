@@ -1,22 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/04/30 13:39:37 by syukna           ###   ########.fr       */
+/*   Created: 2025/04/30 13:34:28 by syukna            #+#    #+#             */
+/*   Updated: 2025/04/30 13:34:28 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/headings.h"
-
-t_token	ft_parse(char *line)
-{
-	t_token request;
-	
-	ft_memset(&request, '\0', sizeof(t_token));
-	printf("Got = %s\n", line);
-	return (request);
-}

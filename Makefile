@@ -8,7 +8,6 @@
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-CFLAGS += -lreadline
 
 # **************************************************************************** #
 # **********************************COLORS************************************ #
@@ -37,7 +36,7 @@ COLOUR_BRIGHT_CYAN=\033[1;36m
 
 OBJ_DIR = build
 INC_DIR = inc
-PARS_DIR = parsing
+VPATH = . parsing exec
 
 # **************************************************************************** #
 # *********************************HEADERS************************************ #
@@ -52,20 +51,13 @@ HEADERS =	${INC_DIR}/functions.h \
 # **************************************************************************** #
 
 FILES = main.c \
-		# ${PARS_DIR}/sort.c \
-		# ${PARS_DIR}/forward.c \
-		# ${PARS_DIR}/back.c \
-		# ${PARS_DIR}/back_up.c \
-		# ${PARS_DIR}/back_down.c \
-		# ${PARS_DIR}/funct_choice.c \
-		# ${PARS_DIR}/view.c \
-		# ${PARS_DIR}/push.c \
-		# ${PARS_DIR}/rotate.c \
-		# ${PARS_DIR}/swap.c \
-		# ${PARS_DIR}/free.c \
-		# ${PARS_DIR}/optimize_funct.c \
+		parsing/parsing.c \
+        exec/exec.c \
 
-OBJ = ${FILES:$(PARS_DIR)/%.c=$(OBJ_DIR)/%.o}
+
+OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))
+
+# OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # **************************************************************************** #
 # **********************************MAKE************************************** #
@@ -75,7 +67,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS) Makefile
 	make -C libft --no-print-directory
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a -lreadline
 	@echo -n "$(COLOUR_BRIGHT_GREEN)Loading: "
 	@i=1; \
 	while [ $$i -le 25 ]; do \
@@ -88,6 +80,10 @@ $(NAME): $(OBJ) $(HEADERS) Makefile
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/%.o: %.c $(HEADERS)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
