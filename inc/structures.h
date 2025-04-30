@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/04/30 10:57:06 by syukna           ###   ########.fr       */
+/*   Updated: 2025/04/30 15:35:18 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef enum e_type
 	APPEND,
 	HEREDOC,
 	INFILE,
-	OUTFILE
+	OUTFILE,
+	INVALID
 }			t_type;
 
 typedef struct s_token
