@@ -36,7 +36,9 @@ COLOUR_BRIGHT_CYAN=\033[1;36m
 
 OBJ_DIR = build
 INC_DIR = inc
-VPATH = . parsing exec
+PARS_DIR = parsing
+EXEC_DIR = exec
+VPATH = . ${PARS_DIR} ${EXEC_DIR}
 
 # **************************************************************************** #
 # *********************************HEADERS************************************ #
@@ -51,8 +53,8 @@ HEADERS =	${INC_DIR}/functions.h \
 # **************************************************************************** #
 
 FILES = main.c \
-		parsing/parsing.c \
-        exec/exec.c \
+		${PARS_DIR}/parsing.c \
+        ${EXEC_DIR}/exec.c \
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))
