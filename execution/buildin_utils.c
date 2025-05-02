@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:22:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/02 15:50:32 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:22:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ bool is_buildin(char *args)
 
     cmd = ft_split(args, ' ');
     
-    printf("cmd[0] = %s\n", cmd[0]);
     if (!ft_strcmp(cmd[0], "echo"))
         return (true); 
     else if (!ft_strcmp(cmd[0], "cd"))
@@ -46,5 +45,3 @@ bool is_buildin(char *args)
     else
         return (false);
 }
-
-

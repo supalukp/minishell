@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/02 15:20:35 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:26:27 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,28 +99,6 @@ void	free_matrix(char **matrix)
 	matrix = NULL;
 }
 
-// int simple_command_process(t_token *tree, char **env)
-// {
-//     int exit_status;
-//     char **args;
-//     char *paths;
-
-//     args = ft_split(tree->name, ' ');
-//     // if (!args)
-//     //     exit_close_fd();
-//     paths = get_path(args[0], env);
-//     // if (!paths)
-//     //     exit_close_fd();
-
-//     // Check if there is REDIRECT
-//     // if (tree->   ->type == INFILE || )
-//     //     set_up_redirect();
-
-//     execve(paths, args, NULL);
-//     free_matrix(args);
-//     //exit_error();
-// }
-
 int	simple_command_process(t_token *tree, char **env)
 {
 	pid_t	pid;
@@ -206,82 +184,7 @@ int	pipe_process(t_token *tree, char **env)
 
 	// else if (WIFSIGNALED(exit_status))
 		//     return (128 + WTERMSIG(exit_status));
-// void execute_buidin(t_branch *branch);
-// void each_branch_execute(t_branch *branch);
-// void execute_external(t_branch *branch);
 
-// void main_execution(t_program *prog)
-// {
-//     t_branch *branch;
 
-//     branch = prog->first_branch;
-//     while (branch)
-//     {
-//         each_branch_execute(branch);
-//         branch = branch->next;
-//     }
-// }
 
-// void each_branch_execute(t_branch *branch)
-// {
-//     // Create pipe
 
-//     // Handle Redirection
-
-//     // Check if it's build in
-//     if (is_buildin(branch->first_token))
-//     {
-//         execute_buildin(branch);
-//     }
-//     else
-//     {
-//         execute_external(branch);
-//     }
-// }
-
-// void execute_buidin(t_branch *branch)
-// {
-//     char *cmd;
-//     int exit_status;
-
-//     exit_status = 1;
-//     cmd = branch->first_token;
-//     if (!ft_strcmp(cmd, "echo"))
-//         exit_status = ft_echo();
-//     else if (!ft_strcmp(cmd, "cd"))
-//         exit_status = ft_cd();
-//     else if (!ft_strcmp(cmd, "pwd"))
-//         exit_status = ft_pwd();
-//     else if (!ft_strcmp(cmd, "export"))
-//         exit_status = ft_export();
-//     else if (!ft_strcmp(cmd, "unset"))
-//         exit_status = ft_unset();
-//     else if (!ft_strcmp(cmd, "export"))
-//         exit_status = ft_export();
-//     else if (!ft_strcmp(cmd, "unset"))
-//         exit_status = ft_unset();
-//     else if (!ft_strcmp(cmd, "env"))
-//         exit_status = ft_env();
-//     else if (!ft_strcmp(cmd, "exit"))
-//         exit_status = ft_exit();
-//     return (exit_status);
-// }
-
-// void execute_external(t_branch *branch)
-// {
-//     /*
-//         // Fork
-
-//         // In child process
-//         if (pid == 0)
-//         {
-//             //Child Process
-//             execve();
-//         }
-//         else
-//         {
-//             //Parent Process
-//             waitpid(); // Wait child
-//         }
-//     */
-// }
