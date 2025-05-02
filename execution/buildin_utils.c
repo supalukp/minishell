@@ -6,34 +6,45 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:22:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/29 16:16:52 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:50:32 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "../inc/headings.h"
 
-// int is_buildin(t_token *token)
-// {
-//     char *cmd;
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] && s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}
+
+bool is_buildin(char *args)
+{
+    char **cmd;
+
+    cmd = ft_split(args, ' ');
     
-//     cmd = token->name;
-//     if (!ft_strcmp(cmd, "echo"))
-//         return (1); 
-//     else if (!ft_strcmp(cmd, "cd"))
-//         return (1); 
-//     else if (!ft_strcmp(cmd, "pwd"))
-//         return (1); 
-//     else if (!ft_strcmp(cmd, "export"))
-//         return (1); 
-//     else if (!ft_strcmp(cmd, "unset"))
-//         return (1); 
-//     else if (!ft_strcmp(cmd, "export"))
-//         return (1); 
-//     else if (!ft_strcmp(cmd, "unset"))
-//         return (1); 
-//     else if (!ft_strcmp(cmd, "env"))
-//         return (1); 
-//     else if (!ft_strcmp(cmd, "exit"))
-//         return (1);
-//     return (0);
-// }
+    printf("cmd[0] = %s\n", cmd[0]);
+    if (!ft_strcmp(cmd[0], "echo"))
+        return (true); 
+    else if (!ft_strcmp(cmd[0], "cd"))
+        return (true); 
+    else if (!ft_strcmp(cmd[0], "pwd"))
+        return (true); 
+    else if (!ft_strcmp(cmd[0], "export"))
+        return (true); 
+    else if (!ft_strcmp(cmd[0], "unset"))
+        return (true);
+    else if (!ft_strcmp(cmd[0], "env"))
+        return (true); 
+    else if (!ft_strcmp(cmd[0], "exit"))
+        return (true);
+    else
+        return (false);
+}
+
+

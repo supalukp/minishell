@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/02 15:13:55 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:27:11 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,8 @@ void	free_matrix(char **matrix);
 int	simple_command_process(t_token *tree, char **env);
 int	pipe_process(t_token *tree, char **env);
 void print_ast(t_token *node);
+
+
+bool is_buildin(char *args);
 
 #endif
