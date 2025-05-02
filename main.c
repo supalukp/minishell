@@ -1,46 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structures.h                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/02 15:17:08 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/05/02 15:08:47 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/05/02 15:22:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTURES_H
-# define STRUCTURES_H
+#include "inc/headings.h"
 
-typedef enum e_type
+int main(int ac, char **av, char **env)
 {
-	CMD,
-	PIPE,
-	AND,
-	OR,
-	PAREN_LEFT,
-	PAREN_RIGHT,
-	APPEND,
-	HEREDOC,
-	INFILE,
-	OUTFILE
-}					t_type;
+    (void)ac;
+    (void)av;
+    //(void)env;
 
-typedef struct s_token
-{
-	t_type			type;
-	char			*name;
-	int				op;
-	struct s_token	*left;
-	struct s_token	*right;
-}					t_token;
+    t_token *tree;
 
+    tree = NULL;
+    pipe_simple_input(&tree);
+    //print_ast(tree);
 
-typedef struct s_env
-{
-	char			*env;
-	struct s_env	*next;
-}					t_env;
-
-#endif
+    main_execution(tree, env);
+    return (0); 
+}

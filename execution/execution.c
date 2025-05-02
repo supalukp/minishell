@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/02 15:04:16 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:20:35 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	main_execution(t_token *tree, char **env)
 		exit_status = pipe_process(tree, env); // TODO
 	else if (tree->type == CMD)
     {
-        is_buildin(tree->name);
-
+        // if (is_buildin(tree->name) == true)
+        //     exit_status = exec_buildin();
 		exit_status = simple_command_process(tree, env); // TODO
     }
 	// else

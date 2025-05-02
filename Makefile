@@ -8,7 +8,6 @@
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-CFLAGS += -lreadline
 
 # **************************************************************************** #
 # **********************************COLORS************************************ #
@@ -39,6 +38,7 @@ OBJ_DIR = build
 INC_DIR = inc
 PARS_DIR = parsing
 EXEC_DIR = execution
+VPATH = . ${PARS_DIR} ${EXEC_DIR}
 
 # **************************************************************************** #
 # *********************************HEADERS************************************ #
@@ -52,10 +52,14 @@ HEADERS =	${INC_DIR}/execution.h \
 # ********************************SRC FILES*********************************** #
 # **************************************************************************** #
 
-FILES = ${EXEC_DIR}/main.c \
-		${EXEC_DIR}/env_init.c
+FILES = main.c \
+		${EXEC_DIR}/my_init.c \
+		${EXEC_DIR}/execution.c
 
-OBJ = ${FILES:$(PARS_DIR)/%.c=$(OBJ_DIR)/%.o}
+
+OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))
+
+# OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # **************************************************************************** #
 # **********************************MAKE************************************** #
@@ -65,19 +69,23 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS) Makefile
 	make -C libft --no-print-directory
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a -lreadline
 	@echo -n "$(COLOUR_BRIGHT_GREEN)Loading: "
 	@i=1; \
 	while [ $$i -le 25 ]; do \
 		echo -n "█"; \
 		i=$$((i + 1)); \
-		sleep 0.05; \
+		sleep 0.01; \
 	done
 	@echo " 100% $(COLOUR_END)🎆"
 	@echo "🤖$(COLOUR_PURPLE) $(NAME) 🤖         $(COLOUR_GREEN)PROGRAM CREATED ✅$(COLOUR_END)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/%.o: %.c $(HEADERS)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

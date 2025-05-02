@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/30 18:47:05 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:13:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,18 @@
 /* -------------------------------------------------------------------------- */
 /*                           init_input (hard code)                           */
 /* -------------------------------------------------------------------------- */
-void	pipe_simple_input(t_token *tree); // ls-al | wc -l
+void	pipe_simple_input(t_token **tree); // ls-al | wc -l
 
 /* -------------------------------------------------------------------------- */
 /*                                  execution                                 */
 /* -------------------------------------------------------------------------- */
 
-int	main_execution(t_token *tree);
-void init_env(t_env **env_lst, char **env);
-void free_env_list(t_env **env_lst);
+int	main_execution(t_token *tree, char **env);
+char	*find_executable(char **all_path, char *command);
+char	*get_path(char *command, char **envp);
+void	free_matrix(char **matrix);
+int	simple_command_process(t_token *tree, char **env);
+int	pipe_process(t_token *tree, char **env);
+void print_ast(t_token *node);
 
 #endif
