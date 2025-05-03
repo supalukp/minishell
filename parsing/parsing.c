@@ -6,18 +6,17 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/04/30 16:04:43 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/03 18:57:50 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-// #include "../inc/structures.h"
 
 t_type	is_operator(char *line)
 {
 	int i;
 	int parenthesis;
-	
+
 	i = 0;
 	parenthesis = 0;
 	while (line[i])
@@ -37,15 +36,38 @@ t_type	is_operator(char *line)
 	return (INVALID);
 }
 
-t_token	mns_parse(char *line)
+t_token *AST_maker(char *substr)
 {
-	t_token request;
+	t_token *node;
+	t_type	operator;
 	
-	ft_memset(&request, '\0', sizeof(t_token));
-	printf("Got = %s\n", line);
-	printf("With enum = %u\n", is_operator(line));
-	if (is_operator(line) != INVALID)
-		printf("WE HAVE AN OPERATOR\n");
+	node = malloc(sizeof(t_token));
+	if (!node)
+		return (NULL); // TODO = EXIT PROGRAM FUNCTION
+	ft_memset(node, '\0', sizeof(t_token));
+	operator = is_operator(substr);
+	if (operator != INVALID)
+	{
+		node->content = NULL;
+		node->type = operator;
+		parse_separator(substr, node);
+	}
+	else
+	{
+		node->content = ft_strtrim(substr, " ");
+		node->type = CMD;
+		// free(substr);
+	}
+	print_node(node);
+	return (node);
+	
+}
+
+t_token	*mns_parse(char *line)
+{
+	t_token *request;
+
+	request = AST_maker(line);
 	return (request);
 }
 
