@@ -54,6 +54,8 @@ HEADERS =	${INC_DIR}/functions.h \
 
 FILES = main.c \
 		${PARS_DIR}/parsing.c \
+		${PARS_DIR}/separator.c \
+		${PARS_DIR}/visual.c \
         ${EXEC_DIR}/exec.c \
 
 
@@ -68,35 +70,35 @@ OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))
 all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS) Makefile
-	make -C libft --no-print-directory
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a -lreadline
+	@make -C libft --no-print-directory
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a -lreadline
 	@echo -n "$(COLOUR_BRIGHT_GREEN)Loading: "
 	@i=1; \
 	while [ $$i -le 25 ]; do \
 		echo -n "█"; \
 		i=$$((i + 1)); \
-		sleep 0.05; \
+		sleep 0.01; \
 	done
 	@echo " 100% $(COLOUR_END)🎆"
 	@echo "🤖$(COLOUR_PURPLE) $(NAME) 🤖         $(COLOUR_GREEN)PROGRAM CREATED ✅$(COLOUR_END)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
-	mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 build/%.o: %.c $(HEADERS)
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	if [ -d "$(OBJ_DIR)" ]; then rm -r $(OBJ_DIR); fi
-	make -C libft clean --no-print-directory
-	rm -f ${OBJ}
+	@make -C libft clean --no-print-directory
+	@rm -f ${OBJ}
 	@echo "🤖 $(COLOUR_PURPLE)$(NAME) 🤖$(COLOUR_CYAN)    EXTRA FILES REMOVED. $(COLOUR_END)🗑️"
 
 fclean: clean
-	make -C libft fclean --no-print-directory
-	rm -f ${NAME}
+	@make -C libft fclean --no-print-directory
+	@rm -f ${NAME}
 	@echo "$(COLOUR_PURPLE)🤖 $(NAME) 🤖 $(COLOUR_RED)     PROGRAM BULLDOZED. $(COLOUR_END)💣"
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/04/30 15:35:18 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/03 18:28:16 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ typedef enum e_type
 	PIPE,
 	AND,
 	OR,
-	PAREN_LEFT,
-	PAREN_RIGHT,
 	APPEND,
 	HEREDOC,
 	INFILE,
@@ -33,11 +31,20 @@ typedef enum e_type
 
 typedef struct s_token
 {
-	char		*name; // "&&"
-	t_type	type; // AND
-	bool		operator; // 1
+	char			*content; // "&&"
+	t_type			type; // AND
+	// int				quoted; // 0 when no quotes, 1 when single, 2 when double
 	struct s_token	*left; // token "ls -a"
 	struct s_token	*right; // NULL
-}			t_token;
+	// ADD LINKED LIST OF INPUT AND OUTPUT FILES
+}					t_token;
+
+typedef struct s_data
+{
+	t_token			AST;
+	// ADD LINKED LIST OF ENV
+}					t_data;
+
+// T_DATA IS WHAT I WILL SEND YOU
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/04/30 15:06:24 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/03 17:57:32 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,16 @@
 /* *********************************PARSING********************************** */
 /* ************************************************************************** */
 
-t_token	mns_parse(char *line);
+// separator.c
+void	parse_separator(char *substr, t_token *parent);
+
+// parsing.c
+t_token	*mns_parse(char *line);
 t_type	is_operator(char *line);
+t_token *AST_maker(char *substr);
+
+// visual.c
+void	print_node(t_token *node);
 
 /* ************************************************************************** */
 /* ***********************************EXEC*********************************** */
