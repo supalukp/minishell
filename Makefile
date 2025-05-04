@@ -56,6 +56,7 @@ FILES = main.c \
 		${PARS_DIR}/parsing.c \
 		${PARS_DIR}/separator.c \
 		${PARS_DIR}/visual.c \
+		${PARS_DIR}/parenthesis.c \
         ${EXEC_DIR}/exec.c \
 
 

@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 13:25:49 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/03 18:17:19 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/04 14:12:16 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*parse_get_second(char *substr, t_type operator)
 
 	pos = parse_pos_second(substr, operator);
 	subsecond = ft_calloc(ft_strlen(substr) - pos, sizeof(char));
-	ft_strlcpy(subsecond, &substr[pos], ft_strlen(substr) - pos);
+	ft_strlcpy(subsecond, &substr[pos], ft_strlen(substr) - pos + 1);
 	return (subsecond);
 }
 

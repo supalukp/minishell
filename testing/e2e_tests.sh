@@ -5,3 +5,6 @@ errors :
 
 
 bash >test.sh
+
+
+(ls -a && echo "hello) || echo "world"

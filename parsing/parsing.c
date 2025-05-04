@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/03 18:57:50 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/04 14:05:42 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,12 @@ t_token *AST_maker(char *substr)
 	t_token *node;
 	t_type	operator;
 	
+	if (!substr)
+		return (NULL);
 	node = malloc(sizeof(t_token));
 	if (!node)
 		return (NULL); // TODO = EXIT PROGRAM FUNCTION
+	// TODO need to trim string here
 	ft_memset(node, '\0', sizeof(t_token));
 	operator = is_operator(substr);
 	if (operator != INVALID)
@@ -51,6 +54,12 @@ t_token *AST_maker(char *substr)
 		node->content = NULL;
 		node->type = operator;
 		parse_separator(substr, node);
+	}
+	else if (contains_letter(substr, '('))
+	{
+		remove_parenthesis(&substr);
+		printf("removed parenthesis ? %s \n", substr);
+		return(AST_maker(substr));
 	}
 	else
 	{
@@ -60,7 +69,6 @@ t_token *AST_maker(char *substr)
 	}
 	print_node(node);
 	return (node);
-	
 }
 
 t_token	*mns_parse(char *line)
