@@ -53,9 +53,12 @@ HEADERS =	${INC_DIR}/execution.h \
 # **************************************************************************** #
 
 FILES = main.c \
-		${EXEC_DIR}/my_init.c \
+		${EXEC_DIR}/my_tree.c \
 		${EXEC_DIR}/execution.c \
-		${EXEC_DIR}/buildin_utils.c
+		${EXEC_DIR}/buildin_utils.c \
+		${EXEC_DIR}/debug.c \
+		$(EXEC_DIR)/buildin_ft.c \
+		$(EXEC_DIR)/exec_utils.c
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))

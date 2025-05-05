@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/02 16:26:27 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:29:18 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,80 +23,15 @@ int	main_execution(t_token *tree, char **env)
 	if (tree->type == PIPE)
 		exit_status = pipe_process(tree, env); // TODO
 	else if (tree->type == CMD)
-    {
-        // if (is_buildin(tree->name) == true)
-        //     exit_status = exec_buildin();
-		exit_status = simple_command_process(tree, env); // TODO
-    }
+	{
+		if (is_buildin(tree->name) == true)
+			exit_status = exec_buildin(tree->name);
+		else
+			exit_status = simple_command_process(tree, env); // TODO
+	}
 	// else
 	//     return (handle_unexpected_type(tree)); // TODO
 	return (exit_status);
-}
-
-char	*find_executable(char **all_path, char *command)
-{
-	int		j;
-	char	*add_slash;
-	char	*path_command;
-
-	j = 0;
-	while (all_path[j] != NULL)
-	{
-		add_slash = ft_strjoin(all_path[j], "/");
-		if (!add_slash)
-			return (free_matrix(all_path), NULL);
-		path_command = ft_strjoin(add_slash, command);
-		if (!path_command)
-			return (free_matrix(all_path), NULL);
-		free(add_slash);
-		if (access(path_command, F_OK | X_OK) == 0)
-		{
-			free_matrix(all_path);
-			return (ft_strdup(path_command));
-		}
-		free(path_command);
-		j++;
-	}
-	return (free_matrix(all_path), NULL);
-}
-
-char	*get_path(char *command, char **envp)
-{
-	int		i;
-	char	**all_path;
-
-	i = 0;
-	if (!command || !envp)
-		return (NULL);
-	while (envp[i] != NULL)
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			all_path = ft_split(ft_strchr(envp[i], '=') + 1, ':');
-			if (!all_path)
-				return (NULL);
-			return (find_executable(all_path, command));
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-void	free_matrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	if (!matrix)
-		return ;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		matrix[i] = NULL;
-		i++;
-	}
-	free(matrix);
-	matrix = NULL;
 }
 
 int	simple_command_process(t_token *tree, char **env)
@@ -139,7 +74,7 @@ int	simple_command_process(t_token *tree, char **env)
 		if (WIFEXITED(exit_status))
 			return (WEXITSTATUS(exit_status));
 		else
-			return (1);
+			return (EXIT_FAILURE);
 	}
 }
 
@@ -182,9 +117,5 @@ int	pipe_process(t_token *tree, char **env)
 	return (EXIT_FAILURE);
 }
 
-	// else if (WIFSIGNALED(exit_status))
-		//     return (128 + WTERMSIG(exit_status));
-
-
-
-
+// else if (WIFSIGNALED(exit_status))
+//     return (128 + WTERMSIG(exit_status));

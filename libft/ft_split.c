@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:43:09 by syukna            #+#    #+#             */
-/*   Updated: 2025/02/19 12:42:07 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/05 16:38:44 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,94 +14,92 @@
 #include <stdlib.h>
 #include "libft.h"
 
-static int	countchar(char const *s, char c)
+static int	count_word(char const *s, char c)
 {
-	int	i;
 	int	count;
+	int	i;
 
-	i = 0;
 	count = 0;
-	while (s[i] == c)
-		i++;
-	while (s[i] != '\0')
+	i = 0;
+	if (s[i] != c && s[i] != '\0')
 	{
-		if (s[i] != c && (i == 0 || s[i - 1] == c))
+		count++;
+		i++;
+	}
+	while (s[i])
+	{
+		if (s[i] == c && s[i + 1] != c && s[i + 1] != '\0')
 			count++;
 		i++;
 	}
 	return (count);
 }
 
-// Counting the length of each string
-static int	getstrlen(char const *s, char c)
+static int	count_len_word(char const *s, char c, int index)
 {
-	int	i;
+	int	count;
 
-	i = 0;
-	while (s[i] != '\0' && (char)s[i] != c)
-		i++;
-	i++;
-	return (i);
+	count = 0;
+	while (s[index] == c && s[index] != '\0')
+		index++;
+	while (s[index] != c && s[index] != '\0')
+	{
+		count++;
+		index++;
+	}
+	return (count);
 }
 
-static void	free_rtnlist(char **rtnlist)
+static char	**create_array(char const *s, char c)
 {
-	int	i;
+	int		count;
+	char	**array;
 
-	i = 0;
-	while (rtnlist[i])
-		free(rtnlist[i++]);
-	free(rtnlist);
+	count = count_word(s, c);
+	array = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!array)
+		return (NULL);
+	return (array);
 }
 
-static char	**split_logic(char **rtnlist, const char *s, char c, int count)
+static char	**fill_word(char **array, char const *s, char c, int g)
 {
 	int	i;
 	int	j;
-	int	len;
 
 	i = 0;
 	j = 0;
-	while (j < count)
+	g = 0;
+	while (i < count_word(s, c))
 	{
-		len = getstrlen((char *)&s[i], c);
-		rtnlist[j] = ft_calloc(len, sizeof(char));
-		if (!rtnlist[j])
+		array[i] = malloc(sizeof(char) * (count_len_word(s, c, j) + 1));
+		if (!array[i])
 		{
-			free_rtnlist(rtnlist);
+			while (i >= 0)
+				free(array[i--]);
+			free(array);
 			return (NULL);
 		}
-		ft_strlcpy(rtnlist[j], &s[i], len);
-		i += len;
-		while ((char)s[i] == c)
-			i++;
-		j++;
+		while (s[j] == c)
+			j++;
+		while (s[j] != c && s[j])
+			array[i][g++] = s[j++];
+		array[i++][g] = '\0';
+		g = 0;
 	}
-	return (rtnlist);
+	array[i] = NULL;
+	return (array);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**rtnlist;
-	int		i;
-	int		count;
+	char	**array;
+	int		g;
 
-	if (!s)
+	array = create_array(s, c);
+	if (array == NULL)
 		return (NULL);
-	if (s[0] == '\0')
-	{
-		rtnlist = ft_calloc(1, sizeof(char *));
-		if (!rtnlist)
-			return (NULL);
-		rtnlist[0] = NULL;
-		return (rtnlist);
-	}
-	i = 0;
-	while (s[i] == c)
-		i++;
-	count = countchar(&s[i], c);
-	rtnlist = ft_calloc(count + 1, sizeof(char *));
-	if (!rtnlist)
-		return (NULL);
-	return (split_logic(rtnlist, &s[i], c, count));
+	g = 0;
+	array = fill_word(array, s, c, g);
+	return (array);
 }

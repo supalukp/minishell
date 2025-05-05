@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 15:08:47 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/05 16:23:59 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/05/05 10:03:18 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/05/05 16:29:01 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/headings.h"
+#include "../inc/headings.h"
 
-int	main(int ac, char **av, char **env)
+void	check_if_buildin(t_token *tree)
 {
-	(void)ac;
-	(void)av;
-	(void)env;
-
-	t_token *tree;
-
-	tree = NULL;
-	pipe_simple_input(&tree);
-	// pipe_triple_input(&tree);
-	// print_ast(tree);
-	// check_if_buildin(tree);
-	main_execution(tree, env);
-	free_ast(&tree);
-	
-	return (0);
+	if (is_buildin(tree->name) == true)
+		printf("true\n");
+	else
+		printf("false\n");
 }

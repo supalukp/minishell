@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/02 15:27:11 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:12:29 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,30 @@
 /*                           init_input (hard code)                           */
 /* -------------------------------------------------------------------------- */
 void	pipe_simple_input(t_token **tree); // ls-al | wc -l
-
+void	pipe_triple_input(t_token **tree);
+void	free_ast(t_token **node);
 /* -------------------------------------------------------------------------- */
 /*                                  execution                                 */
 /* -------------------------------------------------------------------------- */
 
-int	main_execution(t_token *tree, char **env);
+int		main_execution(t_token *tree, char **env);
 char	*find_executable(char **all_path, char *command);
 char	*get_path(char *command, char **envp);
 void	free_matrix(char **matrix);
-int	simple_command_process(t_token *tree, char **env);
-int	pipe_process(t_token *tree, char **env);
-void print_ast(t_token *node);
+int		simple_command_process(t_token *tree, char **env);
+int		pipe_process(t_token *tree, char **env);
+void	print_ast(t_token *node);
 
+/* -------------------------------------------------------------------------- */
+/*                                  build_in                                  */
+/* -------------------------------------------------------------------------- */
+bool	is_buildin(char *args);
+int		exec_buildin(char *args);
+int		ft_echo(char *args);
 
-bool is_buildin(char *args);
+/* -------------------------------------------------------------------------- */
+/*                                  debuging                                  */
+/* -------------------------------------------------------------------------- */
+void	check_if_buildin(t_token *tree);
 
 #endif
