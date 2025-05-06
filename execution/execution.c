@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/05 16:29:18 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:53:04 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	simple_command_process(t_token *tree, char **env)
 	args = ft_split(tree->name, ' ');
 	if (!args)
 		return (1);
+	free_ast(&tree);
 	paths = get_path(args[0], env);
 	if (!paths)
 	{

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:49:36 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/05 16:49:17 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:06:15 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,19 @@ int	ft_echo(char *args)
 	if (noline_flag == false)
 		printf("\n");
 	return (free(cmd), 0);
+}
+
+int ft_pwd(void)
+{
+	char *res;
+
+	res = getcwd(NULL, 1024);
+	if (res == NULL)
+	{
+		printf("Get current working directory failed.\n");
+		return (1);
+	}
+	printf("%s\n", res);
+	free(res);
+	return (0);
 }

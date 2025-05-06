@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/05 16:50:02 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:21:49 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ void	free_ast(t_token **node)
 	free((*node));
 }
 
+void one_cmd(t_token **tree)
+{
+	(*tree) = malloc(sizeof(t_token));
+	(*tree)->type = CMD;
+	(*tree)->name = ft_strdup("pwd");
+	(*tree)->left = NULL;
+	(*tree)->right = NULL;
+}
+
 void	pipe_simple_input(t_token **tree)
 {
 	// cmd = ls -al | wc -l
@@ -50,13 +59,13 @@ void	pipe_simple_input(t_token **tree)
 	// Left
 	(*tree)->left = malloc(sizeof(t_token));
 	(*tree)->left->type = CMD;
-	(*tree)->left->name = ft_strdup("echo -n");
+	(*tree)->left->name = ft_strdup("pwd");
 	(*tree)->left->left = NULL;
 	(*tree)->left->right = NULL;
 	// Right
 	(*tree)->right = malloc(sizeof(t_token));
 	(*tree)->right->type = CMD;
-	(*tree)->right->name = ft_strdup("rev");
+	(*tree)->right->name = ft_strdup("cat");
 	(*tree)->right->left = NULL;
 	(*tree)->right->right = NULL;
 }

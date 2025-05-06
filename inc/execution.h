@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/05 16:12:29 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:22:10 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 /* -------------------------------------------------------------------------- */
 /*                           init_input (hard code)                           */
 /* -------------------------------------------------------------------------- */
+void one_cmd(t_token **tree);
 void	pipe_simple_input(t_token **tree); // ls-al | wc -l
 void	pipe_triple_input(t_token **tree);
 void	free_ast(t_token **node);
@@ -48,6 +49,7 @@ void	print_ast(t_token *node);
 bool	is_buildin(char *args);
 int		exec_buildin(char *args);
 int		ft_echo(char *args);
+int		ft_pwd(void);
 
 /* -------------------------------------------------------------------------- */
 /*                                  debuging                                  */

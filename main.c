@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:08:47 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/05 16:23:59 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:25:16 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int ac, char **av, char **env)
 	t_token *tree;
 
 	tree = NULL;
+	//one_cmd(&tree);
 	pipe_simple_input(&tree);
 	// pipe_triple_input(&tree);
 	// print_ast(tree);
