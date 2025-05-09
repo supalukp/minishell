@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/02 15:17:08 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:05:26 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,59 @@
 
 typedef enum e_type
 {
-	CMD,
+	// AST TREE LEVEL
+	CMD_LINE,
 	PIPE,
 	AND,
 	OR,
-	PAREN_LEFT,
-	PAREN_RIGHT,
+
+	// CMD_LINE LEVEL
+	CMD,
+	ARG,
 	APPEND,
 	HEREDOC,
 	INFILE,
-	OUTFILE
+	OUTFILE,
+	INVALID
 }					t_type;
 
-typedef struct s_token
+typedef struct s_cmd_element
 {
-	t_type			type;
-	char			*name;
-	int				op;
-	struct s_token	*left;
-	struct s_token	*right;
-}					t_token;
+	char *content;              // "ls"
+	t_type type;                // CMD
+	int quoted;                 // 0 when no quotes, 1 when single 2 when double
+	struct s_cmd_element *next; // token "ls -a"
+}					t_cmd_element;
 
+typedef struct s_file
+{
+	char *content;       // "text.txt"
+	t_type type;         // HEREDOC? INFILE? OUTFILE?
+	struct s_file *next; // next file from same type
+}					t_file;
+
+typedef struct s_tree_token
+{
+	char *content;           // "ls -a"
+	t_type type;             // CMD_LINE
+	t_cmd_element *cmd_line; // linked list of all non file expanded elements
+	t_file			*infiles;
+	t_file			*outfiles;
+	struct s_tree_token *left;  // token "ls -a"
+	struct s_tree_token *right; // NULL
+}					t_tree_token;
 
 typedef struct s_env
 {
-	char			*env;
-	struct s_env	*next;
-}					t_env;
+    char            *env;
+    struct s_env    *next;
+}                    t_env;
+
+typedef struct s_data
+{
+	t_tree_token	*ast;
+	t_env           *env;
+}					t_data;
+
 
 #endif

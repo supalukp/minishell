@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/06 11:22:10 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:42:22 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,44 +16,42 @@
 # include "headings.h"
 
 /* -------------------------------------------------------------------------- */
-/*                                  Function                                  */
-/* -------------------------------------------------------------------------- */
-
-// void execute_buidin(t_branch *branch);
-// void each_branch_execute(t_branch *branch);
-// void execute_external(t_branch *branch);
-// void main_execution(t_program *prog);
-
-/* -------------------------------------------------------------------------- */
 /*                           init_input (hard code)                           */
 /* -------------------------------------------------------------------------- */
-void one_cmd(t_token **tree);
-void	pipe_simple_input(t_token **tree); // ls-al | wc -l
-void	pipe_triple_input(t_token **tree);
-void	free_ast(t_token **node);
+void	one_cmd(t_tree_token **tree);
+void	pipe_simple_input(t_tree_token **tree);
+void	print_ast(t_tree_token *node);
+void	init_s_main(t_data **data, t_tree_token *tree);
 /* -------------------------------------------------------------------------- */
 /*                                  execution                                 */
 /* -------------------------------------------------------------------------- */
-
-int		main_execution(t_token *tree, char **env);
 char	*find_executable(char **all_path, char *command);
 char	*get_path(char *command, char **envp);
 void	free_matrix(char **matrix);
-int		simple_command_process(t_token *tree, char **env);
-int		pipe_process(t_token *tree, char **env);
-void	print_ast(t_token *node);
+char	**combine_cmdline(t_cmd_element *args);
+int		main_execution(t_tree_token *tree, char **env, t_data *root);
+int		external_single(t_tree_token *tree, char **env);
+int		external_cmd_process(t_tree_token *tree, char **env);
+int		pipe_process(t_tree_token *tree, char **env, t_data *data);
 
 /* -------------------------------------------------------------------------- */
 /*                                  build_in                                  */
 /* -------------------------------------------------------------------------- */
+int		ft_strcmp(const char *s1, const char *s2);
 bool	is_buildin(char *args);
 int		exec_buildin(char *args);
 int		ft_echo(char *args);
 int		ft_pwd(void);
 
 /* -------------------------------------------------------------------------- */
-/*                                  debuging                                  */
+/*                                     free                                   */
 /* -------------------------------------------------------------------------- */
-void	check_if_buildin(t_token *tree);
+void	free_program(t_data *data);
+void	free_ast(t_tree_token **node);
+
+/* -------------------------------------------------------------------------- */
+/*                                    debug                                   */
+/* -------------------------------------------------------------------------- */
+void	check_if_buildin(t_tree_token *tree);
 
 #endif

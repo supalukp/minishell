@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:58:36 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/05 16:29:15 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:35:51 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*find_executable(char **all_path, char *command)
 		if (access(path_command, F_OK | X_OK) == 0)
 		{
 			free_matrix(all_path);
-			return (ft_strdup(path_command));
+			return (path_command);
 		}
 		free(path_command);
 		j++;
@@ -76,4 +76,20 @@ void	free_matrix(char **matrix)
 	}
 	free(matrix);
 	matrix = NULL;
+}
+
+void free_program(t_data *data)
+{
+	if (data->ast)
+		free_ast(&data->ast);
+	if (data->env)
+	{
+		while (data->env)
+		{
+			free(data->env);
+			data->env = data->env->next;
+		}
+	}
+	if (data) 
+		free(data);
 }

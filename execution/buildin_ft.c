@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:49:36 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/06 11:06:15 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:11:12 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ft_echo(char *args)
 		noline_flag = true;
 		i++;
 	}
+	
 	while (cmd[i])
 	{
 		printf("%s", cmd[i]);
@@ -37,7 +38,8 @@ int	ft_echo(char *args)
 	}
 	if (noline_flag == false)
 		printf("\n");
-	return (free(cmd), 0);
+	free_matrix(cmd);
+	return (0);
 }
 
 int ft_pwd(void)
@@ -52,5 +54,9 @@ int ft_pwd(void)
 	}
 	printf("%s\n", res);
 	free(res);
+	// if (root->root)
+	// 	free_ast(root->root);
+	// if (root)
+	// 	free(root); // TODO free all t_main
 	return (0);
 }
