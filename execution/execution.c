@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/09 16:58:56 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:25:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	main_execution(t_tree_token *tree, char **env, t_data *data)
 		else
 			exit_status = external_single(tree, env);
 	}
-
 	// else
 	//     return (handle_unexpected_type(tree)); // TODO
 	return (exit_status);
@@ -73,7 +72,7 @@ int	external_single(t_tree_token *tree, char **env)
 	char	**args;
 	char	*paths;
 
-	args = combine_cmdline(tree->cmd_line); // TODO
+	args = combine_cmdline(tree->cmd_line);
 	// args = ft_split(tree->content, ' ');
 	if (!args)
 		return (1);
@@ -110,79 +109,6 @@ int	external_single(t_tree_token *tree, char **env)
 			return (EXIT_FAILURE);
 	}
 }
-
-// int	external_single(t_token *tree, char **env, t_main *root)
-// {
-// 	pid_t	pid;
-// 	int		exit_status;
-// 	char	**args;
-// 	char	*paths;
-
-// 	args = ft_split(tree->name, ' ');
-// 	if (!args)
-// 		return (1);
-// 	paths = get_path(args[0], env);
-// 	if (!paths)
-// 	{
-// 		free_matrix(args);
-// 		free_ast(root->root);
-// 		free(root);
-// 		return (127);
-// 	}
-// 	pid = fork();
-// 	if (pid == -1)
-// 	{
-// 		perror("fork failed");
-// 		free_matrix(args);
-// 		free(paths);
-// 		return (1);
-// 	}
-// 	if (pid == 0)
-// 	{
-// 		execve(paths, args, env);
-// 		perror("execve failed");
-// 		free_ast(root->root);
-// 		free(root);
-// 		free_matrix(args);
-// 		free(paths);
-// 		exit(1);
-// 	}
-// 	else
-// 	{
-// 		waitpid(pid, &exit_status, 0);
-// 		free_matrix(args);
-// 		free(paths);
-// 		free_ast(root->root);
-// 		free(root);
-// 		if (WIFEXITED(exit_status))
-// 			return (WEXITSTATUS(exit_status));
-// 		else
-// 			return (EXIT_FAILURE);
-// 	}
-// }
-
-// int	external_cmd_process(t_token *tree, char **env)
-// {
-// 	char	**args;
-// 	char	*paths;
-
-// 	args = ft_split(tree->name, ' ');
-// 	if (!args)
-// 		return (1);
-// 	paths = get_path(args[0], env);
-// 	if (!paths)
-// 	{
-// 		free_matrix(args);
-// 		free_ast(root->root);
-// 		free(root);
-// 		return (127);
-// 	}
-// 	execve(paths, args, env);
-// 	perror("execve failed");
-// 	free_matrix(args);
-// 	free(paths);
-// 	exit(1);
-// }
 
 int	external_cmd_process(t_tree_token *tree, char **env)
 {

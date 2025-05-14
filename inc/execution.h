@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/09 16:42:22 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:48:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	one_cmd(t_tree_token **tree);
 void	pipe_simple_input(t_tree_token **tree);
 void	print_ast(t_tree_token *node);
 void	init_s_main(t_data **data, t_tree_token *tree);
+void	double_pipes_input(t_tree_token **tree);
+void	triple_pipes_input(t_tree_token **tree);
+
 /* -------------------------------------------------------------------------- */
 /*                                  execution                                 */
 /* -------------------------------------------------------------------------- */
@@ -33,6 +36,13 @@ int		main_execution(t_tree_token *tree, char **env, t_data *root);
 int		external_single(t_tree_token *tree, char **env);
 int		external_cmd_process(t_tree_token *tree, char **env);
 int		pipe_process(t_tree_token *tree, char **env, t_data *data);
+
+/* -------------------------------------------------------------------------- */
+/*                                    pipes                                   */
+/* -------------------------------------------------------------------------- */
+int		count_pipes(t_tree_token *tree);
+
+
 
 /* -------------------------------------------------------------------------- */
 /*                                  build_in                                  */
