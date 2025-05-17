@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:22:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/09 14:36:48 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/17 20:44:04 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	exec_buildin(char *args)
 {
 	int		exit_status;
 	char	**cmd;
-
+	
 	cmd = ft_split(args, ' ');
 	if (!ft_strcmp(cmd[0], "echo"))
 		exit_status = ft_echo(args);

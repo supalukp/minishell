@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/15 16:52:30 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:50:41 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ typedef struct s_tree_token
 	char *content;           // "ls -a"
 	t_type type;             // CMD_LINE
 	t_cmd_element *cmd_line; // linked list of all non file expanded elements
-	t_file			*infiles;
-	t_file			*outfiles;
+	t_file			*files;
 	struct s_tree_token *left;  // token "ls -a"
 	struct s_tree_token *right; // NULL
 }					t_tree_token;
@@ -63,21 +62,20 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_pipes
-{
-	int				pipes_count;
-	int				process;
-	int				**pipefd;
-	pid_t			*pid;
-	char			**cmd_list;
-}					t_pipes;
-
 typedef struct s_pipe_cmds
 {
 	t_tree_token			*cmd;
 	struct s_pipe_cmds		*next;
 }							t_pipe_cmds;
 
+typedef struct s_pipes
+{
+	int				pipes_count;
+	int				process;
+	int				**pipefd;
+	pid_t			*pid;
+	t_pipe_cmds		*cmd_lst;
+}					t_pipes;
 
 typedef struct s_data
 {

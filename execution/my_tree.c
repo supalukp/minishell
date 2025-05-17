@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/14 12:59:49 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/17 21:19:35 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,20 @@ void	print_ast(t_tree_token *node)
 	print_ast(node->right);
 }
 
+void	free_file_list(t_file *file)
+{
+	t_file *tmp;
+
+	while (file)
+	{
+		tmp = file->next;
+		if (file->content)
+			free(file->content);
+		free(file);
+		file = tmp;
+	}
+}
+
 void	free_ast(t_tree_token **node)
 {
 	t_tree_token	*tmp_left;
@@ -66,6 +80,8 @@ void	free_ast(t_tree_token **node)
 			tmp_cmd = next;
 		}
 	}
+	if ((*node)->files)
+		free_file_list((*node)->files);
 	if ((*node))
 		free((*node));
 }
@@ -95,8 +111,10 @@ void one_cmd(t_tree_token **tree)
 	(*tree)->cmd_line->next->content = ft_strdup("\"hello\"");
 	(*tree)->cmd_line->next->type = ARG;
 	(*tree)->cmd_line->next->next = NULL;
-	(*tree)->infiles = NULL;
-	(*tree)->outfiles = NULL;
+	(*tree)->files = malloc(sizeof(t_file));
+	(*tree)->files->content = ft_strdup("outfile");
+	(*tree)->files->type = OUTFILE;
+	(*tree)->files->next = NULL;
 	(*tree)->left = NULL;
 	(*tree)->right = NULL;
 }
@@ -107,24 +125,25 @@ void	pipe_simple_input(t_tree_token **tree)
 	(*tree)->type = PIPE;
 	(*tree)->content = ft_strdup("|");
 	(*tree)->cmd_line = NULL;
-	(*tree)->infiles = NULL;
-	(*tree)->outfiles = NULL;
+	(*tree)->files = NULL;
 	
 	(*tree)->left = malloc(sizeof(t_tree_token));
 	(*tree)->left->type = CMD_LINE;
-	(*tree)->left->content = ft_strdup("echo hello");
+	(*tree)->left->content = ft_strdup("cat -e");
 	(*tree)->left->cmd_line = malloc(sizeof(t_cmd_element));
-	(*tree)->left->cmd_line->content = ft_strdup("echo");
+	(*tree)->left->cmd_line->content = ft_strdup("cat");
 	(*tree)->left->cmd_line->quoted = 0;
 	(*tree)->left->cmd_line->type = CMD;
 	(*tree)->left->cmd_line->next = malloc(sizeof(t_cmd_element));
-	(*tree)->left->cmd_line->next->content = ft_strdup("\"hello\"");
+	(*tree)->left->cmd_line->next->content = ft_strdup("-e");
 	(*tree)->left->cmd_line->next->type = ARG;
 	(*tree)->left->cmd_line->next->next = NULL;
 	(*tree)->left->left = NULL;
 	(*tree)->left->right = NULL;
-	(*tree)->left->infiles = NULL;
-	(*tree)->left->outfiles = NULL;
+	(*tree)->left->files = malloc(sizeof(t_file));
+	(*tree)->left->files->content = ft_strdup("main.c");
+	(*tree)->left->files->type = INFILE;
+	(*tree)->left->files->next = NULL;
 
 	(*tree)->right = malloc(sizeof(t_tree_token));
 	(*tree)->right->type = CMD_LINE;
@@ -136,171 +155,269 @@ void	pipe_simple_input(t_tree_token **tree)
 	(*tree)->right->cmd_line->next = NULL;
 	(*tree)->right->left = NULL;
 	(*tree)->right->right = NULL;
-	(*tree)->right->infiles = NULL;
-	(*tree)->right->outfiles = NULL;
+	(*tree)->right->files = malloc(sizeof(t_file));
+	(*tree)->right->files->content = ft_strdup("outfile");
+	(*tree)->right->files->type = OUTFILE;
+	(*tree)->right->files->next = malloc(sizeof(t_file));
+	(*tree)->right->files->next->content = ft_strdup("outfile2");
+	(*tree)->right->files->next->type = OUTFILE;
+	(*tree)->right->files->next->next = NULL;
 }
 
-void	double_pipes_input(t_tree_token **tree)
+// void	double_pipes_input(t_tree_token **tree)
+// {
+//     *tree = malloc(sizeof(t_tree_token));
+//     (*tree)->type = PIPE;
+//     (*tree)->content = ft_strdup("|");
+//     (*tree)->cmd_line = NULL;
+//     (*tree)->infiles = NULL;
+//     (*tree)->outfiles = NULL;
+
+//     // Left side: echo "hello" | rev
+//     (*tree)->left = malloc(sizeof(t_tree_token));
+//     (*tree)->left->type = PIPE;
+//     (*tree)->left->content = ft_strdup("|");
+//     (*tree)->left->cmd_line = NULL;
+//     (*tree)->left->infiles = NULL;
+//     (*tree)->left->outfiles = NULL;
+
+//     // Left of left: echo "hello"
+//     (*tree)->left->left = malloc(sizeof(t_tree_token));
+//     (*tree)->left->left->type = CMD_LINE;
+//     (*tree)->left->left->content = ft_strdup("echo hello");
+//     (*tree)->left->left->cmd_line = malloc(sizeof(t_cmd_element));
+//     (*tree)->left->left->cmd_line->content = ft_strdup("echo");
+//     (*tree)->left->left->cmd_line->quoted = 0;
+//     (*tree)->left->left->cmd_line->type = CMD;
+
+//     (*tree)->left->left->cmd_line->next = malloc(sizeof(t_cmd_element));
+//     (*tree)->left->left->cmd_line->next->content = ft_strdup("\"hello\"");
+//     (*tree)->left->left->cmd_line->next->quoted = 1;
+//     (*tree)->left->left->cmd_line->next->type = ARG;
+//     (*tree)->left->left->cmd_line->next->next = NULL;
+
+//     (*tree)->left->left->left = NULL;
+//     (*tree)->left->left->right = NULL;
+//     (*tree)->left->left->infiles = NULL;
+//     (*tree)->left->left->outfiles = NULL;
+
+//     // Right of left: rev
+//     (*tree)->left->right = malloc(sizeof(t_tree_token));
+//     (*tree)->left->right->type = CMD_LINE;
+//     (*tree)->left->right->content = ft_strdup("rev");
+//     (*tree)->left->right->cmd_line = malloc(sizeof(t_cmd_element));
+//     (*tree)->left->right->cmd_line->content = ft_strdup("rev");
+//     (*tree)->left->right->cmd_line->quoted = 0;
+//     (*tree)->left->right->cmd_line->type = CMD;
+//     (*tree)->left->right->cmd_line->next = NULL;
+//     (*tree)->left->right->left = NULL;
+//     (*tree)->left->right->right = NULL;
+//     (*tree)->left->right->infiles = NULL;
+//     (*tree)->left->right->outfiles = NULL;
+
+//     // Right: cat -e
+//     (*tree)->right = malloc(sizeof(t_tree_token));
+//     (*tree)->right->type = CMD_LINE;
+//     (*tree)->right->content = ft_strdup("cat -e");
+//     (*tree)->right->cmd_line = malloc(sizeof(t_cmd_element));
+//     (*tree)->right->cmd_line->content = ft_strdup("ls");
+//     (*tree)->right->cmd_line->quoted = 0;
+//     (*tree)->right->cmd_line->type = CMD;
+
+//     (*tree)->right->cmd_line->next = malloc(sizeof(t_cmd_element));
+//     (*tree)->right->cmd_line->next->content = ft_strdup("-a");
+//     (*tree)->right->cmd_line->next->quoted = 0;
+//     (*tree)->right->cmd_line->next->type = ARG;
+//     (*tree)->right->cmd_line->next->next = NULL;
+
+//     (*tree)->right->left = NULL;
+//     (*tree)->right->right = NULL;
+//     (*tree)->right->infiles = NULL;
+//     (*tree)->right->outfiles = NULL;
+// }
+
+// void	triple_pipes_input(t_tree_token **tree)
+// {
+// 	// First pipe node: final 'rev'
+// 	(*tree) = malloc(sizeof(t_tree_token));
+// 	(*tree)->type = PIPE;
+// 	(*tree)->content = ft_strdup("|");
+// 	(*tree)->cmd_line = NULL;
+// 	(*tree)->infiles = NULL;
+// 	(*tree)->outfiles = NULL;
+
+// 	// Left: second pipe node (cat -e | rev)
+// 	(*tree)->left = malloc(sizeof(t_tree_token));
+// 	(*tree)->left->type = PIPE;
+// 	(*tree)->left->content = ft_strdup("|");
+// 	(*tree)->left->cmd_line = NULL;
+// 	(*tree)->left->infiles = NULL;
+// 	(*tree)->left->outfiles = NULL;
+
+// 	// Right: rev
+// 	(*tree)->right = malloc(sizeof(t_tree_token));
+// 	(*tree)->right->type = CMD_LINE;
+// 	(*tree)->right->content = ft_strdup("rev");
+// 	(*tree)->right->cmd_line = malloc(sizeof(t_cmd_element));
+// 	(*tree)->right->cmd_line->content = ft_strdup("rev");
+// 	(*tree)->right->cmd_line->type = CMD;
+// 	(*tree)->right->cmd_line->next = NULL;
+// 	(*tree)->right->left = NULL;
+// 	(*tree)->right->right = NULL;
+// 	(*tree)->right->infiles = NULL;
+// 	(*tree)->right->outfiles = NULL;
+
+// 	// Left-Left: first pipe node (echo "hello" | rev)
+// 	t_tree_token *echo_rev_pipe = (*tree)->left;
+
+// 	echo_rev_pipe->left = malloc(sizeof(t_tree_token));
+// 	echo_rev_pipe->left->type = PIPE;
+// 	echo_rev_pipe->left->content = ft_strdup("|");
+// 	echo_rev_pipe->left->cmd_line = NULL;
+// 	echo_rev_pipe->left->infiles = NULL;
+// 	echo_rev_pipe->left->outfiles = NULL;
+
+// 	// echo "hello"
+// 	echo_rev_pipe->left->left = malloc(sizeof(t_tree_token));
+// 	echo_rev_pipe->left->left->type = CMD_LINE;
+// 	echo_rev_pipe->left->left->content = ft_strdup("echo hello");
+// 	echo_rev_pipe->left->left->cmd_line = malloc(sizeof(t_cmd_element));
+// 	echo_rev_pipe->left->left->cmd_line->content = ft_strdup("echo");
+// 	echo_rev_pipe->left->left->cmd_line->type = CMD;
+// 	echo_rev_pipe->left->left->cmd_line->next = malloc(sizeof(t_cmd_element));
+// 	echo_rev_pipe->left->left->cmd_line->next->content = ft_strdup("\"hello\"");
+// 	echo_rev_pipe->left->left->cmd_line->next->type = ARG;
+// 	echo_rev_pipe->left->left->cmd_line->next->next = NULL;
+// 	echo_rev_pipe->left->left->left = NULL;
+// 	echo_rev_pipe->left->left->right = NULL;
+// 	echo_rev_pipe->left->left->infiles = NULL;
+// 	echo_rev_pipe->left->left->outfiles = NULL;
+
+// 	// rev (1st)
+// 	echo_rev_pipe->left->right = malloc(sizeof(t_tree_token));
+// 	echo_rev_pipe->left->right->type = CMD_LINE;
+// 	echo_rev_pipe->left->right->content = ft_strdup("rev");
+// 	echo_rev_pipe->left->right->cmd_line = malloc(sizeof(t_cmd_element));
+// 	echo_rev_pipe->left->right->cmd_line->content = ft_strdup("rev");
+// 	echo_rev_pipe->left->right->cmd_line->type = CMD;
+// 	echo_rev_pipe->left->right->cmd_line->next = NULL;
+// 	echo_rev_pipe->left->right->left = NULL;
+// 	echo_rev_pipe->left->right->right = NULL;
+// 	echo_rev_pipe->left->right->infiles = NULL;
+// 	echo_rev_pipe->left->right->outfiles = NULL;
+
+// 	// cat -e
+// 	echo_rev_pipe->right = malloc(sizeof(t_tree_token));
+// 	echo_rev_pipe->right->type = CMD_LINE;
+// 	echo_rev_pipe->right->content = ft_strdup("cat");
+// 	echo_rev_pipe->right->cmd_line = malloc(sizeof(t_cmd_element));
+// 	echo_rev_pipe->right->cmd_line->content = ft_strdup("cat");
+// 	echo_rev_pipe->right->cmd_line->type = CMD;
+// 	echo_rev_pipe->right->cmd_line->next = malloc(sizeof(t_cmd_element));
+// 	echo_rev_pipe->right->cmd_line->next->content = ft_strdup("-e");
+// 	echo_rev_pipe->right->cmd_line->next->type = ARG;
+// 	echo_rev_pipe->right->cmd_line->next->next = NULL;
+// 	echo_rev_pipe->right->left = NULL;
+// 	echo_rev_pipe->right->right = NULL;
+// 	echo_rev_pipe->right->infiles = NULL;
+// 	echo_rev_pipe->right->outfiles = NULL;
+// }
+
+void	quadruple_pipes_input(t_tree_token **tree)
 {
-    *tree = malloc(sizeof(t_tree_token));
-    (*tree)->type = PIPE;
-    (*tree)->content = ft_strdup("|");
-    (*tree)->cmd_line = NULL;
-    (*tree)->infiles = NULL;
-    (*tree)->outfiles = NULL;
-
-    // Left side: echo "hello" | rev
-    (*tree)->left = malloc(sizeof(t_tree_token));
-    (*tree)->left->type = PIPE;
-    (*tree)->left->content = ft_strdup("|");
-    (*tree)->left->cmd_line = NULL;
-    (*tree)->left->infiles = NULL;
-    (*tree)->left->outfiles = NULL;
-
-    // Left of left: echo "hello"
-    (*tree)->left->left = malloc(sizeof(t_tree_token));
-    (*tree)->left->left->type = CMD_LINE;
-    (*tree)->left->left->content = ft_strdup("echo hello");
-    (*tree)->left->left->cmd_line = malloc(sizeof(t_cmd_element));
-    (*tree)->left->left->cmd_line->content = ft_strdup("echo");
-    (*tree)->left->left->cmd_line->quoted = 0;
-    (*tree)->left->left->cmd_line->type = CMD;
-
-    (*tree)->left->left->cmd_line->next = malloc(sizeof(t_cmd_element));
-    (*tree)->left->left->cmd_line->next->content = ft_strdup("\"hello\"");
-    (*tree)->left->left->cmd_line->next->quoted = 1;
-    (*tree)->left->left->cmd_line->next->type = ARG;
-    (*tree)->left->left->cmd_line->next->next = NULL;
-
-    (*tree)->left->left->left = NULL;
-    (*tree)->left->left->right = NULL;
-    (*tree)->left->left->infiles = NULL;
-    (*tree)->left->left->outfiles = NULL;
-
-    // Right of left: rev
-    (*tree)->left->right = malloc(sizeof(t_tree_token));
-    (*tree)->left->right->type = CMD_LINE;
-    (*tree)->left->right->content = ft_strdup("rev");
-    (*tree)->left->right->cmd_line = malloc(sizeof(t_cmd_element));
-    (*tree)->left->right->cmd_line->content = ft_strdup("rev");
-    (*tree)->left->right->cmd_line->quoted = 0;
-    (*tree)->left->right->cmd_line->type = CMD;
-    (*tree)->left->right->cmd_line->next = NULL;
-    (*tree)->left->right->left = NULL;
-    (*tree)->left->right->right = NULL;
-    (*tree)->left->right->infiles = NULL;
-    (*tree)->left->right->outfiles = NULL;
-
-    // Right: cat -e
-    (*tree)->right = malloc(sizeof(t_tree_token));
-    (*tree)->right->type = CMD_LINE;
-    (*tree)->right->content = ft_strdup("cat -e");
-    (*tree)->right->cmd_line = malloc(sizeof(t_cmd_element));
-    (*tree)->right->cmd_line->content = ft_strdup("cat");
-    (*tree)->right->cmd_line->quoted = 0;
-    (*tree)->right->cmd_line->type = CMD;
-
-    (*tree)->right->cmd_line->next = malloc(sizeof(t_cmd_element));
-    (*tree)->right->cmd_line->next->content = ft_strdup("-e");
-    (*tree)->right->cmd_line->next->quoted = 0;
-    (*tree)->right->cmd_line->next->type = ARG;
-    (*tree)->right->cmd_line->next->next = NULL;
-
-    (*tree)->right->left = NULL;
-    (*tree)->right->right = NULL;
-    (*tree)->right->infiles = NULL;
-    (*tree)->right->outfiles = NULL;
-}
-
-void	triple_pipes_input(t_tree_token **tree)
-{
-	// First pipe node: final 'rev'
-	(*tree) = malloc(sizeof(t_tree_token));
+	*tree = malloc(sizeof(t_tree_token));
 	(*tree)->type = PIPE;
 	(*tree)->content = ft_strdup("|");
 	(*tree)->cmd_line = NULL;
-	(*tree)->infiles = NULL;
-	(*tree)->outfiles = NULL;
+	(*tree)->files = NULL;
 
-	// Left: second pipe node (cat -e | rev)
+	// Right: cat -e
+	(*tree)->right = malloc(sizeof(t_tree_token));
+	(*tree)->right->type = CMD_LINE;
+	(*tree)->right->content = ft_strdup("cat -e");
+	(*tree)->right->cmd_line = malloc(sizeof(t_cmd_element));
+	(*tree)->right->cmd_line->content = ft_strdup("cat");
+	(*tree)->right->cmd_line->type = CMD;
+
+	(*tree)->right->cmd_line->next = malloc(sizeof(t_cmd_element));
+	(*tree)->right->cmd_line->next->content = ft_strdup("-e");
+	(*tree)->right->cmd_line->next->type = ARG;
+	(*tree)->right->cmd_line->next->next = NULL;
+
+	(*tree)->right->left = NULL;
+	(*tree)->right->right = NULL;
+	(*tree)->right->files = NULL;
+
+	// Left: rev
 	(*tree)->left = malloc(sizeof(t_tree_token));
 	(*tree)->left->type = PIPE;
 	(*tree)->left->content = ft_strdup("|");
 	(*tree)->left->cmd_line = NULL;
-	(*tree)->left->infiles = NULL;
-	(*tree)->left->outfiles = NULL;
+	(*tree)->left->files = NULL;
 
-	// Right: rev
-	(*tree)->right = malloc(sizeof(t_tree_token));
-	(*tree)->right->type = CMD_LINE;
-	(*tree)->right->content = ft_strdup("rev");
-	(*tree)->right->cmd_line = malloc(sizeof(t_cmd_element));
-	(*tree)->right->cmd_line->content = ft_strdup("rev");
-	(*tree)->right->cmd_line->quoted = 0;
-	(*tree)->right->cmd_line->type = CMD;
-	(*tree)->right->cmd_line->next = NULL;
-	(*tree)->right->left = NULL;
-	(*tree)->right->right = NULL;
-	(*tree)->right->infiles = NULL;
-	(*tree)->right->outfiles = NULL;
+	(*tree)->left->right = malloc(sizeof(t_tree_token));
+	(*tree)->left->right->type = CMD_LINE;
+	(*tree)->left->right->content = ft_strdup("rev");
+	(*tree)->left->right->cmd_line = malloc(sizeof(t_cmd_element));
+	(*tree)->left->right->cmd_line->content = ft_strdup("rev");
+	(*tree)->left->right->cmd_line->type = CMD;
+	(*tree)->left->right->cmd_line->next = NULL;
+	(*tree)->left->right->left = NULL;
+	(*tree)->left->right->right = NULL;
+	(*tree)->left->right->files = NULL;
 
-	// Left-Left: first pipe node (echo "hello" | rev)
-	t_tree_token *echo_rev_pipe = (*tree)->left;
+	// Left-Left: cat -e
+	(*tree)->left->left = malloc(sizeof(t_tree_token));
+	(*tree)->left->left->type = PIPE;
+	(*tree)->left->left->content = ft_strdup("|");
+	(*tree)->left->left->cmd_line = NULL;
+	(*tree)->left->left->files = NULL;
 
-	echo_rev_pipe->left = malloc(sizeof(t_tree_token));
-	echo_rev_pipe->left->type = PIPE;
-	echo_rev_pipe->left->content = ft_strdup("|");
-	echo_rev_pipe->left->cmd_line = NULL;
-	echo_rev_pipe->left->infiles = NULL;
-	echo_rev_pipe->left->outfiles = NULL;
+	(*tree)->left->left->right = malloc(sizeof(t_tree_token));
+	(*tree)->left->left->right->type = CMD_LINE;
+	(*tree)->left->left->right->content = ft_strdup("cat -e");
+	(*tree)->left->left->right->cmd_line = malloc(sizeof(t_cmd_element));
+	(*tree)->left->left->right->cmd_line->content = ft_strdup("cat");
+	(*tree)->left->left->right->cmd_line->type = CMD;
 
-	// echo "hello"
-	echo_rev_pipe->left->left = malloc(sizeof(t_tree_token));
-	echo_rev_pipe->left->left->type = CMD_LINE;
-	echo_rev_pipe->left->left->content = ft_strdup("echo hello");
-	echo_rev_pipe->left->left->cmd_line = malloc(sizeof(t_cmd_element));
-	echo_rev_pipe->left->left->cmd_line->content = ft_strdup("echo");
-	echo_rev_pipe->left->left->cmd_line->quoted = 0;
-	echo_rev_pipe->left->left->cmd_line->type = CMD;
-	echo_rev_pipe->left->left->cmd_line->next = malloc(sizeof(t_cmd_element));
-	echo_rev_pipe->left->left->cmd_line->next->content = ft_strdup("\"hello\"");
-	echo_rev_pipe->left->left->cmd_line->next->type = ARG;
-	echo_rev_pipe->left->left->cmd_line->next->quoted = 0;
-	echo_rev_pipe->left->left->cmd_line->next->next = NULL;
-	echo_rev_pipe->left->left->left = NULL;
-	echo_rev_pipe->left->left->right = NULL;
-	echo_rev_pipe->left->left->infiles = NULL;
-	echo_rev_pipe->left->left->outfiles = NULL;
+	(*tree)->left->left->right->cmd_line->next = malloc(sizeof(t_cmd_element));
+	(*tree)->left->left->right->cmd_line->next->content = ft_strdup("-e");
+	(*tree)->left->left->right->cmd_line->next->type = ARG;
+	(*tree)->left->left->right->cmd_line->next->next = NULL;
 
-	// rev (1st)
-	echo_rev_pipe->left->right = malloc(sizeof(t_tree_token));
-	echo_rev_pipe->left->right->type = CMD_LINE;
-	echo_rev_pipe->left->right->content = ft_strdup("rev");
-	echo_rev_pipe->left->right->cmd_line = malloc(sizeof(t_cmd_element));
-	echo_rev_pipe->left->right->cmd_line->content = ft_strdup("rev");
-	echo_rev_pipe->left->right->cmd_line->quoted = 0;
-	echo_rev_pipe->left->right->cmd_line->type = CMD;
-	echo_rev_pipe->left->right->cmd_line->next = NULL;
-	echo_rev_pipe->left->right->left = NULL;
-	echo_rev_pipe->left->right->right = NULL;
-	echo_rev_pipe->left->right->infiles = NULL;
-	echo_rev_pipe->left->right->outfiles = NULL;
+	(*tree)->left->left->right->left = NULL;
+	(*tree)->left->left->right->right = NULL;
+	(*tree)->left->left->right->files = NULL;
 
-	// cat -e
-	echo_rev_pipe->right = malloc(sizeof(t_tree_token));
-	echo_rev_pipe->right->type = CMD_LINE;
-	echo_rev_pipe->right->content = ft_strdup("cat -e");
-	echo_rev_pipe->right->cmd_line = malloc(sizeof(t_cmd_element));
-	echo_rev_pipe->right->cmd_line->content = ft_strdup("cat");
-	echo_rev_pipe->right->cmd_line->quoted = 0;
-	echo_rev_pipe->right->cmd_line->type = CMD;
-	echo_rev_pipe->right->cmd_line->next = malloc(sizeof(t_cmd_element));
-	echo_rev_pipe->right->cmd_line->next->content = ft_strdup("-e");
-	echo_rev_pipe->right->cmd_line->next->type = ARG;
-	echo_rev_pipe->right->cmd_line->next->quoted = 0;
-	echo_rev_pipe->right->cmd_line->next->next = NULL;
-	echo_rev_pipe->right->left = NULL;
-	echo_rev_pipe->right->right = NULL;
-	echo_rev_pipe->right->infiles = NULL;
-	echo_rev_pipe->right->outfiles = NULL;
+	// Left-Left-Left: rev
+	(*tree)->left->left->left = malloc(sizeof(t_tree_token));
+	(*tree)->left->left->left->type = PIPE;
+	(*tree)->left->left->left->content = ft_strdup("|");
+	(*tree)->left->left->left->cmd_line = NULL;
+	(*tree)->left->left->left->files = NULL;
+
+	(*tree)->left->left->left->right = malloc(sizeof(t_tree_token));
+	(*tree)->left->left->left->right->type = CMD_LINE;
+	(*tree)->left->left->left->right->content = ft_strdup("rev");
+	(*tree)->left->left->left->right->cmd_line = malloc(sizeof(t_cmd_element));
+	(*tree)->left->left->left->right->cmd_line->content = ft_strdup("rev");
+	(*tree)->left->left->left->right->cmd_line->type = CMD;
+	(*tree)->left->left->left->right->cmd_line->next = NULL;
+	(*tree)->left->left->left->right->left = NULL;
+	(*tree)->left->left->left->right->right = NULL;
+	(*tree)->left->left->left->right->files = NULL;
+
+	// Left-Left-Left-Left: ls
+	(*tree)->left->left->left->left = malloc(sizeof(t_tree_token));
+	(*tree)->left->left->left->left->type = CMD_LINE;
+	(*tree)->left->left->left->left->content = ft_strdup("pwd");
+	(*tree)->left->left->left->left->cmd_line = malloc(sizeof(t_cmd_element));
+	(*tree)->left->left->left->left->cmd_line->content = ft_strdup("pwd");
+	(*tree)->left->left->left->left->cmd_line->type = CMD;
+	(*tree)->left->left->left->left->cmd_line->next = NULL;
+	(*tree)->left->left->left->left->left = NULL;
+	(*tree)->left->left->left->left->right = NULL;
+	(*tree)->left->left->left->left->files = NULL;
 }
+
+

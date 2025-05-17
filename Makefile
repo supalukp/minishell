@@ -58,7 +58,11 @@ FILES = main.c \
 		${EXEC_DIR}/buildin_utils.c \
 		${EXEC_DIR}/debug.c \
 		$(EXEC_DIR)/buildin_ft.c \
-		$(EXEC_DIR)/exec_utils.c 
+		$(EXEC_DIR)/exec_utils.c \
+		$(EXEC_DIR)/multi_pipe.c \
+		$(EXEC_DIR)/pipes_init.c \
+		$(EXEC_DIR)/pipes_utils.c \
+		$(EXEC_DIR)/redirect.c
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))

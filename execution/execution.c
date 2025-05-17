@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/15 14:36:44 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/17 21:13:09 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ int	main_execution(t_tree_token *tree, char **env, t_data *data)
 
 	if (!tree)
 		return (0);
-	if (tree->type == PIPE)
+	if (tree->type == AND)
 		exit_status = pipe_process(tree, env, data);
-	// if (tree->type == PIPE)
-	// 	exit_status = multi_pipe_process(tree, env, root);
+	if (tree->type == PIPE)
+		exit_status = pipe_multi_process(tree, env, data);
 	else if (tree->type == CMD_LINE)
 	{
 		if (is_buildin(tree->content) == true)
 			exit_status = exec_buildin(tree->content);
 		else if (tree->left == NULL && tree->right == NULL)
-			exit_status = external_cmd_process(tree, env);
-		else
 			exit_status = external_single(tree, env);
+		else
+			exit_status = external_cmd_process(tree, env);
 	}
 	// else
 	//     return (handle_unexpected_type(tree)); // TODO
@@ -72,6 +72,7 @@ int	external_single(t_tree_token *tree, char **env)
 	char	**args;
 	char	*paths;
 
+	// redirect_io(tree);
 	args = combine_cmdline(tree->cmd_line);
 	// args = ft_split(tree->content, ' ');
 	if (!args)
@@ -116,6 +117,7 @@ int	external_cmd_process(t_tree_token *tree, char **env)
 	char	*paths;
 
 	//args = ft_split(tree->content, ' ');
+	// redirect_io(tree);
 	args = combine_cmdline(tree->cmd_line);
 	if (!args)
 		return (1);
