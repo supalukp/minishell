@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 18:46:44 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/22 13:12:20 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:34:38 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,11 @@ int redirect_io(t_tree_token *token, t_pipes *pipes, t_data *data)
 			if (redirect_append(file->content) == -1)
 				free_all_exit(data, pipes);
 		}
-        // else if (token->files->type == HEREDOC)
-        //     redirect_heredoc(file->content);
+        else if (token->files->type == HEREDOC)
+		{
+			if (redirect_heredoc(file->content) == -1)
+				free_all_exit(data, pipes);
+		}
         else 
             return (-1);
         file = file->next;
@@ -127,8 +130,11 @@ int redirect_one_cmd(t_tree_token *token)
 			if (redirect_append(file->content) == -1)
 				return (-1);
 		}
-        // else if (token->files->type == HEREDOC)
-        //     redirect_heredoc(file->content);
+        else if (token->files->type == HEREDOC)
+		{
+			if (redirect_heredoc(file->content) == -1)
+				return (-1);
+		}
         else 
             return (-1);
         file = file->next;

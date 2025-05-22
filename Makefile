@@ -63,7 +63,8 @@ FILES = main.c \
 		$(EXEC_DIR)/pipes_init.c \
 		$(EXEC_DIR)/pipes_utils.c \
 		$(EXEC_DIR)/redirect.c \
-		$(EXEC_DIR)/error_msg.c
+		$(EXEC_DIR)/error_msg.c \
+		$(EXEC_DIR)/heredoc
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))

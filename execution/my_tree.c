@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/22 15:06:14 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:45:33 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,19 +119,19 @@ void	pipe_simple_input(t_tree_token **tree)
 	
 	(*tree)->left = malloc(sizeof(t_tree_token));
 	(*tree)->left->type = CMD_LINE;
-	(*tree)->left->content = ft_strdup("echo hello");
+	(*tree)->left->content = ft_strdup("cat -e");
 	(*tree)->left->cmd_line = malloc(sizeof(t_cmd_element));
-	(*tree)->left->cmd_line->content = ft_strdup("echo");
+	(*tree)->left->cmd_line->content = ft_strdup("cat");
 	(*tree)->left->cmd_line->quoted = 0;
 	(*tree)->left->cmd_line->type = CMD;
 	(*tree)->left->cmd_line->next = malloc(sizeof(t_cmd_element));
-	(*tree)->left->cmd_line->next->content = ft_strdup("hellodddd");
+	(*tree)->left->cmd_line->next->content = ft_strdup("-e");
 	(*tree)->left->cmd_line->next->type = ARG;
 	(*tree)->left->cmd_line->next->next = NULL;
 	(*tree)->left->left = NULL;
 	(*tree)->left->right = NULL;
 	(*tree)->left->files = malloc(sizeof(t_file));
-	(*tree)->left->files->content = ft_strdup("main.c");
+	(*tree)->left->files->content = ft_strdup("Makefile");
 	(*tree)->left->files->type = INFILE;
 	(*tree)->left->files->next = NULL;
 

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/22 14:32:24 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:34:51 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	main_execution(t_tree_token *tree, char **env, t_data *data)
 
 	if (!tree)
 		return (0);
-	if (tree->type == AND)
-		exit_status = pipe_process(tree, env, data);
+	// if (tree->type == AND)
+	// 	exit_status = pipe_process(tree, env, data);
 	if (tree->type == PIPE)
 		exit_status = pipe_multi_process(tree, env, data);
 	else if (tree->type == CMD_LINE)
