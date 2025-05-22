@@ -6,21 +6,21 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:49:36 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/09 17:11:12 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:43:24 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	ft_echo(char *args)
+int	ft_echo(t_tree_token *tree)
 {
 	int		i;
 	bool	noline_flag;
 	char	**cmd;
 
-	if (!args)
+	if (!tree)
 		return (0);
-	cmd = ft_split(args, ' ');
+	cmd = combine_cmdline(tree->cmd_line);
 	noline_flag = false;
 	i = 1;
 	while (cmd[i] != NULL && strcmp(cmd[i], "-n") == 0)
@@ -42,21 +42,28 @@ int	ft_echo(char *args)
 	return (0);
 }
 
-int ft_pwd(void)
+int ft_pwd(t_tree_token *tree)
 {
 	char *res;
-
+	
+	if (tree && tree->cmd_line && tree->cmd_line->next && tree->cmd_line->next->content)
+	{
+		if (tree->cmd_line->next->content[0] == '-')
+		{
+			write(2, "pwd : bad option\n", 17);
+			return (1);
+		}
+	}
 	res = getcwd(NULL, 1024);
 	if (res == NULL)
 	{
 		printf("Get current working directory failed.\n");
 		return (1);
 	}
-	printf("%s\n", res);
-	free(res);
-	// if (root->root)
-	// 	free_ast(root->root);
-	// if (root)
-	// 	free(root); // TODO free all t_main
+	if (res)
+	{
+		printf("%s\n", res);
+		free(res);
+	}
 	return (0);
 }

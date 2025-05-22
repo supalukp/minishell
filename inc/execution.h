@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/17 21:13:54 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:04:26 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXECUTION_H
 
 # include "headings.h"
+
 
 /* -------------------------------------------------------------------------- */
 /*                           init_input (hard code)                           */
@@ -25,7 +26,7 @@ void		init_s_main(t_data **data, t_tree_token *tree);
 void		double_pipes_input(t_tree_token **tree);
 void		triple_pipes_input(t_tree_token **tree);
 void		quadruple_pipes_input(t_tree_token **tree);
-
+void	complex_pipe_input(t_tree_token **tree);
 /* -------------------------------------------------------------------------- */
 /*                                  execution                                 */
 /* -------------------------------------------------------------------------- */
@@ -60,31 +61,38 @@ int			process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst,
 				char **env, t_data *data);
 void		free_pipes_struct(t_pipes *pipes);
 
-
-int redirect_infile(char *filename);
-int	redirect_outfile(char *filename);
-int	redirect_append(char *filename);
-int redirect_io(t_tree_token *token);
-
+int			redirect_infile(char *filename);
+int			redirect_outfile(char *filename);
+int			redirect_append(char *filename);
+int			redirect_io(t_tree_token *token, t_pipes *pipes, t_data *data);
+int redirect_one_cmd(t_tree_token *token);
 
 /* -------------------------------------------------------------------------- */
 /*                                  build_in                                  */
 /* -------------------------------------------------------------------------- */
 int			ft_strcmp(const char *s1, const char *s2);
-bool		is_buildin(char *args);
-int			exec_buildin(char *args);
-int			ft_echo(char *args);
-int			ft_pwd(void);
+bool		is_buildin(t_tree_token *tree);
+int			exec_buildin(t_tree_token *tree);
+int			ft_echo(t_tree_token *tree);
+int			ft_pwd(t_tree_token *tree);
 
 /* -------------------------------------------------------------------------- */
 /*                                     free                                   */
 /* -------------------------------------------------------------------------- */
 void		free_program(t_data *data);
-void		free_ast(t_tree_token **node);
-void	free_file_list(t_file *file);
+void		free_ast(t_tree_token *node);
+void		free_file_list(t_file *file);
+void		free_all_exit(t_data *data, t_pipes *pipes);
 /* -------------------------------------------------------------------------- */
 /*                                    debug                                   */
 /* -------------------------------------------------------------------------- */
-void		check_if_buildin(t_tree_token *tree);
+
+
+/* -------------------------------------------------------------------------- */
+/*                                error message                               */
+/* -------------------------------------------------------------------------- */
+void    print_error_msg(char *error_msg, int errno);
+
+
 
 #endif

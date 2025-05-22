@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/17 21:13:09 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:32:24 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,13 @@ int	main_execution(t_tree_token *tree, char **env, t_data *data)
 		exit_status = pipe_multi_process(tree, env, data);
 	else if (tree->type == CMD_LINE)
 	{
-		if (is_buildin(tree->content) == true)
-			exit_status = exec_buildin(tree->content);
+		if (is_buildin(tree) == true)
+		{
+			if (tree->files)
+				if (redirect_one_cmd(tree) == -1)
+					return (1);
+			exit_status = exec_buildin(tree);
+		}
 		else if (tree->left == NULL && tree->right == NULL)
 			exit_status = external_single(tree, env);
 		else
@@ -72,9 +77,9 @@ int	external_single(t_tree_token *tree, char **env)
 	char	**args;
 	char	*paths;
 
-	// redirect_io(tree);
+	if (tree->files)
+		redirect_one_cmd(tree);
 	args = combine_cmdline(tree->cmd_line);
-	// args = ft_split(tree->content, ' ');
 	if (!args)
 		return (1);
 	paths = get_path(args[0], env);

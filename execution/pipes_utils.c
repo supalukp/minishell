@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:33:38 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/17 16:14:53 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:09:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,11 @@ void	free_pipes_struct(t_pipes *pipes)
 	free(pipes);
 }
 
+void free_all_exit(t_data *data, t_pipes *pipes)
+{
+	if (data)
+		free_program(data);
+	if (pipes)
+		free_pipes_struct(pipes);
+	exit(EXIT_FAILURE);
+}

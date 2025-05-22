@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:20 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/17 17:28:49 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:51:36 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	**create_double_fd(int pipe_count)
 			free_double_array(fd);
 			return (NULL);
 		}
-		// fd[i][0] = -1;
-		// fd[i][1] = -1;
 		i++;
 	}
 	fd[pipe_count] = NULL;
@@ -108,3 +106,4 @@ void create_pipes(t_pipes *pipes)
         i++;
     }
 }
+

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/17 21:14:01 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:44:46 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	setup_inout_last(t_pipes *pipes)
 	i = pipes->process - 1;
 	dup2(pipes->pipefd[i - 1][0], STDIN_FILENO);
 	close(pipes->pipefd[i - 1][0]);
-	// dup2(pipes->pipefd, STDOUT_FILENO);
-	// close(pipes->pipefd);
 }
 
 void	setup_inout(int i, t_pipes *pipes)
@@ -63,14 +61,17 @@ int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, char **env, t_dat
 {
 	int	exit_status;
 
+	exit_status = 0;
 	close_unused_pipes(i, pipes);
 	setup_inout(i, pipes);
-	redirect_io(cmd_lst->cmd);
-	if (is_buildin(cmd_lst->cmd->content) == true)
+	redirect_io(cmd_lst->cmd, pipes, data);
+	if (is_buildin(cmd_lst->cmd) == true)
 	{
-		exit_status = exec_buildin(cmd_lst->cmd->content);
+		exit_status = exec_buildin(cmd_lst->cmd);
 		if (data)
 			free_program(data);
+		// if (pipes)
+		// 	free_pipes_struct(pipes);
 	}
 	else if (cmd_lst->cmd->type == CMD_LINE)
 		exit_status = external_cmd_process(cmd_lst->cmd, env);

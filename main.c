@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:08:47 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/17 20:58:22 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:04:43 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	main(int ac, char **av, char **env)
 	tree = NULL;
 	data = NULL;
 	// one_cmd(&tree);
-	pipe_simple_input(&tree);
+	// pipe_simple_input(&tree);
+	complex_pipe_input(&tree);
 	// double_pipes_input(&tree);
 	// triple_pipes_input(&tree);
 	// quadruple_pipes_input(&tree);
