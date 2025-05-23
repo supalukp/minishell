@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/22 17:45:33 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/23 08:25:37 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ void	pipe_simple_input(t_tree_token **tree)
 	(*tree)->left->left = NULL;
 	(*tree)->left->right = NULL;
 	(*tree)->left->files = malloc(sizeof(t_file));
-	(*tree)->left->files->content = ft_strdup("Makefile");
-	(*tree)->left->files->type = INFILE;
+	(*tree)->left->files->content = ft_strdup("eof");
+	(*tree)->left->files->type = HEREDOC;
 	(*tree)->left->files->next = NULL;
 
 	(*tree)->right = malloc(sizeof(t_tree_token));
