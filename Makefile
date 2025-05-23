@@ -8,6 +8,7 @@
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
+FLAGS += -fsanitize=address -g
 
 # **************************************************************************** #
 # **********************************COLORS************************************ #
@@ -53,10 +54,14 @@ HEADERS =	${INC_DIR}/functions.h \
 # **************************************************************************** #
 
 FILES = main.c \
-		${PARS_DIR}/parsing.c \
-		${PARS_DIR}/separator.c \
+		${PARS_DIR}/ast_parsing.c \
+		${PARS_DIR}/ast_separator.c \
+		${PARS_DIR}/ast_parenthesis.c \
+		${PARS_DIR}/cmd_line.c \
+		${PARS_DIR}/cmd_redirections.c \
+		${PARS_DIR}/cmd_elements.c \
+		${PARS_DIR}/cmd_ll_files.c \
 		${PARS_DIR}/visual.c \
-		${PARS_DIR}/parenthesis.c \
         ${EXEC_DIR}/exec.c \
 
 

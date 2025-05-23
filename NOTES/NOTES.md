@@ -2,13 +2,13 @@
 
 // CURRENT
 
-typedef struct s_token
+typedef struct s_tree_token
 {
 	char		*name; // "ls -a";
 	enum_type	type; // CMD;
 	int			operator; // 0;
-	struct s_token	*left;
-	struct s_token	*right;
+	struct s_tree_token	*left;
+	struct s_tree_token	*right;
 }
 
 // OLD
@@ -20,16 +20,16 @@ typedef enum e_type
 	AGR
 }			t_type;
 
-typedef struct s_token
+typedef struct s_tree_token
 {
 	char			*name;
 	t_type			type;
-	struct s_token	*next;
+	struct s_tree_token	*next;
 }
 
 typedef struct s_branch
 {
-	t_token		*first_token;
+	t_tree_token		*first_tree_token;
 	struct s_branch		*next;
 	int					rank;
 }				t_branch;

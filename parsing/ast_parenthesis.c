@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parenthesis.c                                      :+:      :+:    :+:   */
+/*   ast_parenthesis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:13:37 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/04 14:08:02 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/23 13:41:25 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ int	contains_letter(char *substr, char letter)
 			return (1);
 		i++;
 	}
+	return (0);
+}
+
+int	is_letters(char letter, char *substr)
+{
+	int i;
+
+	i = 0;
+	while(substr[i])
+	{
+		if (substr[i] == letter)
+			return (1);
+		i++;
+	}
+	
 	return (0);
 }
 
@@ -60,7 +75,6 @@ void	remove_parenthesis(char **substr)
 			str_without[j++] = (*substr)[i];
 		i++;
 	}
-	printf("the future AST str = %s\nYEt the current is %s\n", str_without, *substr);
 	free(*substr);
 	*substr = str_without;
 }

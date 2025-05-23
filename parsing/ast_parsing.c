@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ast_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/04 14:05:42 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/22 15:39:35 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,57 @@ t_type	is_operator(char *line)
 {
 	int i;
 	int parenthesis;
+	bool	single_q;
+	bool double_q;
 
 	i = 0;
 	parenthesis = 0;
+	single_q = false;
+	double_q = false;
+	
 	while (line[i])
 	{
 		if (line[i]  == '(')
 			parenthesis += 1;
 		if (line[i]  == ')')
 			parenthesis -= 1;
-		if (line[i]  == '|' && line[i - 1]  != '|' && line[i + 1]  != '|' && parenthesis == 0)
+		if (line[i]  == '\'')
+		{
+			if (single_q == false)
+				single_q = true;
+			else
+				single_q = false;
+		}
+		if (line[i]  == '\"')
+		{
+			if (double_q == false)
+				double_q = true;
+			else
+				double_q = false;
+		}
+		if (line[i]  == '|' && line[i - 1]  != '|' && line[i + 1]  != '|' && parenthesis == 0 && single_q == false && double_q == false)
 			return (PIPE);
-		if (line[i]  == '&' && line[i + 1]  == '&'  && parenthesis == 0)
+		if (line[i]  == '&' && line[i + 1]  == '&'  && parenthesis == 0 && single_q == false && double_q == false)
 			return (AND);
-		if (line[i]  == '|' && line[i + 1]  == '|'  && parenthesis == 0)
+		if (line[i]  == '|' && line[i + 1]  == '|'  && parenthesis == 0 && single_q == false && double_q == false)
 			return (OR);
 		i++;
 	}
 	return (INVALID);
 }
 
-t_token *AST_maker(char *substr)
+t_tree_token *ast_maker(char *substr)
 {
-	t_token *node;
+	t_tree_token *node;
 	t_type	operator;
 	
 	if (!substr)
 		return (NULL);
-	node = malloc(sizeof(t_token));
+	node = malloc(sizeof(t_tree_token));
 	if (!node)
 		return (NULL); // TODO = EXIT PROGRAM FUNCTION
 	// TODO need to trim string here
-	ft_memset(node, '\0', sizeof(t_token));
+	ft_memset(node, '\0', sizeof(t_tree_token));
 	operator = is_operator(substr);
 	if (operator != INVALID)
 	{
@@ -58,24 +77,23 @@ t_token *AST_maker(char *substr)
 	else if (contains_letter(substr, '('))
 	{
 		remove_parenthesis(&substr);
-		printf("removed parenthesis ? %s \n", substr);
-		return(AST_maker(substr));
+		return(ast_maker(substr));
 	}
 	else
 	{
 		node->content = ft_strtrim(substr, " ");
-		node->type = CMD;
+		node->type = CMD_LINE;
+		command_line_maker(node);
 		// free(substr);
 	}
-	print_node(node);
 	return (node);
 }
 
-t_token	*mns_parse(char *line)
+t_tree_token	*mns_parse(char *line)
 {
-	t_token *request;
+	t_tree_token *request;
 
-	request = AST_maker(line);
+	request = ast_maker(line);
 	return (request);
 }
 

@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 13:25:49 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/04 14:12:16 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/09 14:04:10 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ char	*parse_get_second(char *substr, t_type operator)
 	return (subsecond);
 }
 
-void	parse_separator(char *substr, t_token *parent)
+void	parse_separator(char *substr, t_tree_token *parent)
 {
 	char	*first;
 	char	*second;
 	
 	first = parse_get_first(substr, parent->type);
-	parent->left = AST_maker(first);
+	parent->left = ast_maker(first);
 	second = parse_get_second(substr, parent->type);
-	parent->right = AST_maker(second);
+	parent->right = ast_maker(second);
 }
