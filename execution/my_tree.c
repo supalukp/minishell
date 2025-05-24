@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/23 08:25:37 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:13:36 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	print_ast(t_tree_token *node)
 {
 	char **res;
+	t_file *file;
 	int i;
 
 	i = 0;
@@ -33,6 +34,12 @@ void	print_ast(t_tree_token *node)
 			i++;
 		}
 		free_matrix(res);
+		file = node->files;
+		while (file)
+		{
+			printf("file = %s\n", file->content);
+			file = file->next;
+		}
 	}
 	print_ast(node->left);
 	print_ast(node->right);
@@ -88,6 +95,36 @@ void init_s_main(t_data **data, t_tree_token *tree)
 }
 
 
+void try_one_cmd(t_tree_token **tree)
+{
+	(*tree) = malloc(sizeof(t_tree_token));
+	(*tree)->type = CMD_LINE;
+	(*tree)->content = ft_strdup("cat -e");
+	(*tree)->cmd_line = malloc(sizeof(t_cmd_element));
+	(*tree)->cmd_line->content = ft_strdup("cat");
+	(*tree)->cmd_line->quoted = 0;
+	(*tree)->cmd_line->type = CMD;
+	(*tree)->cmd_line->next = malloc(sizeof(t_cmd_element));
+	(*tree)->cmd_line->next->content = ft_strdup("-e");
+	(*tree)->cmd_line->next->type = ARG;
+	(*tree)->cmd_line->next->next = NULL;
+	(*tree)->files = malloc(sizeof(t_file));
+	(*tree)->files->content = ft_strdup("Makefile");
+	(*tree)->files->type = INFILE;
+	(*tree)->files->next = malloc(sizeof(t_file));
+	(*tree)->files->next->content = ft_strdup("eof2");
+	(*tree)->files->next->type = HEREDOC;
+	(*tree)->files->next->next = malloc(sizeof(t_file));
+	(*tree)->files->next->next->content = ft_strdup("infile");
+	(*tree)->files->next->next->type = INFILE;
+	(*tree)->files->next->next->next = NULL; //malloc(sizeof(t_file));
+	// (*tree)->files->next->next->next->content = ft_strdup("eof3");
+	// (*tree)->files->next->next->next->type = HEREDOC;
+	// (*tree)->files->next->next->next->next = NULL;
+	(*tree)->left = NULL;
+	(*tree)->right = NULL;
+}
+
 void one_cmd(t_tree_token **tree)
 {
 	(*tree) = malloc(sizeof(t_tree_token));
@@ -131,9 +168,12 @@ void	pipe_simple_input(t_tree_token **tree)
 	(*tree)->left->left = NULL;
 	(*tree)->left->right = NULL;
 	(*tree)->left->files = malloc(sizeof(t_file));
-	(*tree)->left->files->content = ft_strdup("eof");
-	(*tree)->left->files->type = HEREDOC;
-	(*tree)->left->files->next = NULL;
+	(*tree)->left->files->content = ft_strdup("main.c");
+	(*tree)->left->files->type = INFILE;
+	(*tree)->left->files->next = malloc(sizeof(t_file));
+	(*tree)->left->files->next->content = ft_strdup("eof");
+	(*tree)->left->files->next->type = OUTFILE;
+	(*tree)->left->files->next->next = NULL;
 
 	(*tree)->right = malloc(sizeof(t_tree_token));
 	(*tree)->right->type = CMD_LINE;
@@ -156,21 +196,19 @@ void	pipe_simple_input(t_tree_token **tree)
 
 void	complex_pipe_input(t_tree_token **tree)
 {
-	// Root pipe: connects second PIPE to ls -a
+	// cat < Makefile << eof | rev > outfile6 | ls -al > outfile1
 	(*tree) = malloc(sizeof(t_tree_token));
 	(*tree)->type = PIPE;
 	(*tree)->content = ft_strdup("|");
 	(*tree)->cmd_line = NULL;
 	(*tree)->files = NULL;
 
-	// Left child = inner pipe: cat < makefile | rev > outfile5
 	(*tree)->left = malloc(sizeof(t_tree_token));
 	(*tree)->left->type = PIPE;
 	(*tree)->left->content = ft_strdup("|");
 	(*tree)->left->cmd_line = NULL;
 	(*tree)->left->files = NULL;
 
-	// Left of inner pipe: cat < makefile
 	(*tree)->left->left = malloc(sizeof(t_tree_token));
 	(*tree)->left->left->type = CMD_LINE;
 	(*tree)->left->left->content = ft_strdup("cat");
@@ -182,13 +220,14 @@ void	complex_pipe_input(t_tree_token **tree)
 	(*tree)->left->left->left = NULL;
 	(*tree)->left->left->right = NULL;
 
-	// Input redirection: makefile
 	(*tree)->left->left->files = malloc(sizeof(t_file));
 	(*tree)->left->left->files->content = ft_strdup("Makefile");
 	(*tree)->left->left->files->type = INFILE;
-	(*tree)->left->left->files->next = NULL;
+	(*tree)->left->left->files->next = malloc(sizeof(t_file));
+	(*tree)->left->left->files->next->content = ft_strdup("eof1");
+	(*tree)->left->left->files->next->type = HEREDOC;
+	(*tree)->left->left->files->next->next = NULL;
 
-	// Right of inner pipe: rev > outfile5
 	(*tree)->left->right = malloc(sizeof(t_tree_token));
 	(*tree)->left->right->type = CMD_LINE;
 	(*tree)->left->right->content = ft_strdup("rev");
@@ -200,13 +239,11 @@ void	complex_pipe_input(t_tree_token **tree)
 	(*tree)->left->right->left = NULL;
 	(*tree)->left->right->right = NULL;
 
-	// Output redirection: outfile5
 	(*tree)->left->right->files = malloc(sizeof(t_file));
 	(*tree)->left->right->files->content = ft_strdup("outfile6");
 	(*tree)->left->right->files->type = OUTFILE;
 	(*tree)->left->right->files->next = NULL;
 
-	// Right child of root pipe: ls -a > outfile
 	(*tree)->right = malloc(sizeof(t_tree_token));
 	(*tree)->right->type = CMD_LINE;
 	(*tree)->right->content = ft_strdup("ls -a");
@@ -224,7 +261,6 @@ void	complex_pipe_input(t_tree_token **tree)
 	(*tree)->right->left = NULL;
 	(*tree)->right->right = NULL;
 
-	// Output redirection: outfile
 	(*tree)->right->files = malloc(sizeof(t_file));
 	(*tree)->right->files->content = ft_strdup("outfile1");
 	(*tree)->right->files->type = OUTFILE;

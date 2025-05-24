@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/22 17:36:13 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/24 09:38:40 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ typedef struct s_tree_token
 
 typedef struct s_env
 {
-	char			*env;
-	struct s_env	*next;
+	char			*env_name;
+	char *env_variable;
+	struct s_env *next;
 }					t_env;
 
 typedef struct s_pipe_cmds

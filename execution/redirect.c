@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 18:46:44 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/22 15:34:38 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:12:41 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 int redirect_infile(char *filename)
 {
     int fd;
-
+	
     fd = open(filename, O_RDONLY);
     if (fd == -1)
     {
-        perror("Error opening file");
+        perror("Error opening infile");
 	    return (-1);
     }
     if (dup2(fd, STDIN_FILENO) == -1)
 	{
 		perror("dup2 failed for input redirection");
 		close(fd);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 	close(fd);
 	return (0);
@@ -46,7 +46,7 @@ int	redirect_outfile(char *filename)
 	{
 		perror("dup2 failed for output redirection");
 		close(fd);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 	close(fd);
 	return (0);
@@ -66,7 +66,7 @@ int	redirect_append(char *filename)
 	{
 		perror("dup2 failed for append redirection");
 		close(fd);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 	close(fd);
 	return (0);
@@ -80,22 +80,22 @@ int redirect_io(t_tree_token *token, t_pipes *pipes, t_data *data)
     
     while (file)
     {
-        if (token->files->type == INFILE)
+        if (file->type == INFILE)
 		{
 			if (redirect_infile(file->content) == -1)
 				free_all_exit(data, pipes);
 		}
-        else if (token->files->type == OUTFILE)
+        else if (file->type == OUTFILE)
 		{
 			if (redirect_outfile(file->content) == -1)
 				free_all_exit(data, pipes);
 		}
-		else if (token->files->type == APPEND)
+		else if (file->type == APPEND)
 		{
 			if (redirect_append(file->content) == -1)
 				free_all_exit(data, pipes);
 		}
-        else if (token->files->type == HEREDOC)
+        else if (file->type == HEREDOC)
 		{
 			if (redirect_heredoc(file->content) == -1)
 				free_all_exit(data, pipes);
@@ -107,6 +107,8 @@ int redirect_io(t_tree_token *token, t_pipes *pipes, t_data *data)
     return (0);
 }
 
+
+
 int redirect_one_cmd(t_tree_token *token)
 {
     t_file *file;
@@ -115,22 +117,22 @@ int redirect_one_cmd(t_tree_token *token)
     
     while (file)
     {
-        if (token->files->type == INFILE)
+        if (file->type == INFILE)
 		{
 			if (redirect_infile(file->content) == -1)
 				return (-1);
 		}
-        else if (token->files->type == OUTFILE)
+        else if (file->type == OUTFILE)
 		{
 			if (redirect_outfile(file->content) == -1)
 				return (-1);
 		}
-		else if (token->files->type == APPEND)
+		else if (file->type == APPEND)
 		{
 			if (redirect_append(file->content) == -1)
 				return (-1);
 		}
-        else if (token->files->type == HEREDOC)
+        else if (file->type == HEREDOC)
 		{
 			if (redirect_heredoc(file->content) == -1)
 				return (-1);

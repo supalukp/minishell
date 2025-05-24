@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/22 15:34:14 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/24 12:45:32 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 /*                           init_input (hard code)                           */
 /* -------------------------------------------------------------------------- */
 void		one_cmd(t_tree_token **tree);
+void try_one_cmd(t_tree_token **tree);
 void		pipe_simple_input(t_tree_token **tree);
 void		print_ast(t_tree_token *node);
 void		init_s_main(t_data **data, t_tree_token *tree);
@@ -67,6 +68,7 @@ int			redirect_append(char *filename);
 int			redirect_io(t_tree_token *token, t_pipes *pipes, t_data *data);
 int redirect_one_cmd(t_tree_token *token);
 int redirect_heredoc(char *delimeter);
+char *create_random_filename(void);
 
 /* -------------------------------------------------------------------------- */
 /*                                  build_in                                  */
