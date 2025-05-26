@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/22 14:44:46 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:50:11 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, char **env, t_dat
 	exit_status = 0;
 	close_unused_pipes(i, pipes);
 	setup_inout(i, pipes);
-	redirect_io(cmd_lst->cmd, pipes, data);
+	if (redirect_io(cmd_lst->cmd, pipes, data) == -1)
+	{
+		return (1);
+	}
 	if (is_buildin(cmd_lst->cmd) == true)
 	{
 		exit_status = exec_buildin(cmd_lst->cmd);
@@ -140,9 +143,13 @@ int	process_parent(t_pipes *pipes)
 	while (++i < pipes->process)
 	{
 		if (waitpid(pipes->pid[i], &status, 0) == -1)
-            perror("waitpid failed");
-		else if (WIFEXITED(status))
-            last_exit_status = WEXITSTATUS(status);
+            perror("waitpid");
+		if (WIFEXITED(status))
+			last_exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			last_exit_status = 128 + WTERMSIG(status);
+		else
+			return (EXIT_FAILURE);
 	}
 	if (pipes)
 		free_pipes_struct(pipes);
@@ -174,6 +181,8 @@ int	pipe_multi_process(t_tree_token *tree, char **env, t_data *data)
 			free_pipes_struct(pipes);
 			exit(exit_status);
 		}
+		// if (waitpid(pipes->pid[i], &exit_status, 0) == -1)
+        // 	perror("waitpid");
 		tmp = tmp->next;
 	}
 	last_exit_status = process_parent(pipes);

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:50:16 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/23 10:50:31 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/25 10:59:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ int	ft_echo(t_tree_token *tree)
 	cmd = combine_cmdline(tree->cmd_line);
 	noline_flag = false;
 	i = 1;
-	while (cmd[i] != NULL && strcmp(cmd[i], "-n") == 0)
+	while (cmd[i] != NULL && ft_strcmp(cmd[i], "-n") == 0)
 	{
 		noline_flag = true;
 		i++;
 	}
-	
 	while (cmd[i])
 	{
 		printf("%s", cmd[i]);

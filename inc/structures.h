@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/24 09:38:40 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:52:26 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_tree_token
 	t_type type;             // CMD_LINE
 	t_cmd_element *cmd_line; // linked list of all non file expanded elements
 	t_file			*files;
+	int fd_in;
+	int fd_out;
 	struct s_tree_token *left;  // token "ls -a"
 	struct s_tree_token *right; // NULL
 }					t_tree_token;
@@ -82,6 +84,7 @@ typedef struct s_data
 {
 	t_tree_token	*ast;
 	t_env			*env;
+	int			last_exit;
 }					t_data;
 
 #endif

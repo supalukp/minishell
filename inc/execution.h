@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/24 12:45:32 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:03:39 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ int			redirect_outfile(char *filename);
 int			redirect_append(char *filename);
 int			redirect_io(t_tree_token *token, t_pipes *pipes, t_data *data);
 int redirect_one_cmd(t_tree_token *token);
-int redirect_heredoc(char *delimeter);
+int collect_heredoc_input(char *delimeter);
 char *create_random_filename(void);
+// int redirect_heredoc(int fd_heredoc);
+int redirect_heredoc(char *delimiter);
 
 /* -------------------------------------------------------------------------- */
 /*                                  build_in                                  */

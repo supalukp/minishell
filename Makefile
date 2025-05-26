@@ -39,8 +39,9 @@ INC_DIR = inc
 PARS_DIR = parsing
 EXEC_DIR = execution
 BUILTIN_DIR = builtin
+REDIRECT_DIR = redirect
 ENV_DIR = env
-VPATH = . ${PARS_DIR} ${EXEC_DIR} ${BUILTIN_DIR} ${ENV_DIR}
+VPATH = . ${PARS_DIR} ${EXEC_DIR} ${BUILTIN_DIR} ${ENV_DIR} ${REDIRECT_DIR}
 
 # **************************************************************************** #
 # *********************************HEADERS************************************ #
@@ -61,9 +62,9 @@ FILES = main.c \
 		${EXEC_DIR}/multi_pipe.c \
 		${EXEC_DIR}/pipes_init.c \
 		${EXEC_DIR}/pipes_utils.c \
-		${EXEC_DIR}/redirect.c \
+		${REDIRECT_DIR}/redirect.c \
 		${EXEC_DIR}/error_msg.c \
-		${EXEC_DIR}/heredoc.c \
+		${REDIRECT_DIR}/heredoc.c \
 		${BUILTIN_DIR}/buildin_utils.c \
 		${BUILTIN_DIR}/ft_echo.c \
 		${BUILTIN_DIR}/ft_pwd.c \

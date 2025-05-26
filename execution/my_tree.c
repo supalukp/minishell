@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/24 14:13:36 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:50:22 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void init_s_main(t_data **data, t_tree_token *tree)
 		return;
 	(*data)->ast = tree;
 	(*data)->env = NULL;	
+	(*data)->last_exit = 0;
 }
 
 
@@ -100,6 +101,8 @@ void try_one_cmd(t_tree_token **tree)
 	(*tree) = malloc(sizeof(t_tree_token));
 	(*tree)->type = CMD_LINE;
 	(*tree)->content = ft_strdup("cat -e");
+	(*tree)->fd_in = STDIN_FILENO;
+	(*tree)->fd_out = STDOUT_FILENO;
 	(*tree)->cmd_line = malloc(sizeof(t_cmd_element));
 	(*tree)->cmd_line->content = ft_strdup("cat");
 	(*tree)->cmd_line->quoted = 0;
@@ -109,14 +112,14 @@ void try_one_cmd(t_tree_token **tree)
 	(*tree)->cmd_line->next->type = ARG;
 	(*tree)->cmd_line->next->next = NULL;
 	(*tree)->files = malloc(sizeof(t_file));
-	(*tree)->files->content = ft_strdup("Makefile");
-	(*tree)->files->type = INFILE;
+	(*tree)->files->content = ft_strdup("eof1");
+	(*tree)->files->type = HEREDOC;
 	(*tree)->files->next = malloc(sizeof(t_file));
 	(*tree)->files->next->content = ft_strdup("eof2");
 	(*tree)->files->next->type = HEREDOC;
 	(*tree)->files->next->next = malloc(sizeof(t_file));
-	(*tree)->files->next->next->content = ft_strdup("infile");
-	(*tree)->files->next->next->type = INFILE;
+	(*tree)->files->next->next->content = ft_strdup("ouput");
+	(*tree)->files->next->next->type = OUTFILE;
 	(*tree)->files->next->next->next = NULL; //malloc(sizeof(t_file));
 	// (*tree)->files->next->next->next->content = ft_strdup("eof3");
 	// (*tree)->files->next->next->next->type = HEREDOC;
@@ -129,13 +132,13 @@ void one_cmd(t_tree_token **tree)
 {
 	(*tree) = malloc(sizeof(t_tree_token));
 	(*tree)->type = CMD_LINE;
-	(*tree)->content = ft_strdup("pwd");
+	(*tree)->content = ft_strdup("ls");
 	(*tree)->cmd_line = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->content = ft_strdup("pwd");
+	(*tree)->cmd_line->content = ft_strdup("ls");
 	(*tree)->cmd_line->quoted = 0;
 	(*tree)->cmd_line->type = CMD;
 	(*tree)->cmd_line->next = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->next->content = ft_strdup("l");
+	(*tree)->cmd_line->next->content = ft_strdup("-l");
 	(*tree)->cmd_line->next->type = ARG;
 	(*tree)->cmd_line->next->next = NULL;
 	(*tree)->files = malloc(sizeof(t_file));
@@ -168,11 +171,11 @@ void	pipe_simple_input(t_tree_token **tree)
 	(*tree)->left->left = NULL;
 	(*tree)->left->right = NULL;
 	(*tree)->left->files = malloc(sizeof(t_file));
-	(*tree)->left->files->content = ft_strdup("main.c");
+	(*tree)->left->files->content = ft_strdup("main444.c");
 	(*tree)->left->files->type = INFILE;
 	(*tree)->left->files->next = malloc(sizeof(t_file));
 	(*tree)->left->files->next->content = ft_strdup("eof");
-	(*tree)->left->files->next->type = OUTFILE;
+	(*tree)->left->files->next->type = HEREDOC;
 	(*tree)->left->files->next->next = NULL;
 
 	(*tree)->right = malloc(sizeof(t_tree_token));
@@ -186,7 +189,7 @@ void	pipe_simple_input(t_tree_token **tree)
 	(*tree)->right->left = NULL;
 	(*tree)->right->right = NULL;
 	(*tree)->right->files = malloc(sizeof(t_file));
-	(*tree)->right->files->content = ft_strdup("outfile1");
+	(*tree)->right->files->content = ft_strdup("outfile3");
 	(*tree)->right->files->type = OUTFILE;
 	(*tree)->right->files->next = malloc(sizeof(t_file));
 	(*tree)->right->files->next->content = ft_strdup("outfile2");
