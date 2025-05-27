@@ -6,12 +6,11 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/23 13:48:34 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:16:41 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-
 
 void	ft_lstadd_env_back(t_env **lst, t_env *new)
 {
@@ -72,6 +71,22 @@ t_env *create_env_node(char *env_variable)
 	return (node);
 }
 
+t_env *create_own_env(void)
+{
+    t_env *own_lst;
+
+    own_lst = malloc(sizeof(t_env));
+    if (!own_lst)
+        return (NULL);
+    own_lst->env_name = ft_strdup("PWD");
+    own_lst->env_variable = ft_strdup(getcwd(NULL, 1024));
+    own_lst->next = malloc(sizeof(t_env));
+    own_lst->next->env_name = ft_strdup("SHLVL");
+    own_lst->next->env_variable = ft_strdup("1");
+    own_lst->next->next = NULL;
+    return (own_lst);
+}
+
 t_env *env_init(char **env)
 {
     t_env *env_lst;
@@ -81,8 +96,8 @@ t_env *env_init(char **env)
     tmp = NULL;
     env_lst = NULL;
     i = 0;
-    if (!env)
-        env_lst = NULL; //create_own_env(); // TODO
+    if (!env || !env[0])
+        env_lst = create_own_env(); 
     else
     {
         while (env[i])
