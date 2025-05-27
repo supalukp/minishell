@@ -6,12 +6,11 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/26 15:36:26 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:28:38 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-
 
 int	main_execution(t_tree_token *tree, char **env, t_data *data)
 {
@@ -30,7 +29,7 @@ int	main_execution(t_tree_token *tree, char **env, t_data *data)
 			if (tree->files)
 				if (redirect_one_cmd(tree) == -1)
 					return (1);
-			exit_status = exec_buildin(tree);
+			exit_status = exec_buildin(tree, data);
 		}
 		else if (tree->left == NULL && tree->right == NULL)
 			exit_status = external_single(tree, env);
@@ -111,7 +110,7 @@ int	external_single(t_tree_token *tree, char **env)
 		if (waitpid(pid, &exit_status, 0) == -1)
 		{
 			perror("waitpid");
-			exit (EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 		free_matrix(args);
 		free(paths);
@@ -135,6 +134,8 @@ int	external_cmd_process(t_tree_token *tree, char **env)
 	paths = get_path(args[0], env);
 	if (!paths)
 	{
+		write(2, args[0], ft_strlen(args[0]));
+		write(2, ": command not found\n", 20);
 		free_matrix(args);
 		return (127);
 	}
@@ -142,57 +143,5 @@ int	external_cmd_process(t_tree_token *tree, char **env)
 	perror("execve failed");
 	free_matrix(args);
 	free(paths);
-	exit(1);
+	return(126);
 }
-
-
-// int	pipe_process(t_tree_token *tree, char **env, t_data *data)
-// {
-// 	int		pipefd[2];
-// 	pid_t	pid1;
-// 	pid_t	pid2;
-// 	int		exit_status1;
-// 	int		exit_status2;
-
-// 	if (pipe(pipefd) == -1)
-// 		return (perror("pipe failed"), EXIT_FAILURE);
-// 	if (tree->left->type != PIPE)
-// 	{
-// 		pid1 = fork();
-// 		if (pid1 == -1)
-// 			return (perror("fork failed"), EXIT_FAILURE);
-// 		if (pid1 == 0)
-// 		{
-// 			close(pipefd[0]);
-// 			dup2(pipefd[1], STDOUT_FILENO);
-// 			close(pipefd[1]);
-// 			exit_status1 = main_execution(tree->left, env, data);
-// 			free_program(data);
-// 			exit(exit_status1);
-// 		}
-// 	}
-// 	else
-// 		exit_status1 = main_execution(tree->left, env, data);
-// 	pid2 = fork();
-// 	if (pid2 == -1)
-// 		return (perror("fork"), EXIT_FAILURE);
-// 	if (pid2 == 0)
-// 	{
-// 		close(pipefd[1]);
-// 		dup2(pipefd[0], STDIN_FILENO);
-// 		close(pipefd[0]);
-// 		exit_status2 = main_execution(tree->right, env, data);
-// 		free_program(data);
-// 		exit(exit_status2);
-// 	}
-// 	close(pipefd[0]);
-// 	close(pipefd[1]);
-// 	if (tree->left->type != PIPE)
-// 		waitpid(pid1, NULL, 0);
-// 	waitpid(pid2, &exit_status2, 0);
-// 	if (WIFEXITED(exit_status2))
-// 		return (WEXITSTATUS(exit_status2));
-// 	if (WIFSIGNALED(exit_status2))
-// 		return (128 + WTERMSIG(exit_status2));
-// 	return (EXIT_FAILURE);
-// }

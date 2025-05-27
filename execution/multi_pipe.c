@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/26 16:50:11 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:28:48 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, char **env, t_dat
 	}
 	if (is_buildin(cmd_lst->cmd) == true)
 	{
-		exit_status = exec_buildin(cmd_lst->cmd);
+		exit_status = exec_buildin(cmd_lst->cmd, data);
 		if (data)
 			free_program(data);
 		// if (pipes)

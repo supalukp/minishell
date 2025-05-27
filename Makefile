@@ -68,6 +68,9 @@ FILES = main.c \
 		${BUILTIN_DIR}/buildin_utils.c \
 		${BUILTIN_DIR}/ft_echo.c \
 		${BUILTIN_DIR}/ft_pwd.c \
+		${BUILTIN_DIR}/ft_env.c \
+		${BUILTIN_DIR}/ft_export.c \
+		${BUILTIN_DIR}/ft_export_utils.c \
 		${ENV_DIR}/env_init.c
 
 

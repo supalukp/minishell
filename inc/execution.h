@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/26 17:03:39 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:52:48 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,29 @@
 
 # include "headings.h"
 
+/* -------------------------------------------------------------------------- */
+/*                                     env                                    */
+/* -------------------------------------------------------------------------- */
+void		ft_lstadd_env_back(t_env **lst, t_env *new);
+char		**split_env(char *env);
+t_env		*create_env_node(char *env_variable);
+t_env		*create_own_env(void);
+t_env		*env_init(char **env);
+void		print_env(t_env *lst);
+void		free_env(t_env *env_lst);
 
 /* -------------------------------------------------------------------------- */
 /*                           init_input (hard code)                           */
 /* -------------------------------------------------------------------------- */
 void		one_cmd(t_tree_token **tree);
-void try_one_cmd(t_tree_token **tree);
+void		try_one_cmd(t_tree_token **tree);
 void		pipe_simple_input(t_tree_token **tree);
 void		print_ast(t_tree_token *node);
-void		init_s_main(t_data **data, t_tree_token *tree);
+void		init_s_main(t_data **data, t_tree_token *tree, char **env);
 void		double_pipes_input(t_tree_token **tree);
 void		triple_pipes_input(t_tree_token **tree);
 void		quadruple_pipes_input(t_tree_token **tree);
-void	complex_pipe_input(t_tree_token **tree);
+void		complex_pipe_input(t_tree_token **tree);
 /* -------------------------------------------------------------------------- */
 /*                                  execution                                 */
 /* -------------------------------------------------------------------------- */
@@ -66,20 +76,25 @@ int			redirect_infile(char *filename);
 int			redirect_outfile(char *filename);
 int			redirect_append(char *filename);
 int			redirect_io(t_tree_token *token, t_pipes *pipes, t_data *data);
-int redirect_one_cmd(t_tree_token *token);
-int collect_heredoc_input(char *delimeter);
-char *create_random_filename(void);
+int			redirect_one_cmd(t_tree_token *token);
+int			collect_heredoc_input(char *delimeter);
+char		*create_random_filename(void);
 // int redirect_heredoc(int fd_heredoc);
-int redirect_heredoc(char *delimiter);
+int			redirect_heredoc(char *delimiter);
 
 /* -------------------------------------------------------------------------- */
 /*                                  build_in                                  */
 /* -------------------------------------------------------------------------- */
+int			no_argument(t_tree_token *tree);
 int			ft_strcmp(const char *s1, const char *s2);
 bool		is_buildin(t_tree_token *tree);
-int			exec_buildin(t_tree_token *tree);
+int			exec_buildin(t_tree_token *tree, t_data *data);
 int			ft_echo(t_tree_token *tree);
 int			ft_pwd(t_tree_token *tree);
+int			ft_env(t_tree_token *tree, t_data *data);
+t_env		**ascii_env_lst(t_data *data);
+int			print_export_no_option(t_data *data);
+int			count_env_node(t_env *env_lst);
 
 /* -------------------------------------------------------------------------- */
 /*                                     free                                   */
@@ -92,12 +107,9 @@ void		free_all_exit(t_data *data, t_pipes *pipes);
 /*                                    debug                                   */
 /* -------------------------------------------------------------------------- */
 
-
 /* -------------------------------------------------------------------------- */
 /*                                error message                               */
 /* -------------------------------------------------------------------------- */
-void    print_error_msg(char *error_msg, int errno);
-
-
+void		print_error_msg(char *error_msg, int errno);
 
 #endif

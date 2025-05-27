@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/26 17:50:22 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:25:07 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ void	free_ast(t_tree_token *node)
 }
 
 
-void init_s_main(t_data **data, t_tree_token *tree)
+void init_s_main(t_data **data, t_tree_token *tree, char **env)
 {
 	*data = malloc(sizeof(t_data));
 	if (!*data)
 		return;
 	(*data)->ast = tree;
-	(*data)->env = NULL;	
+	(*data)->env = env_init(env);
 	(*data)->last_exit = 0;
 }
 
@@ -104,11 +104,11 @@ void try_one_cmd(t_tree_token **tree)
 	(*tree)->fd_in = STDIN_FILENO;
 	(*tree)->fd_out = STDOUT_FILENO;
 	(*tree)->cmd_line = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->content = ft_strdup("cat");
+	(*tree)->cmd_line->content = ft_strdup("echo");
 	(*tree)->cmd_line->quoted = 0;
 	(*tree)->cmd_line->type = CMD;
 	(*tree)->cmd_line->next = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->next->content = ft_strdup("-e");
+	(*tree)->cmd_line->next->content = ft_strdup("-n");
 	(*tree)->cmd_line->next->type = ARG;
 	(*tree)->cmd_line->next->next = NULL;
 	(*tree)->files = malloc(sizeof(t_file));
@@ -132,19 +132,24 @@ void one_cmd(t_tree_token **tree)
 {
 	(*tree) = malloc(sizeof(t_tree_token));
 	(*tree)->type = CMD_LINE;
-	(*tree)->content = ft_strdup("ls");
+	(*tree)->content = ft_strdup("echo");
 	(*tree)->cmd_line = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->content = ft_strdup("ls");
+	(*tree)->cmd_line->content = ft_strdup("echo");
 	(*tree)->cmd_line->quoted = 0;
 	(*tree)->cmd_line->type = CMD;
-	(*tree)->cmd_line->next = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->next->content = ft_strdup("-l");
-	(*tree)->cmd_line->next->type = ARG;
-	(*tree)->cmd_line->next->next = NULL;
-	(*tree)->files = malloc(sizeof(t_file));
-	(*tree)->files->content = ft_strdup("outfile4");
-	(*tree)->files->type = OUTFILE;
-	(*tree)->files->next = NULL;
+	(*tree)->cmd_line->next = NULL; //malloc(sizeof(t_cmd_element));
+	// (*tree)->cmd_line->next->content = ft_strdup("-l");
+	// (*tree)->cmd_line->next->type = ARG;
+	// (*tree)->cmd_line->next->next = NULL; //malloc(sizeof(t_cmd_element));
+	// (*tree)->cmd_line->next->next->content = ft_strdup("-nm");
+	// (*tree)->cmd_line->next->next->type = ARG;
+	// (*tree)->cmd_line->next->next->next = malloc(sizeof(t_cmd_element));
+	// (*tree)->cmd_line->next->next->next->content = ft_strdup("hello");
+	// (*tree)->cmd_line->next->next->next->next = NULL;
+	(*tree)->files = NULL; //malloc(sizeof(t_file));
+	// (*tree)->files->content = ft_strdup("outfile4");
+	// (*tree)->files->type = OUTFILE;
+	// (*tree)->files->next = NULL;
 	(*tree)->left = NULL;
 	(*tree)->right = NULL;
 }
@@ -180,16 +185,16 @@ void	pipe_simple_input(t_tree_token **tree)
 
 	(*tree)->right = malloc(sizeof(t_tree_token));
 	(*tree)->right->type = CMD_LINE;
-	(*tree)->right->content = ft_strdup("rev");
+	(*tree)->right->content = ft_strdup("grep");
 	(*tree)->right->cmd_line = malloc(sizeof(t_cmd_element));
-	(*tree)->right->cmd_line->content = ft_strdup("rev");
+	(*tree)->right->cmd_line->content = ft_strdup("grep");
 	(*tree)->right->cmd_line->quoted = 0;
 	(*tree)->right->cmd_line->type = CMD;
 	(*tree)->right->cmd_line->next = NULL;
 	(*tree)->right->left = NULL;
 	(*tree)->right->right = NULL;
 	(*tree)->right->files = malloc(sizeof(t_file));
-	(*tree)->right->files->content = ft_strdup("outfile3");
+	(*tree)->right->files->content = ft_strdup("outfile0");
 	(*tree)->right->files->type = OUTFILE;
 	(*tree)->right->files->next = malloc(sizeof(t_file));
 	(*tree)->right->files->next->content = ft_strdup("outfile2");
