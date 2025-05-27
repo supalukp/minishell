@@ -6,13 +6,31 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:00:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/23 14:07:28 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:57:17 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-// int ft_env(t_data *data)
-// {
-    
-// }
+int ft_env(t_tree_token *tree, t_data *data)
+{
+    // return 125 -> invalid option
+    // return 127 -> invalid argument
+    if (!data->env)
+        return (1);
+    if (!no_argument(tree))
+	{
+		if (tree->cmd_line->next->content[0] == '-')
+		{
+			ft_putstr_fd("env: invalid option\n", 2);
+			return (125);
+		}
+        else
+        {
+            ft_putstr_fd("env: invalid agrument\n", 2);
+			return (127);
+        }
+	}
+    print_env(data->env);
+    return (0);
+}

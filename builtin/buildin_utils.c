@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:22:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/22 10:55:54 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:27:03 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	is_buildin(t_tree_token *tree)
 		return (free_matrix(cmd), false);
 }
 
-int	exec_buildin(t_tree_token *tree)
+int	exec_buildin(t_tree_token *tree, t_data *data)
 {
 	int		exit_status;
 	char	**cmd;
@@ -61,8 +61,8 @@ int	exec_buildin(t_tree_token *tree)
 	//     return (true);
 	// else if (!ft_strcmp(cmd[0], "unset"))
 	//     return (true);
-	// else if (!ft_strcmp(cmd[0], "env"))
-	//     return (true);
+	else if (!ft_strcmp(cmd[0], "env"))
+		exit_status = ft_env(tree, data);
 	// else if (!ft_strcmp(cmd[0], "exit"))
 	//     return (true);
 	else
