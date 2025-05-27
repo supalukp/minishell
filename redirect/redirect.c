@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 18:46:44 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/26 17:46:04 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/27 09:31:42 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int redirect_infile(char *filename)
     fd = open(filename, O_RDONLY);
     if (fd == -1)
     {
-        perror("Error opening infile");
+        perror(filename);
 	    return (-1);
     }
     if (dup2(fd, STDIN_FILENO) == -1)
@@ -39,7 +39,7 @@ int	redirect_outfile(char *filename)
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		perror("Error opening output file");
+		perror(filename);
 		return (-1);
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
@@ -59,7 +59,7 @@ int	redirect_append(char *filename)
 	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		perror("Error opening file for append");
+		perror(filename);
 		return (-1);
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
@@ -71,35 +71,6 @@ int	redirect_append(char *filename)
 	close(fd);
 	return (0);
 }
-
-
-// int redirect_io(t_tree_token *token, t_pipes *pipes, t_data *data)
-// {
-//     t_file *file;
-// 	i
-
-//     file = token->files;
-    
-//     while (file)
-//     {
-//         if (file->type == INFILE)
-// 		{
-// 			redirect_infile(file->content);
-// 		}
-//         else if (file->type == OUTFILE )
-// 			redirect_outfile(file->content);
-// 		else if (file->type == APPEND)
-// 			redirect_append(file->content);
-//         else if (file->type == HEREDOC)
-// 			redirect_heredoc(file->content);
-//         else 
-//             return (-1);
-//         file = file->next;
-//     }
-//     return (0);
-// }
-
-
 
 int redirect_io(t_tree_token *token, t_pipes *pipes, t_data *data)
 {
