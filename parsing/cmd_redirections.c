@@ -6,13 +6,13 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:25:45 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/23 13:40:17 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/28 15:48:53 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int		get_new_redirectionless_str(int index, t_tree_token *cmd_line)
+int		get_new_redirectionless_str(int index, t_tree *cmd_line)
 {
 	int	i;
 	bool word;
@@ -26,7 +26,7 @@ int		get_new_redirectionless_str(int index, t_tree_token *cmd_line)
 	return (i);
 }
 
-void	remove_redirection(int index, t_tree_token *cmd_line)
+void	remove_redirection(int index, t_tree *cmd_line, int *error)
 {
 	int lenrem;
 	char *replacement;
@@ -34,6 +34,12 @@ void	remove_redirection(int index, t_tree_token *cmd_line)
 	
 	lenrem = get_new_redirectionless_str(index, cmd_line);
 	replacement = ft_calloc(ft_strlen(cmd_line->content) - lenrem + 1, sizeof(char));
+	if (!replacement)
+	{
+		free(cmd_line->content);
+		*error = 1;
+		return ; \
+	}
 	i = 0;
 	while (i < index)
 	{
@@ -49,7 +55,7 @@ void	remove_redirection(int index, t_tree_token *cmd_line)
 	cmd_line->content = replacement;
 }
 
-char	*get_redirection_file(int index, char *cmd_line)
+char	*get_redirection_file(int index, char *cmd_line, int *error)
 {
 	int i;
 	int j;
@@ -62,6 +68,11 @@ char	*get_redirection_file(int index, char *cmd_line)
 	while ( cmd_line[i + index] != ' ' && cmd_line[i + index] != '\0')
 		i++;
 	file_name = ft_calloc(i + 1, sizeof(char));
+	if (!file_name)
+	{
+		free(cmd_line);
+		return (*error = 1, NULL); // TODO exit
+	}
 	while (j < i)
 	{
 		file_name[j] = cmd_line[index + j];
@@ -92,24 +103,36 @@ t_type	define_redirection_type(int index, char *cmd_line)
 // OUTFILE, >
 // OUTFILE_APPEND, >>
 
-void	get_redirections(int index, t_tree_token *cmd_line)
+void	get_redirections(int index, t_tree *cmd_line, int *error)
 {
 	int 	i;
 	bool	word;
 	char	*filename;
 	t_type	filetype;
 
+	if (!cmd_line || !cmd_line->content || *error)
+		return;
 	i = index;
 	word = true;
 	filetype = define_redirection_type(i, cmd_line->content);
 	while(is_letters(cmd_line->content[i],"< >"))
 		i++;
-	filename = get_redirection_file(i, cmd_line->content);
-	remove_redirection(index, cmd_line);
-	add_cmd_file(filename, filetype, cmd_line);
+	filename = get_redirection_file(i, cmd_line->content, error);
+	if (!filename)
+	{
+		*error = 1;
+		return;
+	}
+	remove_redirection(index, cmd_line, error);
+	if (*error)
+	{
+		free(filename);
+		return;
+	}
+	add_cmd_file(filename, filetype, cmd_line, error);
 }
 
-void	identify_redirections(t_tree_token *cmd_line)
+void	identify_redirections(t_tree *cmd_line, int *error)
 {
 	size_t	i;
 	bool	s_quote;
@@ -120,6 +143,8 @@ void	identify_redirections(t_tree_token *cmd_line)
 	d_quote = false;
 	while (cmd_line->content[i])
 	{
+		if (*error)
+			return ;
 		if (cmd_line->content[i] == '\'')
 		{
 			if (s_quote == false)
@@ -136,7 +161,9 @@ void	identify_redirections(t_tree_token *cmd_line)
 		}
 		if ((cmd_line->content[i] == '<' || cmd_line->content[i] == '>') && s_quote == false && d_quote == false)
 		{
-			get_redirections(i, cmd_line);
+			get_redirections(i, cmd_line, error);
+			if (*error)
+				return ;
 			i = 0;
 		}
 		else

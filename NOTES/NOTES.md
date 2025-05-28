@@ -29,7 +29,7 @@ typedef struct s_tree_token
 
 typedef struct s_branch
 {
-	t_tree_token		*first_tree_token;
+	t_tree		*first_tree;
 	struct s_branch		*next;
 	int					rank;
 }				t_branch;

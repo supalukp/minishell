@@ -62,7 +62,8 @@ FILES = main.c \
 		${PARS_DIR}/cmd_elements.c \
 		${PARS_DIR}/cmd_ll_files.c \
 		${PARS_DIR}/visual.c \
-        ${EXEC_DIR}/exec.c \
+		${EXEC_DIR}/exec.c \
+		${EXEC_DIR}/clean.c \
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))

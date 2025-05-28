@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:30:04 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/23 17:49:04 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:07:31 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void 	print_cmd_elements(t_cmd_element *cmd_element)
 	printf("*    cmd_element quoted: %d\n", cmd_element->quoted);
 }
 
-void	print_node(t_tree_token *node)
+void	print_node(t_tree *node)
 {
 	t_file *temp_file;
 	t_cmd_element *temp_cmd_element;
@@ -73,7 +73,7 @@ void	print_node(t_tree_token *node)
 	printf("***************************************************\n\n");
 }
 
-void	print_recursive_tree(t_tree_token *node)
+void	print_recursive_tree(t_tree *node)
 {
 	print_node(node);
 	if(node->left)
@@ -86,9 +86,6 @@ void	print_all(t_data *request)
 {
 	printf("********************************************************\n");
 	printf("* REQUEST DATASHEET:\n*\n");
-	printf("* Pipes: %d\n", request->pipes);
-	printf("* Ands: %d\n", request->ands);
-	printf("* Ors: %d\n", request->ors);
 	printf("********************************************************\n\n");
 	print_recursive_tree(request->ast);
 }

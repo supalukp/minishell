@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/22 15:39:35 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/28 15:41:22 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,45 +55,64 @@ t_type	is_operator(char *line)
 	return (INVALID);
 }
 
-t_tree_token *ast_maker(char *substr)
+t_tree *ast_maker(char *substr, int *error)
 {
-	t_tree_token *node;
+	t_tree *node;
 	t_type	operator;
 	
-	if (!substr)
+	if (!substr || *error)
 		return (NULL);
-	node = malloc(sizeof(t_tree_token));
+	node = ft_calloc(1, sizeof(t_tree));
 	if (!node)
-		return (NULL); // TODO = EXIT PROGRAM FUNCTION
-	// TODO need to trim string here
-	ft_memset(node, '\0', sizeof(t_tree_token));
+		return (*error = 1, NULL);
 	operator = is_operator(substr);
 	if (operator != INVALID)
 	{
 		node->content = NULL;
 		node->type = operator;
-		parse_separator(substr, node);
+		parse_separator(substr, node, error);
 	}
 	else if (contains_letter(substr, '('))
 	{
-		remove_parenthesis(&substr);
-		return(ast_maker(substr));
+		free(node);
+		remove_parenthesis(&substr, error);
+		return(ast_maker(substr, error));
 	}
 	else
 	{
 		node->content = ft_strtrim(substr, " ");
+		if (!node->content)
+		{
+			free(node);
+			return (*error = 1, NULL);
+		}
+		if (substr)
+			free(substr);
 		node->type = CMD_LINE;
-		command_line_maker(node);
-		// free(substr);
+		command_line_maker(node, error);
+		if (*error)
+		{
+			free(node);
+			return (NULL);
+		}
 	}
 	return (node);
 }
 
-t_tree_token	*mns_parse(char *line)
+t_tree	*mns_parse(char *line)
 {
-	t_tree_token *request;
+	t_tree	*request;
+	int				error;
 
-	request = ast_maker(line);
+	error = 0;
+	request = ast_maker(line, &error);
+	printf("Error: %d\n", error);
+	if (error)
+	{
+		if (request)
+			clean_recursive_tree(request);
+		return (NULL);
+	}
 	return (request);
 }
 
