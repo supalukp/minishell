@@ -8,7 +8,7 @@
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-CFLAGS += -lreadline
+FLAGS += -fsanitize=address -g
 
 # **************************************************************************** #
 # **********************************COLORS************************************ #
@@ -38,6 +38,8 @@ COLOUR_BRIGHT_CYAN=\033[1;36m
 OBJ_DIR = build
 INC_DIR = inc
 PARS_DIR = parsing
+EXEC_DIR = exec
+VPATH = . ${PARS_DIR} ${EXEC_DIR}
 
 # **************************************************************************** #
 # *********************************HEADERS************************************ #
@@ -52,20 +54,21 @@ HEADERS =	${INC_DIR}/functions.h \
 # **************************************************************************** #
 
 FILES = main.c \
-		# ${PARS_DIR}/sort.c \
-		# ${PARS_DIR}/forward.c \
-		# ${PARS_DIR}/back.c \
-		# ${PARS_DIR}/back_up.c \
-		# ${PARS_DIR}/back_down.c \
-		# ${PARS_DIR}/funct_choice.c \
-		# ${PARS_DIR}/view.c \
-		# ${PARS_DIR}/push.c \
-		# ${PARS_DIR}/rotate.c \
-		# ${PARS_DIR}/swap.c \
-		# ${PARS_DIR}/free.c \
-		# ${PARS_DIR}/optimize_funct.c \
+		${PARS_DIR}/ast_parsing.c \
+		${PARS_DIR}/ast_separator.c \
+		${PARS_DIR}/ast_parenthesis.c \
+		${PARS_DIR}/cmd_line.c \
+		${PARS_DIR}/cmd_redirections.c \
+		${PARS_DIR}/cmd_elements.c \
+		${PARS_DIR}/cmd_ll_files.c \
+		${PARS_DIR}/visual.c \
+		${EXEC_DIR}/exec.c \
+		${EXEC_DIR}/clean.c \
 
-OBJ = ${FILES:$(PARS_DIR)/%.c=$(OBJ_DIR)/%.o}
+
+OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))
+
+# OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # **************************************************************************** #
 # **********************************MAKE************************************** #
@@ -74,31 +77,35 @@ OBJ = ${FILES:$(PARS_DIR)/%.c=$(OBJ_DIR)/%.o}
 all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS) Makefile
-	make -C libft --no-print-directory
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a
+	@make -C libft --no-print-directory
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a -lreadline
 	@echo -n "$(COLOUR_BRIGHT_GREEN)Loading: "
 	@i=1; \
 	while [ $$i -le 25 ]; do \
 		echo -n "█"; \
 		i=$$((i + 1)); \
-		sleep 0.05; \
+		sleep 0.01; \
 	done
 	@echo " 100% $(COLOUR_END)🎆"
 	@echo "🤖$(COLOUR_PURPLE) $(NAME) 🤖         $(COLOUR_GREEN)PROGRAM CREATED ✅$(COLOUR_END)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+build/%.o: %.c $(HEADERS)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	if [ -d "$(OBJ_DIR)" ]; then rm -r $(OBJ_DIR); fi
-	make -C libft clean --no-print-directory
-	rm -f ${OBJ}
+	@make -C libft clean --no-print-directory
+	@rm -f ${OBJ}
 	@echo "🤖 $(COLOUR_PURPLE)$(NAME) 🤖$(COLOUR_CYAN)    EXTRA FILES REMOVED. $(COLOUR_END)🗑️"
 
 fclean: clean
-	make -C libft fclean --no-print-directory
-	rm -f ${NAME}
+	@make -C libft fclean --no-print-directory
+	@rm -f ${NAME}
 	@echo "$(COLOUR_PURPLE)🤖 $(NAME) 🤖 $(COLOUR_RED)     PROGRAM BULLDOZED. $(COLOUR_END)💣"
 
 re: fclean all
