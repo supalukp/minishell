@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/27 17:52:48 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:48:26 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,19 @@ int			ft_env(t_tree_token *tree, t_data *data);
 t_env		**ascii_env_lst(t_data *data);
 int			print_export_no_option(t_data *data);
 int			count_env_node(t_env *env_lst);
+int ft_export(t_tree_token *tree, t_data *data);
+int process_arguments(t_tree_token *tree, t_data *data);
+int process_export(char *args, t_data *data);
+int add_new_variable(char *args, t_data *data);
+int add_value_variable(char *args, t_data *data);
+int is_plus_equal(char *args);
+int not_valid_name(char *args);
+int export_invalid_option(t_cmd_element *args);
+int have_equal(char *str);
+int count_equal(t_cmd_element *args);
+int not_valid_variable(t_tree_token *tree);
+int string_with_equal(char *str);
+char **split_env_plus_equal(char *env);
 
 /* -------------------------------------------------------------------------- */
 /*                                     free                                   */

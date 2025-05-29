@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:22:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/27 11:27:03 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:55:41 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	exec_buildin(t_tree_token *tree, t_data *data)
 	//     return (true);
 	else if (!ft_strcmp(cmd[0], "pwd"))
 		exit_status = ft_pwd(tree);
-	// else if (!ft_strcmp(cmd[0], "export"))
-	//     return (true);
+	else if (!ft_strcmp(cmd[0], "export"))
+		exit_status = ft_export(tree, data);
 	// else if (!ft_strcmp(cmd[0], "unset"))
 	//     return (true);
 	else if (!ft_strcmp(cmd[0], "env"))

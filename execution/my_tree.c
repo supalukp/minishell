@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/27 17:25:07 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:01:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,18 +132,18 @@ void one_cmd(t_tree_token **tree)
 {
 	(*tree) = malloc(sizeof(t_tree_token));
 	(*tree)->type = CMD_LINE;
-	(*tree)->content = ft_strdup("echo");
+	(*tree)->content = ft_strdup("export");
 	(*tree)->cmd_line = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->content = ft_strdup("echo");
+	(*tree)->cmd_line->content = ft_strdup("export");
 	(*tree)->cmd_line->quoted = 0;
 	(*tree)->cmd_line->type = CMD;
-	(*tree)->cmd_line->next = NULL; //malloc(sizeof(t_cmd_element));
-	// (*tree)->cmd_line->next->content = ft_strdup("-l");
-	// (*tree)->cmd_line->next->type = ARG;
-	// (*tree)->cmd_line->next->next = NULL; //malloc(sizeof(t_cmd_element));
-	// (*tree)->cmd_line->next->next->content = ft_strdup("-nm");
-	// (*tree)->cmd_line->next->next->type = ARG;
-	// (*tree)->cmd_line->next->next->next = malloc(sizeof(t_cmd_element));
+	(*tree)->cmd_line->next = malloc(sizeof(t_cmd_element));
+	(*tree)->cmd_line->next->content = ft_strdup("SHLVL=sdsd");
+	(*tree)->cmd_line->next->type = ARG;
+	(*tree)->cmd_line->next->next = malloc(sizeof(t_cmd_element));
+	(*tree)->cmd_line->next->next->content = ft_strdup("-nm");
+	(*tree)->cmd_line->next->next->type = ARG;
+	(*tree)->cmd_line->next->next->next = NULL; // (sizeof(t_cmd_element));
 	// (*tree)->cmd_line->next->next->next->content = ft_strdup("hello");
 	// (*tree)->cmd_line->next->next->next->next = NULL;
 	(*tree)->files = NULL; //malloc(sizeof(t_file));

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/29 12:27:43 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:31:01 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,24 @@ char **split_env(char *env)
         return (NULL);
     res[0] = ft_substr(env, 0, i);
     res[1] = ft_substr(env, i + 1, ft_strlen(env) - i - 1);
+    res[2] = NULL;
+    return (res);
+}
+
+char **split_env_plus_equal(char *env)
+{
+    char **res;
+    int i = 0;
+
+    if (!env)
+        return (NULL);
+    while (env[i] && env[i] != '+')
+        i++;
+    res = malloc(sizeof(char *) * 3);
+    if (!res)
+        return (NULL);
+    res[0] = ft_substr(env, 0, i);
+    res[1] = ft_substr(env, i + 2, ft_strlen(env) - i - 2);
     res[2] = NULL;
     return (res);
 }
