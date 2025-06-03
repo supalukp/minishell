@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:32:16 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 14:39:18 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:12:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ int	not_valid_name(char *args)
 	return (flag);
 }
 
-int	export_invalid_option(t_cmd_element *args)
+int	invalid_option(t_cmd_element *args, char *function)
 {
 	if (args->content[0] == '-')
 	{
-		ft_putstr_fd("export: invalid option\n", 2);
+		ft_putstr_fd(function, 2);
+		ft_putstr_fd(": invalid option\n", 2);
 		return (1);
 	}
 	return (0);

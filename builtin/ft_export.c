@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:34:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 14:37:54 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:23:16 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,20 @@ int	process_arguments(t_tree_token *tree, t_data *data)
 
 	flag = 0;
 	args = tree->cmd_line->next;
+    if (invalid_option(args, "export"))
+		return (2);
 	while (args)
 	{
-		if (export_invalid_option(args))
-			return (2);
-		else if (have_equal(args->content))
-			flag = create_key_value(args, data);
+		if (have_equal(args->content))
+        {
+            if (create_key_value(args, data))
+                flag = 1;
+        }
 		else
-			flag = create_only_key(args, data);
+        {
+            if (create_only_key(args, data))
+                flag = 1;
+        }
 		args = args->next;
 	}
 	return (flag);

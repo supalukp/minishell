@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 14:12:19 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:23:32 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,10 +138,10 @@ void one_cmd(t_tree_token **tree)
 	(*tree)->cmd_line->quoted = 0;
 	(*tree)->cmd_line->type = CMD;
 	(*tree)->cmd_line->next = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->next->content = ft_strdup("ROSE");
+	(*tree)->cmd_line->next->content = ft_strdup("ROSE-s");
 	(*tree)->cmd_line->next->type = ARG;
 	(*tree)->cmd_line->next->next = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->next->next->content = ft_strdup("SHLVL+=hello");
+	(*tree)->cmd_line->next->next->content = ft_strdup("ROSE");
 	(*tree)->cmd_line->next->next->type = ARG;
 	(*tree)->cmd_line->next->next->next = malloc(sizeof(t_cmd_element));
 	(*tree)->cmd_line->next->next->next->content = ft_strdup("SANDY=hello");

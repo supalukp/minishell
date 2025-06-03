@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 14:37:24 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:12:47 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int			create_key_value(t_cmd_element *args, t_data *data);
 int			process_export(char *args, t_data *data);
 int			not_valid_identifier(void);
 int			not_valid_name(char *args);
-int			export_invalid_option(t_cmd_element *args);
+int	invalid_option(t_cmd_element *args, char *function);
 int			have_equal(char *str);
 int			is_plus_equal(char *args);
 void		sort_env_lst(int count_env, t_env **env_lst);
