@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 15:12:47 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:47:22 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ int			process_arguments(t_tree_token *tree, t_data *data);
 int			create_only_key(t_cmd_element *args, t_data *data);
 int			create_key_value(t_cmd_element *args, t_data *data);
 int			process_export(char *args, t_data *data);
-int			not_valid_identifier(void);
-int			not_valid_name(char *args);
+int	not_valid_identifier(char *function);
+int	not_valid_name(char *args, char *function);
 int	invalid_option(t_cmd_element *args, char *function);
 int			have_equal(char *str);
 int			is_plus_equal(char *args);
@@ -114,7 +114,9 @@ int			add_new_variable(char *args, t_data *data);
 int			is_exist_variable(char *args, t_data *data);
 int			change_value_variable(char *args, t_data *data);
 char		**split_env_plus_equal(char *env);
-
+int unset_variable(char *key, t_data *data);
+int unset_process(t_tree_token *tree, t_data *data);
+int ft_unset(t_tree_token *tree, t_data *data);
 /* -------------------------------------------------------------------------- */
 /*                                     free                                   */
 /* -------------------------------------------------------------------------- */

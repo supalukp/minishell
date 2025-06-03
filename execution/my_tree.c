@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 15:23:32 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:54:37 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,18 +134,18 @@ void one_cmd(t_tree_token **tree)
 	(*tree)->type = CMD_LINE;
 	(*tree)->content = ft_strdup("export");
 	(*tree)->cmd_line = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->content = ft_strdup("export");
+	(*tree)->cmd_line->content = ft_strdup("unset");
 	(*tree)->cmd_line->quoted = 0;
 	(*tree)->cmd_line->type = CMD;
 	(*tree)->cmd_line->next = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->next->content = ft_strdup("ROSE-s");
+	(*tree)->cmd_line->next->content = ft_strdup("2Hello");
 	(*tree)->cmd_line->next->type = ARG;
-	(*tree)->cmd_line->next->next = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->next->next->content = ft_strdup("ROSE");
-	(*tree)->cmd_line->next->next->type = ARG;
-	(*tree)->cmd_line->next->next->next = malloc(sizeof(t_cmd_element));
-	(*tree)->cmd_line->next->next->next->content = ft_strdup("SANDY=hello");
-	(*tree)->cmd_line->next->next->next->next = NULL;
+	(*tree)->cmd_line->next->next = NULL; //malloc(sizeof(t_cmd_element));
+	// (*tree)->cmd_line->next->next->content = ft_strdup("ROSE");
+	// (*tree)->cmd_line->next->next->type = ARG;
+	// (*tree)->cmd_line->next->next->next = malloc(sizeof(t_cmd_element));
+	// (*tree)->cmd_line->next->next->next->content = ft_strdup("SANDY=hello");
+	// (*tree)->cmd_line->next->next->next->next = NULL;
 	(*tree)->files = NULL; //malloc(sizeof(t_file));
 	// (*tree)->files->content = ft_strdup("outfile4");
 	// (*tree)->files->type = OUTFILE;

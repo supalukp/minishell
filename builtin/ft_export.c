@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:34:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 15:23:16 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:39:38 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	create_key_value(t_cmd_element *args, t_data *data)
 	flag = 0;
 	if (have_equal(args->content))
 	{
-		if (not_valid_name(args->content))
+		if (not_valid_name(args->content, "export"))
 			flag = 1;
 		else
 			flag = process_export(args->content, data);
@@ -53,7 +53,7 @@ int	create_only_key(t_cmd_element *args, t_data *data)
 	int	flag;
 
 	flag = 0;
-	if (not_valid_name(args->content))
+	if (not_valid_name(args->content, "export"))
 		flag = 1;
 	else
 		flag = create_new_variable(args->content, data);
