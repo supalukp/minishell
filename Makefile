@@ -65,7 +65,7 @@ FILES = main.c \
 		${REDIRECT_DIR}/redirect.c \
 		${EXEC_DIR}/error_msg.c \
 		${REDIRECT_DIR}/heredoc.c \
-		${BUILTIN_DIR}/buildin_utils.c \
+		${BUILTIN_DIR}/builtin_utils.c \
 		${BUILTIN_DIR}/ft_echo.c \
 		${BUILTIN_DIR}/ft_pwd.c \
 		${BUILTIN_DIR}/ft_env.c \

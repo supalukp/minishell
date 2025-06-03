@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 14:06:48 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:52:08 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,15 @@ t_env *create_own_env(void)
     own_lst = malloc(sizeof(t_env));
     if (!own_lst)
         return (NULL);
-    own_lst->env_name = ft_strdup("PWD");
-    own_lst->env_variable = ft_strdup(getcwd(NULL, 1024));
+    own_lst->env_name = ft_strdup("OLDPWD");
+    own_lst->env_variable = NULL;
     own_lst->next = malloc(sizeof(t_env));
-    own_lst->next->env_name = ft_strdup("SHLVL");
-    own_lst->next->env_variable = ft_strdup("1");
-    own_lst->next->next = NULL;
+    own_lst->next->env_name = ft_strdup("PWD");
+    own_lst->next->env_variable = ft_strdup(getcwd(NULL, 1024));
+    own_lst->next->next = malloc(sizeof(t_env));
+    own_lst->next->next->env_name = ft_strdup("SHLVL");
+    own_lst->next->next->env_variable = ft_strdup("1");
+    own_lst->next->next->next = NULL;
     return (own_lst);
 }
 
