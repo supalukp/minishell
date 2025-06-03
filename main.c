@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:08:47 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/29 17:08:31 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:22:49 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int ac, char **av, char **env)
 	printf("exit = %d\n", data->last_exit);
 
 	print_env(data->env);
+	print_export_no_option(data);
 	// while (str[i])
     // {
     //     if (str[i+1] != NULL && ft_strcmp(str[i], str[i + 1]) > 0)

@@ -71,6 +71,9 @@ FILES = main.c \
 		${BUILTIN_DIR}/ft_env.c \
 		${BUILTIN_DIR}/ft_export.c \
 		${BUILTIN_DIR}/ft_export_utils.c \
+		${BUILTIN_DIR}/ft_export_no_args.c \
+		${BUILTIN_DIR}/ft_export_valid_key.c \
+		${BUILTIN_DIR}/ft_export_modify_lst.c \
 		${ENV_DIR}/env_init.c
 
 

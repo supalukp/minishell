@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/29 17:31:01 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:06:48 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,13 @@ void print_env(t_env *lst)
 {
     while (lst)
     {
-        printf("%s=%s\n", lst->env_name, lst->env_variable);
-        lst = lst->next;
+        if (lst->env_variable == NULL)
+            lst = lst->next;
+        else
+        {
+            printf("%s=%s\n", lst->env_name, lst->env_variable);
+            lst = lst->next;
+        }
     }
 }
 
@@ -146,9 +151,12 @@ void free_env(t_env *env_lst)
 	while (env_lst)
 	{
 		tmp = env_lst->next;
-        free(env_lst->env_name);
-        free(env_lst->env_variable);
-		free(env_lst);
+        if (env_lst->env_name)
+            free(env_lst->env_name);
+        if (env_lst->env_variable)
+            free(env_lst->env_variable);
+        if (env_lst)
+		    free(env_lst);
 		env_lst = tmp;
 	}
 }
