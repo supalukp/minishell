@@ -6,89 +6,110 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/04/23 10:41:53 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:09:53 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/headings.h"
 
-void execute_buidin(t_branch *branch);
-void each_branch_execute(t_branch *branch);
-void execute_external(t_branch *branch);
-
-void main_execution(t_program *prog)
+int	main_execution(t_tree *tree, t_data *data)
 {
-    t_branch *branch;
+	int	exit_status;
 
-    branch = prog->first_branch;
-    while (branch)
-    {
-        each_branch_execute(branch);
-        branch = branch->next;
-    }
+	exit_status = 0;
+	if (!tree)
+		return (0);
+	if (tree->type == PIPE)
+		exit_status = pipe_multi_process(tree, data);
+	else if (tree->type == AND)
+	{
+		exit_status = main_execution(tree->left, data);
+		if (exit_status == 0)
+			exit_status = main_execution(tree->right, data);
+	}
+	else if (tree->type == OR)
+	{
+		exit_status = main_execution(tree->left, data);
+		if (exit_status != 0)
+			exit_status = main_execution(tree->right, data);
+	}
+	else if (tree->type == CMD_LINE)
+	{
+		if (is_buildin(tree) == true)
+		{
+			if (tree->files)
+				if (redirect_one_cmd(tree) == -1)
+					return (1);
+			exit_status = exec_buildin(tree, data);
+		}
+		else if (tree->left == NULL && tree->right == NULL)
+			exit_status = external_single(tree, data);
+		else
+			exit_status = external_cmd_process(tree, data);
+	}
+	return (exit_status);
 }
 
-void each_branch_execute(t_branch *branch)
+int	count_cmd_element(t_cmd_element *args)
 {
-    // Create pipe
+	t_cmd_element	*tmp;
+	int				count;
 
-    // Handle Redirection
-
-    // Check if it's build in
-    if (is_buildin(branch->first_token))
-    {
-        execute_buildin(branch);
-    }
-    else
-    {
-        execute_external(branch);
-    }
+	count = 0;
+	tmp = args;
+	while (tmp)
+	{
+		count++;
+		tmp = tmp->next;
+	}
+	return (count);
 }
 
-void execute_buidin(t_branch *branch)
+char	**combine_cmdline(t_cmd_element *args)
 {
-    char *cmd;
-    int exit_status;
-    
-    exit_status = 1;
-    cmd = branch->first_token;
-    if (!ft_strcmp(cmd, "echo"))
-        exit_status = ft_echo(); 
-    else if (!ft_strcmp(cmd, "cd"))
-        exit_status = ft_cd();
-    else if (!ft_strcmp(cmd, "pwd"))
-        exit_status = ft_pwd();
-    else if (!ft_strcmp(cmd, "export"))
-        exit_status = ft_export();
-    else if (!ft_strcmp(cmd, "unset"))
-        exit_status = ft_unset();
-    else if (!ft_strcmp(cmd, "export"))
-        exit_status = ft_export();
-    else if (!ft_strcmp(cmd, "unset"))
-        exit_status = ft_unset();
-    else if (!ft_strcmp(cmd, "env"))
-        exit_status = ft_env();
-    else if (!ft_strcmp(cmd, "exit"))
-        exit_status = ft_exit();
-    return (exit_status);
+	char			**res;
+	int				count;
+	int				i;
+	t_cmd_element	*tmp;
+
+	count = count_cmd_element(args);
+	res = malloc(sizeof(char *) * (count + 1));
+	i = 0;
+	tmp = args;
+	while (tmp)
+	{
+		res[i] = ft_strdup(tmp->content);
+		if (!res[i])
+		{
+			while (i--)
+				free(res[i]);
+			free(res);
+			return (NULL);
+		}
+		tmp = tmp->next;
+		i++;
+	}
+	res[i] = NULL;
+	return (res);
 }
 
-void execute_external(t_branch *branch)
+int	external_cmd_process(t_tree *tree, t_data *data)
 {
-    /*
-        // Fork 
-        
-        // In child process
-        if (pid == 0)
-        {
-            //Child Process
-            execve();
-        }
-        else
-        {
-            //Parent Process
-            waitpid(); // Wait child
-        }
-    */
-}
+	char	**args;
+	char	*paths;
+	char 	**minishell_env;
 
+	args = combine_cmdline(tree->cmd_line);
+	if (!args)
+		return (1);
+	minishell_env = convert_env_lst_double_arrays(data->env);
+	paths = get_path(args[0], minishell_env);
+	if (!paths)
+		return (free_matrix(minishell_env), free_program(data), command_not_found(args));
+	execve(paths, args, minishell_env);
+	perror("execve failed");
+	free_matrix(minishell_env);
+	free_matrix(args);
+	free(paths);
+	return (126);
+}

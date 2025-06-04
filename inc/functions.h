@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/28 15:44:20 by syukna           ###   ########.fr       */
+/*   Created: 2025/06/04 14:52:02 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/06/04 14:53:42 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FUNCTIONS_H
 # define FUNCTIONS_H
 
+# include "../inc/headings.h"
 # include "headings.h"
 # include "structures.h"
 

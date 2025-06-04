@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_redirections.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:25:45 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/28 15:48:53 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:10:21 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_type	define_redirection_type(int index, char *cmd_line)
 	if (cmd_line[index] == '>')
 	{
 		if (cmd_line[index + 1] == '>')
-			return (OUTFILE_APPEND);
+			return (APPEND);
 		return (OUTFILE);
 	}
 	return (INVALID);

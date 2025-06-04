@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:11 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/28 15:41:22 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:12:44 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	clean_node(t_tree *node)
 {
 	if (node->cmd_line)
 		clean_cmd_line(node->cmd_line);
-	if (node->redirections)
-		clean_redirections(node->redirections);
+	if (node->files)
+		clean_redirections(node->files);
 	// if (node->)
 	free(node);
 }

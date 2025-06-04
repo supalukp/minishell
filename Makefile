@@ -38,14 +38,17 @@ COLOUR_BRIGHT_CYAN=\033[1;36m
 OBJ_DIR = build
 INC_DIR = inc
 PARS_DIR = parsing
-EXEC_DIR = exec
-VPATH = . ${PARS_DIR} ${EXEC_DIR}
+EXEC_DIR = execution
+BUILTIN_DIR = builtin
+REDIRECT_DIR = redirect
+ENV_DIR = env
+VPATH = . ${PARS_DIR} ${EXEC_DIR} ${BUILTIN_DIR} ${ENV_DIR} ${REDIRECT_DIR}
 
 # **************************************************************************** #
 # *********************************HEADERS************************************ #
 # **************************************************************************** #
 
-HEADERS =	${INC_DIR}/functions.h \
+HEADERS =	${INC_DIR}/execution.h \
 			${INC_DIR}/headings.h \
 			${INC_DIR}/structures.h \
 
@@ -62,8 +65,31 @@ FILES = main.c \
 		${PARS_DIR}/cmd_elements.c \
 		${PARS_DIR}/cmd_ll_files.c \
 		${PARS_DIR}/visual.c \
-		${EXEC_DIR}/exec.c \
-		${EXEC_DIR}/clean.c \
+		${EXEC_DIR}/my_tree.c \
+		${EXEC_DIR}/execution.c \
+		${EXEC_DIR}/exec_utils.c \
+		${EXEC_DIR}/multi_pipe.c \
+		${EXEC_DIR}/pipes_init.c \
+		${EXEC_DIR}/pipes_utils.c \
+		${EXEC_DIR}/single_cmd.c \
+		${EXEC_DIR}/set_io.c \
+		${EXEC_DIR}/pipes_cmd_lst.c \
+		${REDIRECT_DIR}/redirect.c \
+		${EXEC_DIR}/error_msg.c \
+		${REDIRECT_DIR}/heredoc.c \
+		${BUILTIN_DIR}/builtin_utils.c \
+		${BUILTIN_DIR}/ft_echo.c \
+		${BUILTIN_DIR}/ft_pwd.c \
+		${BUILTIN_DIR}/ft_env.c \
+		${BUILTIN_DIR}/ft_export.c \
+		${BUILTIN_DIR}/ft_export_utils.c \
+		${BUILTIN_DIR}/ft_export_no_args.c \
+		${BUILTIN_DIR}/ft_export_valid_key.c \
+		${BUILTIN_DIR}/ft_export_modify_lst.c \
+		${BUILTIN_DIR}/ft_unset.c \
+		${ENV_DIR}/env_init.c \
+		${ENV_DIR}/env_utils.c \
+		${ENV_DIR}/env_convert.c
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))
@@ -95,6 +121,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 
 build/%.o: %.c $(HEADERS)
 	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/%.o: %.c $(HEADERS)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

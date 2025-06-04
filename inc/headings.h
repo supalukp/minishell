@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   headings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:37 by syukna            #+#    #+#             */
-/*   Updated: 2025/04/30 10:57:12 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/04 14:29:33 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,25 @@
 # define HEADINGS_H
 
 /* ************************************************************************** */
+/* ***************************EXTERNAL LIBRARIES***************************** */
+/* ************************************************************************** */
+
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <stdbool.h>
+# include <stdio.h>
+#include <errno.h>
+# include <fcntl.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+/* ************************************************************************** */
 /* ***************************INTERNAL LIBRARIES***************************** */
 /* ************************************************************************** */
 
 # include "../libft/libft.h"
-# include "functions.h"
 # include "structures.h"
-
-/* ************************************************************************** */
-/* ***************************EXTERNAL LIBRARIES***************************** */
-/* ************************************************************************** */
-
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "execution.h"
 
 #endif

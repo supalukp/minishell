@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:26:48 by syukna            #+#    #+#             */
-/*   Updated: 2024/11/25 19:20:04 by syukna           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:02:38 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ char	*ft_strnstr(const char *str, const char *str_tofind, size_t n)
 	size_t	i;
 	size_t	j;
 	size_t	tofilen;
-	size_t	strlen;
 
 	if (!str_tofind[0])
 		return ((char *)str);
 	tofilen = ft_strlen(str_tofind);
-	strlen = ft_strlen(str);
 	if (tofilen > n)
 		return (NULL);
 	i = 0;

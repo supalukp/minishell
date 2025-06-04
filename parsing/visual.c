@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visual.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:30:04 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/28 16:07:31 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:13:52 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	print_node(t_tree *node)
 		}
 		print_cmd_elements(temp_cmd_element);
 	}
-	if (node->redirections)
+	if (node->files)
 	{
 		printf("*\n* FILES:\n");
-		temp_file = node->redirections;
+		temp_file = node->files;
 		while(temp_file->next)
 		{
 			print_files(temp_file);

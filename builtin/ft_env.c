@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_ll_files.c                                     :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 16:28:09 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/04 15:13:24 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/05/23 14:00:22 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/06/04 15:15:15 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	add_cmd_file(char *ctt, t_type type, t_tree *ln, int *error)
+int	ft_env(t_tree *tree, t_data *data)
 {
-	t_file *file;
-	t_file *temp_file;
-	
-	file = ft_calloc(1, sizeof(t_file));
-	if (!file)
+	if (!data->env)
+		return (1);
+	if (!no_argument(tree))
 	{
-		*error = 1;
-		free (ctt);
-		return ;
+		if (tree->cmd_line->next->content[0] == '-')
+		{
+			ft_putstr_fd("env: invalid option\n", 2);
+			return (125);
+		}
+		else
+		{
+			ft_putstr_fd("env: invalid agrument\n", 2);
+			return (127);
+		}
 	}
-	file->content = ctt;
-	file->type = type;
-	file->next = NULL;
-	if (!ln->files)
-		ln->files = file;
-	else
-	{
-		temp_file = ln->files;
-		while (temp_file->next)
-			temp_file = temp_file->next;
-		temp_file->next = file;
-	}	
+	print_env(data->env);
+	return (0);
 }
