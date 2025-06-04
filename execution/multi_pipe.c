@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 11:45:07 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:09:24 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	close_unused_pipes(int i, t_pipes *pipes)
 	}
 }
 
-int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, char **env,
-		t_data *data)
+int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, t_data *data)
 {
 	int	exit_status;
 
@@ -46,7 +45,7 @@ int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, char **env,
 			free_program(data);
 	}
 	else if (cmd_lst->cmd->type == CMD_LINE)
-		exit_status = external_cmd_process(cmd_lst->cmd, env, data);
+		exit_status = external_cmd_process(cmd_lst->cmd, data);
 	return (exit_status);
 }
 
@@ -78,7 +77,7 @@ int	process_parent(t_pipes *pipes)
 	return (last_exit_status);
 }
 
-int	pipe_multi_process(t_tree_token *tree, char **env, t_data *data)
+int	pipe_multi_process(t_tree_token *tree, t_data *data)
 {
 	t_pipes		*pipes;
 	t_pipe_cmds	*tmp;
@@ -103,7 +102,7 @@ int	pipe_multi_process(t_tree_token *tree, char **env, t_data *data)
 		}
 		if (pipes->pid[i] == 0)
 		{
-			exit_status = process_child(i, pipes, tmp, env, data);
+			exit_status = process_child(i, pipes, tmp, data);
 			free_pipes_struct(pipes);
 			exit(exit_status);
 		}

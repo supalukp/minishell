@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 12:09:07 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:59:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void and_two_cmd(t_tree_token **tree)
 {
 	(*tree) = malloc(sizeof(t_tree_token));
 	(*tree)->type = AND;
-	(*tree)->content = ft_strdup("&&");
+	(*tree)->content = ft_strdup("");
 	(*tree)->cmd_line = NULL;
 	(*tree)->files = NULL;
 	(*tree)->left = malloc(sizeof(t_tree_token));
@@ -176,12 +176,12 @@ void and_two_cmd(t_tree_token **tree)
 	(*tree)->right->type = CMD_LINE;
 	(*tree)->right->content = ft_strdup("echo");
 	(*tree)->right->cmd_line = malloc(sizeof(t_cmd_element));
-	(*tree)->right->cmd_line->content = ft_strdup("echo");
+	(*tree)->right->cmd_line->content = ft_strdup("env");
 	// (*tree)->right->cmd_line->quoted = 0;
 	(*tree)->right->cmd_line->type = CMD;
-	(*tree)->right->cmd_line->next = malloc(sizeof(t_cmd_element));
-	(*tree)->right->cmd_line->next->content = ft_strdup("hello");
-	(*tree)->right->cmd_line->next->next = NULL;
+	(*tree)->right->cmd_line->next = NULL; //malloc(sizeof(t_cmd_element));
+	// (*tree)->right->cmd_line->next->content = ft_strdup("sdsds");
+	// (*tree)->right->cmd_line->next->next = NULL;
 	(*tree)->right->left = NULL;
 	(*tree)->right->right = NULL;
 	(*tree)->right->files = NULL;

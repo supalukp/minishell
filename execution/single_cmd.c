@@ -6,18 +6,19 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 11:10:34 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:56:54 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	external_single(t_tree_token *tree, char **env)
+int	external_single(t_tree_token *tree, t_data *data)
 {
 	pid_t	pid;
 	int		exit_status;
 	char	**args;
 	char	*paths;
+	char 	**minishell_env;
 
 	exit_status = 0;
 	if (tree->files)
@@ -26,24 +27,27 @@ int	external_single(t_tree_token *tree, char **env)
 	args = combine_cmdline(tree->cmd_line);
 	if (!args)
 		return (1);
-	paths = get_path(args[0], env);
+	minishell_env = convert_env_lst_double_arrays(data->env);
+	paths = get_path(args[0], minishell_env);
 	if (!paths)
-		return (command_not_found(args));
+		return (free_matrix(minishell_env), command_not_found(args));
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork failed");
-		return (free_matrix(args), free(paths), 128 + errno);
+		return (free_matrix(minishell_env), free_matrix(args), free(paths), 128 + errno);
 	}
 	if (pid == 0)
-		child_execution(paths, args, env);
+		child_execution(paths, args, minishell_env);
+	free_matrix(minishell_env);
 	return (wait_and_clean(exit_status, pid, args, paths));
 }
 
-void	child_execution(char *paths, char **args, char **env)
+void	child_execution(char *paths, char **args, char **minishell_env)
 {
-	execve(paths, args, env);
+	execve(paths, args, minishell_env);
 	perror("execve failed");
+	free_matrix(minishell_env);
 	free_matrix(args);
 	free(paths);
 	exit(126);

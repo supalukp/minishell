@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 12:15:22 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:10:34 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_env		*env_init(char **env);
 void		print_env(t_env *lst);
 void		free_env(t_env *env_lst);
 t_env		*create_single_node(char *env_name, char *env_variable);
+char		*join_key_value(t_env *env_node);
+char	**convert_env_lst_double_arrays(t_env *env_lst);
 
 /* -------------------------------------------------------------------------- */
 /*                           init_input (hard code)                           */
@@ -47,9 +49,10 @@ char		*find_executable(char **all_path, char *command);
 char		*get_path(char *command, char **envp);
 void		free_matrix(char **matrix);
 char		**combine_cmdline(t_cmd_element *args);
-int			main_execution(t_tree_token *tree, char **env, t_data *data);
-int			external_single(t_tree_token *tree, char **env);
-int			external_cmd_process(t_tree_token *tree, char **env, t_data *data);
+int			main_execution(t_tree_token *tree,  t_data *data);
+int			external_single(t_tree_token *tree, t_data *data);
+// int			external_single(t_tree_token *tree, char **env);
+int			external_cmd_process(t_tree_token *tree, t_data *data);
 int			pipe_process(t_tree_token *tree, char **env, t_data *data);
 int			command_not_found(char **args);
 void		child_execution(char *paths, char **args, char **env);
@@ -76,9 +79,8 @@ t_pipes		*init_pipes(t_tree_token *tree);
 void		create_pipes(t_pipes *pipes);
 void		free_double_array(int **double_array);
 int			process_parent(t_pipes *pipes);
-int			pipe_multi_process(t_tree_token *tree, char **env, t_data *data);
-int			process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst,
-				char **env, t_data *data);
+int			pipe_multi_process(t_tree_token *tree, t_data *data);
+int			process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, t_data *data);
 void		free_pipes_struct(t_pipes *pipes);
 
 int			redirect_infile(char *filename);

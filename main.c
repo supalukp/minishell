@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:08:47 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 12:02:53 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:10:43 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ int	main(int ac, char **av, char **env)
 	// print_env(test);
 
 	// Execution
-	data->last_exit = main_execution(tree, env, data);
+	data->last_exit = main_execution(tree,  data);
 	printf("exit = %d\n", data->last_exit);
 
-	// print_env(data->env);
+	print_env(data->env);
 	// char **res = convert_env_lst_double_arrays(data->env);
 	// int i = 0;
 	// while (res[i])

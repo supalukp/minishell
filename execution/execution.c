@@ -6,13 +6,13 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 12:00:10 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:10:16 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	main_execution(t_tree_token *tree, char **env, t_data *data)
+int	main_execution(t_tree_token *tree, t_data *data)
 {
 	int	exit_status;
 
@@ -20,18 +20,18 @@ int	main_execution(t_tree_token *tree, char **env, t_data *data)
 	if (!tree)
 		return (0);
 	if (tree->type == PIPE)
-		exit_status = pipe_multi_process(tree, env, data);
+		exit_status = pipe_multi_process(tree, data);
 	else if (tree->type == AND)
 	{
-		exit_status = main_execution(tree->left, env, data);
+		exit_status = main_execution(tree->left, data);
 		if (exit_status == 0)
-			exit_status = main_execution(tree->right, env, data);
+			exit_status = main_execution(tree->right, data);
 	}
 	else if (tree->type == OR)
 	{
-		exit_status = main_execution(tree->left, env, data);
+		exit_status = main_execution(tree->left, data);
 		if (exit_status != 0)
-			exit_status = main_execution(tree->right, env, data);
+			exit_status = main_execution(tree->right, data);
 	}
 	else if (tree->type == CMD_LINE)
 	{
@@ -43,9 +43,9 @@ int	main_execution(t_tree_token *tree, char **env, t_data *data)
 			exit_status = exec_buildin(tree, data);
 		}
 		else if (tree->left == NULL && tree->right == NULL)
-			exit_status = external_single(tree, env);
+			exit_status = external_single(tree, data);
 		else
-			exit_status = external_cmd_process(tree, env, data);
+			exit_status = external_cmd_process(tree, data);
 	}
 	return (exit_status);
 }
@@ -93,19 +93,22 @@ char	**combine_cmdline(t_cmd_element *args)
 	return (res);
 }
 
-int	external_cmd_process(t_tree_token *tree, char **env, t_data *data)
+int	external_cmd_process(t_tree_token *tree, t_data *data)
 {
 	char	**args;
 	char	*paths;
+	char 	**minishell_env;
 
 	args = combine_cmdline(tree->cmd_line);
 	if (!args)
 		return (1);
-	paths = get_path(args[0], env);
+	minishell_env = convert_env_lst_double_arrays(data->env);
+	paths = get_path(args[0], minishell_env);
 	if (!paths)
-		return (free_program(data), command_not_found(args));
-	execve(paths, args, env);
+		return (free_matrix(minishell_env), free_program(data), command_not_found(args));
+	execve(paths, args, minishell_env);
 	perror("execve failed");
+	free_matrix(minishell_env);
 	free_matrix(args);
 	free(paths);
 	return (126);
