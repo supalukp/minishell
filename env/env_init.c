@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 12:18:50 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:04:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,28 +67,26 @@ t_env	*create_single_node(char *env_name, char *env_variable)
 
 t_env	*create_own_env(void)
 {
-	t_env	*old_lst;
-	t_env	*pwd_lst;
-	t_env	*shlvl_lst;
+	t_env	*own_lst;
 
-	old_lst = create_single_node("OLDPWD", NULL);
-	if (!old_lst)
-		return (NULL);
-	pwd_lst = create_single_node("PWD", getcwd(NULL, 0));
-	if (!pwd_lst)
-	{
-		free_env(old_lst);
-		return (NULL);
-	}
-	ft_lstadd_env_back(&old_lst, pwd_lst);
-	shlvl_lst = create_single_node("SHLVL", "1");
-	if (!shlvl_lst)
-	{
-		free_env(old_lst);
-		return (NULL);
-	}
-	ft_lstadd_env_back(&old_lst, shlvl_lst);
-	return (old_lst);
+	own_lst = malloc(sizeof(t_env));
+    if (!own_lst)
+        return (NULL);
+    own_lst->env_name = ft_strdup("PWD");
+    own_lst->env_variable = ft_strdup(getcwd(NULL, 1024));
+    own_lst->env_name = ft_strdup("OLDPWD");
+    own_lst->env_variable = NULL;
+    own_lst->next = malloc(sizeof(t_env));
+    own_lst->next->env_name = ft_strdup("SHLVL");
+    own_lst->next->env_variable = ft_strdup("1");
+    own_lst->next->next = NULL;
+    own_lst->next->env_name = ft_strdup("PWD");
+    own_lst->next->env_variable = ft_strdup(getcwd(NULL, 1024));
+    own_lst->next->next = malloc(sizeof(t_env));
+    own_lst->next->next->env_name = ft_strdup("SHLVL");
+    own_lst->next->next->env_variable = ft_strdup("1");
+    own_lst->next->next->next = NULL;
+    return (own_lst);
 }
 
 t_env	*env_init(char **env)
