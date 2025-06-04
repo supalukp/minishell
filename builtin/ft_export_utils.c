@@ -6,24 +6,11 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:48:10 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 14:22:34 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 10:02:09 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-
-int	count_env_node(t_env *env_lst)
-{
-	int	count;
-
-	count = 0;
-	while (env_lst)
-	{
-		count++;
-		env_lst = env_lst->next;
-	}
-	return (count);
-}
 
 int	have_equal(char *str)
 {

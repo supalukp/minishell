@@ -6,15 +6,15 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:50:16 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/27 15:54:29 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 08:17:31 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-static int option_n(char *arg)
+static int	option_n(char *arg)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (arg[i] != '-')
@@ -25,7 +25,7 @@ static int option_n(char *arg)
 	{
 		if (arg[i] != 'n')
 			return (0);
-		i++;	
+		i++;
 	}
 	return (1);
 }

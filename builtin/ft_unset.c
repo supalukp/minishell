@@ -6,16 +6,16 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:48:52 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 16:52:08 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 08:19:46 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int unset_variable(char *key, t_data *data)
+int	unset_variable(char *key, t_data *data)
 {
-	t_env *tmp;
-	t_env *env_lst;
+	t_env	*tmp;
+	t_env	*env_lst;
 
 	if (!key || !data)
 		return (1);
@@ -27,10 +27,10 @@ int unset_variable(char *key, t_data *data)
 			tmp = env_lst->next;
 			env_lst->next = env_lst->next->next;
 			if (tmp->env_name)
-            	free(tmp->env_name);
-        	if (tmp->env_variable)
-           		free(tmp->env_variable);
-		    free(tmp);
+				free(tmp->env_name);
+			if (tmp->env_variable)
+				free(tmp->env_variable);
+			free(tmp);
 			return (0);
 		}
 		else
@@ -39,7 +39,7 @@ int unset_variable(char *key, t_data *data)
 	return (0);
 }
 
-int unset_process(t_tree_token *tree, t_data *data)
+int	unset_process(t_tree_token *tree, t_data *data)
 {
 	int				flag;
 	t_cmd_element	*args;
@@ -47,7 +47,7 @@ int unset_process(t_tree_token *tree, t_data *data)
 	flag = 0;
 	args = tree->cmd_line->next;
 	if (invalid_option(args, "unset"))
-			return (2);
+		return (2);
 	while (args)
 	{
 		if (is_exist_variable(args->content, data))
@@ -59,11 +59,10 @@ int unset_process(t_tree_token *tree, t_data *data)
 			flag = 1;
 		args = args->next;
 	}
-	return (flag);	
+	return (flag);
 }
 
-
-int ft_unset(t_tree_token *tree, t_data *data)
+int	ft_unset(t_tree_token *tree, t_data *data)
 {
 	if (no_argument(tree))
 		return (0);

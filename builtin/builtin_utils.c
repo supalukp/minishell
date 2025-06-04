@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 16:04:06 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 08:17:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	exec_buildin(t_tree_token *tree, t_data *data)
 {
 	int		exit_status;
 	char	**cmd;
-	
+
 	cmd = combine_cmdline(tree->cmd_line);
 	if (!ft_strcmp(cmd[0], "echo"))
 		exit_status = ft_echo(tree);
