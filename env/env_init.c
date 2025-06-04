@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 08:51:32 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:18:50 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,39 +90,6 @@ t_env	*create_own_env(void)
 	ft_lstadd_env_back(&old_lst, shlvl_lst);
 	return (old_lst);
 }
-
-// t_env	*create_own_env(void)
-// {
-// 	t_env	*old_lst;
-// 	t_env	*pwd_lst;
-// 	t_env	*shlvl_lst;
-
-// 	old_lst = malloc(sizeof(t_env));
-// 	if (!old_lst)
-// 		return (NULL);
-// 	old_lst->env_name = ft_strdup("OLDPWD");
-// 	old_lst->env_variable = NULL;
-// 	pwd_lst = malloc(sizeof(t_env));
-// 	if (!pwd_lst)
-// 	{
-// 		free_env(old_lst);
-// 		return (NULL);
-// 	}
-// 	pwd_lst->env_name = ft_strdup("PWD");
-// 	pwd_lst->env_variable = ft_strdup(getcwd(NULL, 0));
-// 	old_lst->next = pwd_lst;
-// 	shlvl_lst = malloc(sizeof(t_env));
-// 	if (!shlvl_lst)
-// 	{
-// 		free_env(old_lst);
-// 		return (NULL);
-// 	}
-// 	shlvl_lst->env_name = ft_strdup("SHLVL");
-// 	shlvl_lst->env_variable = ft_strdup("1");
-// 	shlvl_lst->next = NULL;
-// 	pwd_lst->next = shlvl_lst;
-// 	return (old_lst);
-// }
 
 t_env	*env_init(char **env)
 {
