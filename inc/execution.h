@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 16:47:22 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:15:22 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_env		*create_own_env(void);
 t_env		*env_init(char **env);
 void		print_env(t_env *lst);
 void		free_env(t_env *env_lst);
+t_env		*create_single_node(char *env_name, char *env_variable);
 
 /* -------------------------------------------------------------------------- */
 /*                           init_input (hard code)                           */
@@ -38,6 +39,7 @@ void		double_pipes_input(t_tree_token **tree);
 void		triple_pipes_input(t_tree_token **tree);
 void		quadruple_pipes_input(t_tree_token **tree);
 void		complex_pipe_input(t_tree_token **tree);
+void		and_two_cmd(t_tree_token **tree);
 /* -------------------------------------------------------------------------- */
 /*                                  execution                                 */
 /* -------------------------------------------------------------------------- */
@@ -47,9 +49,16 @@ void		free_matrix(char **matrix);
 char		**combine_cmdline(t_cmd_element *args);
 int			main_execution(t_tree_token *tree, char **env, t_data *data);
 int			external_single(t_tree_token *tree, char **env);
-int			external_cmd_process(t_tree_token *tree, char **env);
+int			external_cmd_process(t_tree_token *tree, char **env, t_data *data);
 int			pipe_process(t_tree_token *tree, char **env, t_data *data);
+int			command_not_found(char **args);
+void		child_execution(char *paths, char **args, char **env);
+int			wait_and_clean(int exit_status, pid_t pid, char **args,
+				char *paths);
 
+t_pipe_cmds	*create_pipe_cmd_node(t_tree_token *token);
+void		ft_lstadd_cmd_front(t_pipe_cmds **lst, t_pipe_cmds *new);
+t_pipe_cmds	*create_cmd_lst(t_tree_token *tree);
 /* -------------------------------------------------------------------------- */
 /*                                    pipes                                   */
 /* -------------------------------------------------------------------------- */
@@ -100,9 +109,9 @@ int			process_arguments(t_tree_token *tree, t_data *data);
 int			create_only_key(t_cmd_element *args, t_data *data);
 int			create_key_value(t_cmd_element *args, t_data *data);
 int			process_export(char *args, t_data *data);
-int	not_valid_identifier(char *function);
-int	not_valid_name(char *args, char *function);
-int	invalid_option(t_cmd_element *args, char *function);
+int			not_valid_identifier(char *function);
+int			not_valid_name(char *args, char *function);
+int			invalid_option(t_cmd_element *args, char *function);
 int			have_equal(char *str);
 int			is_plus_equal(char *args);
 void		sort_env_lst(int count_env, t_env **env_lst);
@@ -114,9 +123,9 @@ int			add_new_variable(char *args, t_data *data);
 int			is_exist_variable(char *args, t_data *data);
 int			change_value_variable(char *args, t_data *data);
 char		**split_env_plus_equal(char *env);
-int unset_variable(char *key, t_data *data);
-int unset_process(t_tree_token *tree, t_data *data);
-int ft_unset(t_tree_token *tree, t_data *data);
+int			unset_variable(char *key, t_data *data);
+int			unset_process(t_tree_token *tree, t_data *data);
+int			ft_unset(t_tree_token *tree, t_data *data);
 /* -------------------------------------------------------------------------- */
 /*                                     free                                   */
 /* -------------------------------------------------------------------------- */
@@ -124,7 +133,7 @@ void		free_program(t_data *data);
 void		free_ast(t_tree_token *node);
 void		free_file_list(t_file *file);
 void		free_all_exit(t_data *data, t_pipes *pipes);
-
+void		free_cmd_lst(t_pipe_cmds *cmd_lst);
 
 /* -------------------------------------------------------------------------- */
 /*                                error message                               */

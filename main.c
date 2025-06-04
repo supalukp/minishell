@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:08:47 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/03 16:52:29 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:02:53 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	main(int ac, char **av, char **env)
 
 	tree = NULL;
 	data = NULL;
-	one_cmd(&tree);
+	// one_cmd(&tree);
+	and_two_cmd(&tree);
 	// try_one_cmd(&tree);
 	// pipe_simple_input(&tree);
 	// complex_pipe_input(&tree);
@@ -50,8 +51,16 @@ int	main(int ac, char **av, char **env)
 	data->last_exit = main_execution(tree, env, data);
 	printf("exit = %d\n", data->last_exit);
 
-	print_env(data->env);
-	print_export_no_option(data);
+	// print_env(data->env);
+	// char **res = convert_env_lst_double_arrays(data->env);
+	// int i = 0;
+	// while (res[i])
+	// {
+	// 	printf("%s\n", res[i]);
+	// 	i++;
+	// }
+	// free_matrix(res);
+	// print_export_no_option(data);
 	// while (str[i])
     // {
     //     if (str[i+1] != NULL && ft_strcmp(str[i], str[i + 1]) > 0)

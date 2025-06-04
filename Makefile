@@ -62,6 +62,9 @@ FILES = main.c \
 		${EXEC_DIR}/multi_pipe.c \
 		${EXEC_DIR}/pipes_init.c \
 		${EXEC_DIR}/pipes_utils.c \
+		${EXEC_DIR}/single_cmd.c \
+		${EXEC_DIR}/set_io.c \
+		${EXEC_DIR}/pipes_cmd_lst.c \
 		${REDIRECT_DIR}/redirect.c \
 		${EXEC_DIR}/error_msg.c \
 		${REDIRECT_DIR}/heredoc.c \
@@ -75,7 +78,9 @@ FILES = main.c \
 		${BUILTIN_DIR}/ft_export_valid_key.c \
 		${BUILTIN_DIR}/ft_export_modify_lst.c \
 		${BUILTIN_DIR}/ft_unset.c \
-		${ENV_DIR}/env_init.c
+		${ENV_DIR}/env_init.c \
+		${ENV_DIR}/env_utils.c \
+		${ENV_DIR}/env_convert.c
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))
