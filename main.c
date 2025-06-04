@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/04 14:25:47 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:25:37 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void	handle_line(char *line)
 
 	tree = mns_parse(line);
 	request.ast = tree;
+	request.last_exit = 0;
 	if (request.ast)
 	{
 		print_all(&request);
+		request.last_exit = main_execution(request.ast, &request);
 		clean_data(&request);
 	}
 }
