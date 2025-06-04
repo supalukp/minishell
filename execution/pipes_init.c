@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:20 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/22 11:51:36 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 08:17:08 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,30 @@ int	**create_double_fd(int pipe_count)
 	return (fd);
 }
 
-t_pipes *init_pipes(t_tree_token *tree)
+t_pipes	*init_pipes(t_tree_token *tree)
 {
-	int i;
-    t_pipes *pipes;
+	int		i;
+	t_pipes	*pipes;
 
-    pipes =  malloc(sizeof(t_pipes));
-    if (!pipes)
-        return (NULL);
-    pipes->pipes_count = count_pipes(tree);
-    pipes->process = pipes->pipes_count + 1;
-    pipes->pipefd = create_double_fd(pipes->pipes_count);
-    if (!pipes->pipefd)
-        return (perror("malloc fd failed"), NULL);
-    pipes->pid = malloc(sizeof(pid_t) * (pipes->process));
-    if (!pipes->pid)
-    {
-        free_double_array(pipes->pipefd);
-    	free(pipes);
-        return (perror("malloc pid failed"), NULL);
-    }
+	pipes = malloc(sizeof(t_pipes));
+	if (!pipes)
+		return (NULL);
+	pipes->pipes_count = count_pipes(tree);
+	pipes->process = pipes->pipes_count + 1;
+	pipes->pipefd = create_double_fd(pipes->pipes_count);
+	if (!pipes->pipefd)
+	{
+		perror("malloc fd failed");
+		free(pipes);
+		return (NULL);
+	}
+	pipes->pid = malloc(sizeof(pid_t) * (pipes->process));
+	if (!pipes->pid)
+	{
+		free_double_array(pipes->pipefd);
+		free(pipes);
+		return (perror("malloc pid failed"), NULL);
+	}
 	i = -1;
 	while (++i < pipes->process)
 		pipes->pid[i] = -1;
@@ -82,7 +86,7 @@ t_pipes *init_pipes(t_tree_token *tree)
 	return (pipes);
 }
 
-void free_pipes(t_pipes *pipes)
+void	free_pipes(t_pipes *pipes)
 {
 	if (!pipes)
 		return ;
@@ -90,20 +94,29 @@ void free_pipes(t_pipes *pipes)
 		free_double_array(pipes->pipefd);
 	if (pipes->pid)
 		free(pipes->pid);
+	if (pipes->cmd_lst)
+		free_cmd_lst(pipes->cmd_lst);
 	if (pipes)
 		free(pipes);
 }
 
-void create_pipes(t_pipes *pipes)
+void	create_pipes(t_pipes *pipes)
 {
-    int i;
-    
-    i = 0;
-    while (i < pipes->pipes_count)
-    {
-        if (pipe(pipes->pipefd[i]) == -1)
-            perror("Failed to create pipes");
-        i++;
-    }
-}
+	int	i;
 
+	i = 0;
+	while (i < pipes->pipes_count)
+	{
+		if (pipe(pipes->pipefd[i]) == -1)
+		{
+			perror("Failed to create pipes");
+			while (--i >= 0)
+			{
+				close(pipes->pipefd[i][0]);
+				close(pipes->pipefd[i][1]);
+			}
+			free_double_array(pipes->pipefd);
+		}
+		i++;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:58:36 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/27 11:29:14 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:45:46 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*get_path(char *command, char **envp)
 
 void	free_matrix(char **matrix)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!matrix)
@@ -71,19 +71,17 @@ void	free_matrix(char **matrix)
 	while (matrix[i])
 	{
 		free(matrix[i]);
-		matrix[i] = NULL;
 		i++;
 	}
 	free(matrix);
-	matrix = NULL;
 }
 
-void free_program(t_data *data)
+void	free_program(t_data *data)
 {
 	if (data->ast)
 		free_ast(data->ast);
 	if (data->env)
 		free_env(data->env);
-	if (data) 
+	if (data)
 		free(data);
 }
