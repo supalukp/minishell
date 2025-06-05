@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:58:36 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 11:45:46 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:35:17 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ void	free_program(t_data *data)
 		free_ast(data->ast);
 	if (data->env)
 		free_env(data->env);
-	if (data)
-		free(data);
+	// if (data)
+	// 	free(data);
 }

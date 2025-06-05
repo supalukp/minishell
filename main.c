@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/05 17:15:09 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:47:16 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void	handle_line(char *line, char **env)
 	request.last_exit = 0;
 	if (request.ast)
 	{
-		print_all(&request);
+		// print_all(&request);
+		// print_ast(request.ast);
+		print_ast_visual(request.ast, 0);
 		request.last_exit = main_execution(request.ast, &request);
 		free_program(&request);
 	}

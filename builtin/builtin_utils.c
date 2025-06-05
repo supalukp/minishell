@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:14:45 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:43:08 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ bool	is_buildin(t_tree *tree)
 {
 	char	**cmd;
 
+	// if (!tree->cmd_line)
+	// 	return (false);
 	cmd = combine_cmdline(tree->cmd_line);
 	if (!ft_strcmp(cmd[0], "echo"))
 		return (free_matrix(cmd), true);

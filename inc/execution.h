@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:34:23 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:46:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,6 @@ void		free_cmd_lst(t_pipe_cmds *cmd_lst);
 /*                                error message                               */
 /* -------------------------------------------------------------------------- */
 void		print_error_msg(char *error_msg, int errno);
+void	print_ast_visual(t_tree *node, int depth);
 
 #endif

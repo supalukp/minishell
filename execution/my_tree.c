@@ -6,11 +6,54 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:26:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:09:45 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:46:12 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/headings.h"
+#include "../inc/headings.h"// Include your types: t_tree, t_file, etc.
+
+void	print_indent(int level)
+{
+	while (level-- > 0)
+		printf("    ");
+}
+
+void	print_ast_visual(t_tree *node, int depth)
+{
+	char	**res;
+	t_file	*file;
+	int		i;
+
+	if (!node)
+		return ;
+
+	print_indent(depth);
+	if (node->type == PIPE)
+		printf("PIPE\n");
+	else if (node->type == CMD_LINE)
+	{
+		printf("CMD_LINE\n");
+		res = combine_cmdline(node->cmd_line);
+		i = 0;
+		while (res && res[i])
+		{
+			print_indent(depth + 1);
+			printf("arg[%d]: %s\n", i, res[i]);
+			i++;
+		}
+		free_matrix(res);
+		file = node->files;
+		while (file)
+		{
+			print_indent(depth + 1);
+			printf("file: %s\n", file->content);
+			file = file->next;
+		}
+	}
+	print_ast_visual(node->left, depth + 1);
+	print_ast_visual(node->right, depth + 1);
+}
+
 
 void	print_ast(t_tree *node)
 {
