@@ -39,7 +39,8 @@ OBJ_DIR = build
 INC_DIR = inc
 PARS_DIR = parsing
 EXEC_DIR = exec
-VPATH = . ${PARS_DIR} ${EXEC_DIR}
+ENV_DIR = env
+VPATH = . ${PARS_DIR} ${EXEC_DIR} ${ENV_DIR}
 
 # **************************************************************************** #
 # *********************************HEADERS************************************ #
@@ -61,9 +62,12 @@ FILES = main.c \
 		${PARS_DIR}/cmd_redirections.c \
 		${PARS_DIR}/cmd_elements.c \
 		${PARS_DIR}/cmd_ll_files.c \
+		${PARS_DIR}/cmd_expansions.c \
 		${PARS_DIR}/visual.c \
+		${PARS_DIR}/clean.c \
 		${EXEC_DIR}/exec.c \
-		${EXEC_DIR}/clean.c \
+		${ENV_DIR}/env_init.c \
+
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))

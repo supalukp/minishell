@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/05/29 12:27:43 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:39:04 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
+
+void    free_matrix(char **matrix)
+{
+    int i;
+
+    i = 0;
+    if (!matrix)
+        return ;
+    while (matrix[i])
+    {
+        free(matrix[i]);
+        matrix[i] = NULL;
+        i++;
+    }
+    free(matrix);
+    matrix = NULL;
+}
 
 void	ft_lstadd_env_back(t_env **lst, t_env *new)
 {

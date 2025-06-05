@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/28 15:47:02 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/29 12:41:44 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ typedef struct s_tree_token
 
 typedef struct s_env
 {
-	char			*env;
-	struct s_env	*next;
-}					t_env;
+    char            *env_name;
+    char            *env_variable;
+    struct s_env    *next;
+}                    t_env;
 
 typedef struct s_data
 {

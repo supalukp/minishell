@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/28 15:41:22 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:21:51 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_tree *ast_maker(char *substr, int *error)
 
 t_tree	*mns_parse(char *line)
 {
-	t_tree	*request;
+	t_tree			*request;
 	int				error;
 
 	error = 0;

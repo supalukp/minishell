@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/28 15:44:20 by syukna           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:29:52 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_tree			*ast_maker(char *substr, int *error);
 
 // visual.c
 void			print_files(t_file *file);
-void			print_node(t_tree *node);
-void			print_all(t_data *request);
+void			print_node(t_tree *node, t_env *lst);
+void			print_all(t_data *request, t_env *lst);
 
 // parenthesis.c
 int				contains_letter(char *substr, char letter);
@@ -58,8 +58,16 @@ void			split_cmd_elements(t_tree *cmd_line, int *error);
 void			clean_data(t_data *data);
 void			clean_recursive_tree(t_tree *node);
 
+// cmd_expansions.c
+char	*find_expansion_match(const char *search, t_env *lst);
+int	add_expansions(t_tree *node, t_env *lst);
+
 /* ************************************************************************** */
 /* ***********************************EXEC*********************************** */
 /* ************************************************************************** */
+
+// env_init.c
+t_env *env_init(char **env);
+void print_env(t_env *lst);
 
 #endif

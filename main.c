@@ -6,35 +6,40 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/28 15:42:08 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/05 14:28:17 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/headings.h"
 
-void	handle_line(char *line)
+void	handle_line(char *line, char **env)
 {
 	t_tree	*tree;
 	t_data	request;
 
 	tree = mns_parse(line);
 	request.ast = tree;
+	request.env = env_init(env);
 	if (request.ast)
 	{
-		print_all(&request);
+		print_all(&request, request.env);
 		clean_data(&request);
 	}
+	// print_env(request.env);
+	printf( "find var USER = %s\n", find_expansion_match("USER", request.env));
 }
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
 	char	*line;
 
 	line = readline("> ");
+	(void)ac;
+	(void)av;
 	while (line != NULL)
 	{
 		add_history(line);
-		handle_line(line);
+		handle_line(line, env);
 		line = readline("> ");
 	}
 	return (0);
