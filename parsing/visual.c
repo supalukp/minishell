@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visual.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:30:04 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/04 15:13:52 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:19:45 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,9 @@ void	print_node(t_tree *node)
 	printf("* Content: |%s|\n", node->content);
 	printf("* Type: %s\n", types_text[node->type]);
 	if (node->left)
-	{
-		if (node->left->type == CMD_LINE)
-			printf("* Left link: %s\n", node->left->content);
-		else 
-			printf("* Left link: Operator type %s\n", types_text[node->left->type]);
-	}
+		printf("* Left link: %s\n", types_text[node->left->type]);
 	if (node->right)
-	{
-		if (node->right->type == CMD_LINE)
-			printf("* right link: %s\n", node->right->content);
-		else
-			printf("* right link: Operator type %s\n",  types_text[node->right->type]);
-	}
+		printf("* right link: %s\n",  types_text[node->right->type]);
 	if (node->cmd_line)
 	{
 		printf("*\n* COMMAND ELEMENTS:\n");
