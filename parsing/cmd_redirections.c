@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:25:45 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/04 15:10:21 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:57:41 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int		get_new_redirectionless_str(int index, t_tree *cmd_line)
 {
 	int	i;
-	bool word;
+	// bool word;
 	
 	i = 0;
-	word = true;
+	// word = true;
 	while(is_letters(cmd_line->content[index + i],"< >"))
 		i++;
 	while (cmd_line->content[index + i] != '\0' && cmd_line->content[index + i] != ' ')
@@ -106,14 +106,14 @@ t_type	define_redirection_type(int index, char *cmd_line)
 void	get_redirections(int index, t_tree *cmd_line, int *error)
 {
 	int 	i;
-	bool	word;
+	// bool	word;
 	char	*filename;
 	t_type	filetype;
 
 	if (!cmd_line || !cmd_line->content || *error)
 		return;
 	i = index;
-	word = true;
+	// word = true;
 	filetype = define_redirection_type(i, cmd_line->content);
 	while(is_letters(cmd_line->content[i],"< >"))
 		i++;

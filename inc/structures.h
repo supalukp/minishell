@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/04 15:06:19 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:00:37 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef enum e_type
 	OR,
 
 	// CMD_LINE LEVEL
-	CMD,
-	ARG,
+	// CMD,
+	// ARG,
 	APPEND,
 	HEREDOC,
 	INFILE,
