@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/04 15:06:19 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:18:01 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ typedef struct s_pipes
 
 typedef struct s_data
 {
-	t_tree	*ast;
-	t_env			*env;
+	t_tree		*ast;
+	t_env		*env;
 	int			last_exit;
 }					t_data;
 

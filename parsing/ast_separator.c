@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 13:25:49 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/05 16:19:04 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:07:04 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 size_t	parse_len_first(char *substr, t_type operator)
 {
 	size_t	i;
-	int	parenthesis;
+	int		parenthesis;
+	int		pos;
 
 	i = 0;
+	pos = 0;
 	parenthesis = 0;
 	while (substr[i])
 	{
@@ -26,14 +28,14 @@ size_t	parse_len_first(char *substr, t_type operator)
 		if (substr[i]  == ')')
 			parenthesis -= 1;
 		if (operator == PIPE && substr[i] == '|' && parenthesis == 0)
-			break;
+			pos = i;
 		if (operator == AND && substr[i] == '&' && substr[i + 1] == '&' && parenthesis == 0)
-			break;
+			pos = i;
 		if (operator == OR && substr[i] == '|' && substr[i + 1] == '|' && parenthesis == 0)
-			break;
+			pos = i;
 		i++;
 	}
-	return i;
+	return (pos);
 }
 
 
@@ -53,9 +55,11 @@ char	*parse_get_first(char *substr, t_type operator, int *error)
 size_t	parse_pos_second(char *substr, t_type operator)
 {
 	size_t	i;
-	int	parenthesis;
+	int		pos;
+	int		parenthesis;
 
 	i = 0;
+	pos = 0;
 	parenthesis = 0;
 	while (substr[i])
 	{
@@ -64,14 +68,14 @@ size_t	parse_pos_second(char *substr, t_type operator)
 		if (substr[i]  == ')')
 			parenthesis -= 1;
 		if (operator == PIPE && substr[i] == '|' && parenthesis == 0)
-			break;
+			pos = i;
 		if (operator == AND && substr[i] == '&' && substr[i - 1] == '&' && parenthesis == 0)
-			break;
+			pos = i;
 		if (operator == OR && substr[i] == '|' && substr[i - 1] == '|' && parenthesis == 0)
-			break;
+			pos = i;
 		i++;
 	}
-	return (i + 1);
+	return (pos + 1);
 }
 
 char	*parse_get_second(char *substr, t_type operator, int *error)
