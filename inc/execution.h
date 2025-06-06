@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:34:23 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/06 13:16:18 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		print_env(t_env *lst);
 void		free_env(t_env *env_lst);
 t_env		*create_single_node(char *env_name, char *env_variable);
 char		*join_key_value(t_env *env_node);
-char	**convert_env_lst_double_arrays(t_env *env_lst);
+char		**convert_env_lst_double_arrays(t_env *env_lst);
 
 /* -------------------------------------------------------------------------- */
 /*                           init_input (hard code)                           */
@@ -50,7 +50,7 @@ char		*find_executable(char **all_path, char *command);
 char		*get_path(char *command, char **envp);
 void		free_matrix(char **matrix);
 char		**combine_cmdline(t_cmd_element *args);
-int			main_execution(t_tree *tree,  t_data *data);
+int			main_execution(t_tree *tree, t_data *data);
 int			external_single(t_tree *tree, t_data *data);
 // int			external_single(t_tree *tree, char **env);
 int			external_cmd_process(t_tree *tree, t_data *data);
@@ -63,6 +63,7 @@ int			wait_and_clean(int exit_status, pid_t pid, char **args,
 t_pipe_cmds	*create_pipe_cmd_node(t_tree *token);
 void		ft_lstadd_cmd_front(t_pipe_cmds **lst, t_pipe_cmds *new);
 t_pipe_cmds	*create_cmd_lst(t_tree *tree);
+int			exec_cmd_line(t_tree *tree, t_data *data, int exit_status);
 /* -------------------------------------------------------------------------- */
 /*                                    pipes                                   */
 /* -------------------------------------------------------------------------- */
@@ -81,7 +82,8 @@ void		create_pipes(t_pipes *pipes);
 void		free_double_array(int **double_array);
 int			process_parent(t_pipes *pipes);
 int			pipe_multi_process(t_tree *tree, t_data *data);
-int			process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, t_data *data);
+int			process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst,
+				t_data *data);
 void		free_pipes_struct(t_pipes *pipes);
 
 int			redirect_infile(char *filename);
@@ -141,6 +143,8 @@ void		free_cmd_lst(t_pipe_cmds *cmd_lst);
 /* -------------------------------------------------------------------------- */
 /*                                error message                               */
 /* -------------------------------------------------------------------------- */
-void		print_error_msg(char *error_msg, int errno);
+void		stderr_msg(char *err_msg);
+void		error_free_pipes(char *err_msg, t_pipes *pipes);
+int			perror_free_pipes(char *err_msg, t_pipes *pipes);
 
 #endif

@@ -6,66 +6,67 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:17:09 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:08:54 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	external_single(t_tree *tree, t_data *data)
+static int	handle_redirect(t_tree *tree)
 {
-	pid_t	pid;
-	int		exit_status;
-	char	**args;
-	char	*paths;
-	char 	**minishell_env;
-
-	exit_status = 0;
 	if (tree->files)
 		if (redirect_one_cmd(tree) == -1)
 			return (1);
-	args = combine_cmdline(tree->cmd_line);
-	if (!args)
+	return (0);
+}
+
+static int	init_args_env(char ***args, char ***env, t_tree *tree, t_data *data)
+{
+	*args = combine_cmdline(tree->cmd_line);
+	if (!*args)
 		return (1);
-	minishell_env = convert_env_lst_double_arrays(data->env);
-	paths = get_path(args[0], minishell_env);
-	if (!paths)
-		return (free_matrix(minishell_env), command_not_found(args));
+	*env = convert_env_lst_double_arrays(data->env);
+	return (0);
+}
+
+static int	init_path(char **path, char **args, char **env)
+{
+	*path = get_path(args[0], env);
+	if (!*path)
+	{
+		free_matrix(env);
+		return (command_not_found(args));
+	}
+	return (0);
+}
+
+int	external_single(t_tree *tree, t_data *data)
+{
+	pid_t	pid;
+	char	**args;
+	char	**env;
+	char	*path;
+	int		stdin_backup;
+
+	stdin_backup = dup(STDIN_FILENO);
+	if (handle_redirect(tree))
+		return (1);
+	if (init_args_env(&args, &env, tree, data))
+		return (1);
+	if (init_path(&path, args, env))
+		return (1);
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork failed");
-		return (free_matrix(minishell_env), free_matrix(args), free(paths), 128 + errno);
+		free_matrix(env);
+		free_matrix(args);
+		return (1);
 	}
 	if (pid == 0)
-		child_execution(paths, args, minishell_env);
-	free_matrix(minishell_env);
-	return (wait_and_clean(exit_status, pid, args, paths));
-}
-
-void	child_execution(char *paths, char **args, char **minishell_env)
-{
-	execve(paths, args, minishell_env);
-	perror("execve failed");
-	free_matrix(minishell_env);
-	free_matrix(args);
-	free(paths);
-	exit(126);
-}
-
-int	wait_and_clean(int exit_status, pid_t pid, char **args, char *paths)
-{
-	if (waitpid(pid, &exit_status, 0) == -1)
-	{
-		perror("waitpid");
-		exit(EXIT_FAILURE);
-	}
-	free_matrix(args);
-	free(paths);
-	if (WIFEXITED(exit_status))
-		return (WEXITSTATUS(exit_status));
-	else if (WIFSIGNALED(exit_status))
-		return (128 + WTERMSIG(exit_status));
-	else
-		return (EXIT_FAILURE);
+		child_execution(path, args, env);
+	free_matrix(env);
+	dup2(stdin_backup, STDIN_FILENO);
+	close(stdin_backup);
+	return (wait_and_clean(0, pid, args, path));
 }

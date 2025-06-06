@@ -42,7 +42,8 @@ EXEC_DIR = execution
 BUILTIN_DIR = builtin
 REDIRECT_DIR = redirect
 ENV_DIR = env
-VPATH = . ${PARS_DIR} ${EXEC_DIR} ${BUILTIN_DIR} ${ENV_DIR} ${REDIRECT_DIR}
+SIG_DIR = signals
+VPATH = . ${PARS_DIR} ${EXEC_DIR} ${BUILTIN_DIR} ${ENV_DIR} ${REDIRECT_DIR} ${SIG_DIR}
 
 # **************************************************************************** #
 # *********************************HEADERS************************************ #
@@ -51,6 +52,7 @@ VPATH = . ${PARS_DIR} ${EXEC_DIR} ${BUILTIN_DIR} ${ENV_DIR} ${REDIRECT_DIR}
 HEADERS =	${INC_DIR}/execution.h \
 			${INC_DIR}/headings.h \
 			${INC_DIR}/structures.h \
+			${INC_DIR}/signals.h
 
 # **************************************************************************** #
 # ********************************SRC FILES*********************************** #
@@ -73,6 +75,7 @@ FILES = main.c \
 		${EXEC_DIR}/pipes_init.c \
 		${EXEC_DIR}/pipes_utils.c \
 		${EXEC_DIR}/single_cmd.c \
+		${EXEC_DIR}/single_cmd_process.c \
 		${EXEC_DIR}/set_io.c \
 		${EXEC_DIR}/pipes_cmd_lst.c \
 		${REDIRECT_DIR}/redirect.c \
@@ -90,7 +93,8 @@ FILES = main.c \
 		${BUILTIN_DIR}/ft_unset.c \
 		${ENV_DIR}/env_init.c \
 		${ENV_DIR}/env_utils.c \
-		${ENV_DIR}/env_convert.c
+		${ENV_DIR}/env_convert.c \
+		${SIG_DIR}/signals.c
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))

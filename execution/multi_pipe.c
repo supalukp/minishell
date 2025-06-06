@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:16:53 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:01:31 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,29 +77,19 @@ int	process_parent(t_pipes *pipes)
 	return (last_exit_status);
 }
 
-int	pipe_multi_process(t_tree *tree, t_data *data)
+static int	fork_and_exec_children(t_pipes *pipes, t_data *data)
 {
-	t_pipes		*pipes;
 	t_pipe_cmds	*tmp;
 	int			i;
 	int			exit_status;
-	int			last_exit_status;
 
-	pipes = init_pipes(tree);
-	if (!pipes)
-		return (perror("malloc failed"), EXIT_FAILURE);
-	create_pipes(pipes);
-	i = -1;
 	tmp = pipes->cmd_lst;
+	i = -1;
 	while (++i < pipes->process && tmp)
 	{
 		pipes->pid[i] = fork();
 		if (pipes->pid[i] == -1)
-		{
-			perror("Fork failed");
-			free_pipes_struct(pipes);
-			return (EXIT_FAILURE);
-		}
+			return (perror_free_pipes("Fork failed", pipes));
 		if (pipes->pid[i] == 0)
 		{
 			exit_status = process_child(i, pipes, tmp, data);
@@ -108,6 +98,20 @@ int	pipe_multi_process(t_tree *tree, t_data *data)
 		}
 		tmp = tmp->next;
 	}
-	last_exit_status = process_parent(pipes);
-	return (last_exit_status);
+	return (0);
+}
+
+int	pipe_multi_process(t_tree *tree, t_data *data)
+{
+	t_pipes	*pipes;
+	int		status;
+
+	pipes = init_pipes(tree);
+	if (!pipes)
+		return (perror("malloc failed"), EXIT_FAILURE);
+	create_pipes(pipes);
+	if (fork_and_exec_children(pipes, data) != 0)
+		return (EXIT_FAILURE);
+	status = process_parent(pipes);
+	return (status);
 }
