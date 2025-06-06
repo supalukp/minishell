@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 14:52:02 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:36:17 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:30:34 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void			parse_separator(char *substr, t_tree *parent, int *error);
 
 // parsing.c
 t_tree			*mns_parse(char *line);
-t_type			is_operator(char *line);
+t_type			has_operator(char *line, t_type	operator);
 t_tree			*ast_maker(char *substr, int *error);
 
 // visual.c

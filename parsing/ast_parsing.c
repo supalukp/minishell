@@ -6,24 +6,22 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/28 15:41:22 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/06 17:36:59 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-t_type	is_operator(char *line)
+t_type	has_operator(char *line, t_type	operator)
 {
-	int i;
-	int parenthesis;
+	int		i;
+	int		parenthesis;
 	bool	single_q;
-	bool double_q;
-
+	bool	double_q;
 	i = 0;
 	parenthesis = 0;
 	single_q = false;
 	double_q = false;
-	
 	while (line[i])
 	{
 		if (line[i]  == '(')
@@ -44,32 +42,40 @@ t_type	is_operator(char *line)
 			else
 				double_q = false;
 		}
-		if (line[i]  == '|' && line[i - 1]  != '|' && line[i + 1]  != '|' && parenthesis == 0 && single_q == false && double_q == false)
-			return (PIPE);
-		if (line[i]  == '&' && line[i + 1]  == '&'  && parenthesis == 0 && single_q == false && double_q == false)
-			return (AND);
-		if (line[i]  == '|' && line[i + 1]  == '|'  && parenthesis == 0 && single_q == false && double_q == false)
-			return (OR);
+		if (operator == PIPE && line[i]  == '|' && line[i - 1]  != '|' && line[i + 1]  != '|' && parenthesis == 0 && single_q == false && double_q == false)
+			return (1);
+		if (operator == AND && line[i]  == '&' && line[i + 1]  == '&'  && parenthesis == 0 && single_q == false && double_q == false)
+			return (1);
+		if (operator == OR && line[i]  == '|' && line[i + 1]  == '|'  && parenthesis == 0 && single_q == false && double_q == false)
+			return (1);
 		i++;
 	}
-	return (INVALID);
+	return (0);
 }
 
 t_tree *ast_maker(char *substr, int *error)
 {
 	t_tree *node;
-	t_type	operator;
 	
 	if (!substr || *error)
 		return (NULL);
 	node = ft_calloc(1, sizeof(t_tree));
 	if (!node)
 		return (*error = 1, NULL);
-	operator = is_operator(substr);
-	if (operator != INVALID)
+	node->content = NULL;
+	if (has_operator(substr, OR))
 	{
-		node->content = NULL;
-		node->type = operator;
+		node->type = OR;
+		parse_separator(substr, node, error);
+	}
+	else if (has_operator(substr, AND))
+	{
+		node->type = AND;
+		parse_separator(substr, node, error);
+	}
+	else if (has_operator(substr, PIPE))
+	{
+		node->type = PIPE;
 		parse_separator(substr, node, error);
 	}
 	else if (contains_letter(substr, '('))
