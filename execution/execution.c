@@ -6,11 +6,27 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:09:53 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:57:10 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
+
+int	exec_cmd_line(t_tree *tree, t_data *data, int exit_status)
+{
+	if (is_buildin(tree) == true)
+	{
+		if (tree->files)
+			if (redirect_one_cmd(tree) == -1)
+				return (1);
+		exit_status = exec_buildin(tree, data);
+	}
+	else if (tree->left == NULL && tree->right == NULL)
+		exit_status = external_single(tree, data);
+	else
+		exit_status = external_cmd_process(tree, data);
+	return (exit_status);
+}
 
 int	main_execution(t_tree *tree, t_data *data)
 {
@@ -34,19 +50,7 @@ int	main_execution(t_tree *tree, t_data *data)
 			exit_status = main_execution(tree->right, data);
 	}
 	else if (tree->type == CMD_LINE)
-	{
-		if (is_buildin(tree) == true)
-		{
-			if (tree->files)
-				if (redirect_one_cmd(tree) == -1)
-					return (1);
-			exit_status = exec_buildin(tree, data);
-		}
-		else if (tree->left == NULL && tree->right == NULL)
-			exit_status = external_single(tree, data);
-		else
-			exit_status = external_cmd_process(tree, data);
-	}
+		exit_status = exec_cmd_line(tree, data, exit_status);
 	return (exit_status);
 }
 
@@ -97,7 +101,7 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 {
 	char	**args;
 	char	*paths;
-	char 	**minishell_env;
+	char	**minishell_env;
 
 	args = combine_cmdline(tree->cmd_line);
 	if (!args)
@@ -105,7 +109,8 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	minishell_env = convert_env_lst_double_arrays(data->env);
 	paths = get_path(args[0], minishell_env);
 	if (!paths)
-		return (free_matrix(minishell_env), free_program(data), command_not_found(args));
+		return (free_matrix(minishell_env), free_program(data),
+			command_not_found(args));
 	execve(paths, args, minishell_env);
 	perror("execve failed");
 	free_matrix(minishell_env);

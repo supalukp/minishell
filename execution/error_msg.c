@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:51:48 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 11:39:27 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:19:56 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,25 @@ int	command_not_found(char **args)
 	write(2, ": command not found\n", 20);
 	free_matrix(args);
 	return (127);
+}
+
+void	stderr_msg(char *err_msg)
+{
+	write(2, err_msg, ft_strlen(err_msg));
+}
+
+void	error_free_pipes(char *err_msg, t_pipes *pipes)
+{
+	stderr_msg(err_msg);
+	if (pipes->pipefd)
+		free_double_array(pipes->pipefd);
+	if (pipes)
+		free(pipes);
+}
+
+int	perror_free_pipes(char *err_msg, t_pipes *pipes)
+{
+	perror(err_msg);
+	free_pipes_struct(pipes);
+	return (EXIT_FAILURE);
 }

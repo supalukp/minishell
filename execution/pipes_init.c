@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:20 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:17:00 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:58:48 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	count_pipes(t_tree *tree)
 {
 	t_tree	*token;
-	int				count;
+	int		count;
 
 	token = tree;
 	count = 0;
@@ -60,20 +60,13 @@ t_pipes	*init_pipes(t_tree *tree)
 		return (NULL);
 	pipes->pipes_count = count_pipes(tree);
 	pipes->process = pipes->pipes_count + 1;
+	pipes->pipefd = NULL;
 	pipes->pipefd = create_double_fd(pipes->pipes_count);
 	if (!pipes->pipefd)
-	{
-		perror("malloc fd failed");
-		free(pipes);
-		return (NULL);
-	}
+		return (error_free_pipes("malloc fd failed\n", pipes), NULL);
 	pipes->pid = malloc(sizeof(pid_t) * (pipes->process));
 	if (!pipes->pid)
-	{
-		free_double_array(pipes->pipefd);
-		free(pipes);
-		return (perror("malloc pid failed"), NULL);
-	}
+		return (error_free_pipes("malloc pid failed\n", pipes), NULL);
 	i = -1;
 	while (++i < pipes->process)
 		pipes->pid[i] = -1;
