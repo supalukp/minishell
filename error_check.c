@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:00:06 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 17:43:41 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/06 19:05:31 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int open_quotes(char *line)
 	while (line[i])
 	{
 		printf("%c\n", line[i]);
-		if (line[i] == '\'' || line[i] == '"' && (single_flag == 0 && double_flag == 0))
+		if ((line[i] == '\'' || line[i] == '"') && (single_flag == 0 && double_flag == 0))
 		{
 			if (line[i] == '\'')
 				single_flag = 1;
@@ -46,9 +46,9 @@ int open_quotes(char *line)
 				double_flag = 1;
 		}
 		else if (line[i] == '\'' && single_flag == 1 && double_flag == 0)
-			single_flag--;
+			single_flag = 0;
 		else if (line[i] == '"' && double_flag == 1 && single_flag == 0)
-			double_flag--;
+			double_flag = 0;
 		printf("sin = %d\n", single_flag);
 		printf("dou = %d\n", double_flag);
 		i++;
@@ -71,7 +71,7 @@ int error_checking(char *line)
 
 int main (void)
 {
-	char line[] = "\"dsd'dsd\"'' ";
+	char line[] = "\"ds'd''dsd\"' ";
 	printf("%d\n", error_checking(line));
 	return (0);
 }
