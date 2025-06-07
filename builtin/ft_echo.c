@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:50:16 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 14:36:36 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/07 15:43:24 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	option_n(char *arg)
 int	ft_echo(t_tree *tree)
 {
 	int		i;
+	int j;
 	bool	noline_flag;
 	char	**cmd;
 
@@ -48,7 +49,15 @@ int	ft_echo(t_tree *tree)
 	}
 	while (cmd[i])
 	{
-		printf("%s", cmd[i]);
+		j = 0;
+		while (cmd[i][j])
+		{
+			if (cmd[i][j] == '\\' && tree->cmd_line->quoted != 2)
+				j++;
+			printf("%c", cmd[i][j]);
+			j++;
+		}
+		// printf("%s", cmd[i]);
 		if (cmd[i + 1] != NULL)
 			printf(" ");
 		i++;

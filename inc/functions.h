@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 14:52:02 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 11:29:07 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:42:27 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@
 /* ************************************************************************** */
 /* *********************************PARSING********************************** */
 /* ************************************************************************** */
+
+// error_checking.c
+int	only_space(char *line);
+int	open_quotes(char *line);
+int	no_files(char *line);
+int	pipe_no_args(char *line);
+int check_semi(char *line);
+int	unsupported_syntax(char *line);
+int	error_checking(char *line, t_data *data);
+
 
 // separator.c
 void	parse_separator(char *substr, t_tree *parent, int *error);
