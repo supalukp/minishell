@@ -1,0 +1,12 @@
+{
+  <readline>
+  Memcheck:Leak
+  ...
+  fun:readline
+}
+{
+  <ls>
+  Memcheck:Leak
+  ...
+  obj:/usr/bin/ls
+}

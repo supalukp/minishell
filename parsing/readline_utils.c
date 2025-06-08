@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   readline_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 11:25:13 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/08 11:46:13 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/06/08 09:50:08 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/06/08 09:53:56 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
+#include "../inc/headings.h"
 
-# include <signal.h>
+char	*ft_itoa(int n)
+{
+}
 
-void handler_signal(int sig);
-
-#endif
+char	*build_prompt(int exit_status)
+{
+	// build str minishell[exitstatus]
+}

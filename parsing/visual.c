@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   visual.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:30:04 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/05 18:18:03 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/08 17:40:48 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-char *types_text[] = { "CMD_LINE", "PIPE","AND","OR","CMD","ARG","APPEND","HEREDOC","INFILE","OUTFILE","INVALID"};
+char *types_text[] = { "CMD_LINE", "PIPE","AND","OR","APPEND","HEREDOC","INFILE","OUTFILE","INVALID"};
 
 void	print_files(t_file *file)
 {

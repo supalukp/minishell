@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/07 17:26:01 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/08 16:52:33 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,56 +34,35 @@ void	handle_line(char *line, t_data *request)
 	}
 }
 
-// int	main(int ac, char **av, char **env)
-// {
-// 	char	*line;
-// 	t_data	request;
-
-// 	(void)ac;
-// 	(void)av;
-	
-// 	init_signals();
-// 	request.env = env_init(env);
-// 	request.last_exit = 0;
-// 	while (1)
-// 	{
-// 		line = readline("> ");
-// 		if (line == NULL)
-// 			break;
-// 		if (*line == '\0') 
-// 		{
-// 			free(line);
-// 			continue;
-// 		}
-// 		add_history(line);
-// 		handle_line(line, &request);
-// 		free(line);
-// 	}
-// 	if (request.env)
-// 		free_env(request.env);
-// 	return (0);
-// }
-
 int	main(int ac, char **av, char **env)
 {
 	char	*line;
 	t_data	request;
-
+	struct sigaction sa;
 	(void)ac;
 	(void)av;
 	
-	init_signals();
+	sa.sa_handler = handler_signal;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+	
 	request.env = env_init(env);
 	request.last_exit = 0;
 	line = readline("> ");
 	while (line != NULL)
 	{
+		printf("%s\n", line);
 		add_history(line);
 		handle_line(line, &request);
 		line = readline("> ");
 	}
 	if (request.env)
 		free_env(request.env);
-	// rl_clear_history();
+	if (line)
+    	free(line);
+	rl_clear_history();
 	return (0);
 }
+
