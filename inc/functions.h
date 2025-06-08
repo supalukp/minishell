@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -29,6 +30,9 @@ int	pipe_no_args(char *line);
 int check_semi(char *line);
 int	unsupported_syntax(char *line);
 int	error_checking(char *line, t_data *data);
+
+
+char	*build_prompt(int exit_status);
 
 
 // separator.c

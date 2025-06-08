@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/08 16:52:33 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/08 23:41:47 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,25 @@ int	main(int ac, char **av, char **env)
 {
 	char	*line;
 	t_data	request;
-	struct sigaction sa;
+	// struct sigaction sa;
 	(void)ac;
 	(void)av;
 	
-	sa.sa_handler = handler_signal;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	// sa.sa_handler = handler_signal;
+	// sigemptyset(&sa.sa_mask);
+	// sa.sa_flags = 0;
+	// sigaction(SIGINT, &sa, NULL);
+	// sigaction(SIGQUIT, &sa, NULL);
 	
 	request.env = env_init(env);
 	request.last_exit = 0;
-	line = readline("> ");
+	line = readline(build_prompt(request.last_exit));
 	while (line != NULL)
 	{
 		printf("%s\n", line);
 		add_history(line);
 		handle_line(line, &request);
-		line = readline("> ");
+		line = readline(build_prompt(request.last_exit));
 	}
 	if (request.env)
 		free_env(request.env);
