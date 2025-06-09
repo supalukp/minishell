@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 14:57:10 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:37:43 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	perror("execve failed");
 	free_matrix(minishell_env);
 	free_matrix(args);
+	free_program(data);
 	free(paths);
 	return (126);
 }

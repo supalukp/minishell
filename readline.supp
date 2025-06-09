@@ -16,3 +16,9 @@
    ...
    fun:add_history
 }
+{
+  <grep>
+  Memcheck:Leak
+  ...
+  obj:/usr/bin/grep
+}
