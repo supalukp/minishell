@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/09 17:31:38 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:57:00 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	handle_line(char *line, t_data *request)
 	request->ast = tree;
 	if (request->ast)
 	{
-		print_all(request);
+		// print_all(request);
 		request->last_exit = main_execution(request->ast, request);
-		printf("exit status = %d\n", request->last_exit);
+		// printf("exit status = %d\n", request->last_exit);
 		clean_data(request);
 	}
 }

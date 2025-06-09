@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/09 17:31:47 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:57:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_tree	*mns_parse(char *line)
 
 	error = 0;
 	request = ast_maker(line, &error);
-	printf("Error: %d\n", error);
+	// printf("Error: %d\n", error);
 	if (error)
 	{
 		if (request)
