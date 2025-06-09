@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:14:45 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:43:27 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	exec_buildin(t_tree *tree, t_data *data)
 	cmd = combine_cmdline(tree->cmd_line);
 	if (!ft_strcmp(cmd[0], "echo"))
 		exit_status = ft_echo(tree);
-	// else if (!ft_strcmp(cmd[0], "cd"))
-	//     return (true);
+	else if (!ft_strcmp(cmd[0], "cd"))
+		exit_status = ft_cd(tree);
 	else if (!ft_strcmp(cmd[0], "pwd"))
 		exit_status = ft_pwd(tree);
 	else if (!ft_strcmp(cmd[0], "export"))

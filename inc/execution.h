@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 13:16:18 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:08:07 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ bool		is_buildin(t_tree *tree);
 int			exec_buildin(t_tree *tree, t_data *data);
 int			ft_echo(t_tree *tree);
 int			ft_pwd(t_tree *tree);
+int			ft_cd(t_tree *tree);
 int			ft_env(t_tree *tree, t_data *data);
 t_env		**ascii_env_lst(t_data *data);
 int			print_export_no_option(t_data *data);

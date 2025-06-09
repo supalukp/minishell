@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/06 15:25:52 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 15:40:26 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	main(int ac, char **av, char **env)
 	request.env = env_init(env);
 	request.last_exit = 0;
 	line = readline("> ");
-	(void)ac;
-	(void)av;
 	while (line != NULL)
 	{
 		add_history(line);
