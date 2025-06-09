@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:25:13 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/08 11:46:13 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:27:32 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <signal.h>
 
-void handler_signal(int sig);
+void	handle_sigint(int sig);
+void	init_signal(void);
 
 #endif

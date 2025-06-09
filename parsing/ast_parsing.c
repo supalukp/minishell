@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/28 15:41:22 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/09 16:15:37 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_type	is_operator(char *line)
 	}
 	return (INVALID);
 }
+
+
 
 t_tree *ast_maker(char *substr, int *error)
 {

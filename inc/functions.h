@@ -23,17 +23,26 @@
 /* ************************************************************************** */
 
 // error_checking.c
-int	only_space(char *line);
-int	open_quotes(char *line);
-int	no_files(char *line);
-int	pipe_no_args(char *line);
-int check_semi(char *line);
-int	unsupported_syntax(char *line);
-int	error_checking(char *line, t_data *data);
+int		only_space(char *line);
+int		open_quotes(char *line);
+int		no_files(char *line);
+int		pipe_no_args(char *line);
+int		check_semi(char *line);
+int		unsupported_syntax(char *line);
+int		error_checking(char *line, t_data *data);
 
-
+// readline_utils.c
 char	*build_prompt(int exit_status);
 
+// prelexer.c
+char	*merge_quotes(const char *line);
+char	*handle_quotes(const char *line, int *i);
+char	*wrap_merged(char *merged, char quote, int count);
+char	*extract_quoted(const char *line, int *i);
+int		have_pipes(t_tree *tree);
+int		is_quote(char character);
+char	*ft_strncpy(char *dest, const char *src, size_t n);
+void	append_str(char **dest, const char *src);
 
 // separator.c
 void	parse_separator(char *substr, t_tree *parent, int *error);

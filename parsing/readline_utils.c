@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 09:50:08 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/08 23:43:09 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:11:43 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ char	*build_prompt(int exit_status)
     tmp = ft_strdup("]> ");
     exit_str = ft_strjoin(res, tmp);
     free(tmp);
+    free(res);
     return (exit_str);
 }

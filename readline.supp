@@ -10,3 +10,15 @@
   ...
   obj:/usr/bin/ls
 }
+{
+   <readline_add_history_reachable>
+   Memcheck:Leak
+   ...
+   fun:add_history
+}
+{
+  <grep>
+  Memcheck:Leak
+  ...
+  obj:/usr/bin/grep
+}

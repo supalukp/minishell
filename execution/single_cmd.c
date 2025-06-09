@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 15:22:39 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:29:11 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	external_single(t_tree *tree, t_data *data)
 	if (handle_redirect(tree))
 		return (1);
 	if (init_args_env(&args, &env, tree, data))
-		return (1);
+		return (close(stdin_backup), 1);
 	if (init_path(&path, args, env))
-		return (1);
+		return ( close(stdin_backup), 1);
 	pid = fork();
 	if (pid == -1)
 	{

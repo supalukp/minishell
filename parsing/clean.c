@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:11 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/04 15:12:44 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:46:11 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,8 @@ void	clean_recursive_tree(t_tree *node)
 
 void clean_data(t_data *data)
 {
-	clean_recursive_tree(data->ast);
+	if (data->ast)
+		clean_recursive_tree(data->ast);
+	// if (data->env)
+	// 	free_env(data->env);
 }

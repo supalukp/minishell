@@ -61,6 +61,8 @@ HEADERS =	${INC_DIR}/execution.h \
 FILES = main.c \
 		${PARS_DIR}/error_check.c \
 		${PARS_DIR}/readline_utils.c \
+		${PARS_DIR}/prelexer.c \
+		${PARS_DIR}/prelexer_utils.c \
 		${PARS_DIR}/ast_parsing.c \
 		${PARS_DIR}/ast_separator.c \
 		${PARS_DIR}/ast_parenthesis.c \

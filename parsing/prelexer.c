@@ -6,174 +6,140 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 18:08:52 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/08 23:10:28 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/09 15:54:46 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-// 1. Remove quote / escape and put it in single quotes skip the one that have space
-// 2. Expansion
-
-int is_quote(char character)
+char	*extract_quoted(const char *line, int *i)
 {
-    if (character == '\'' || character == '"')
-        return (1);
-    else if (character == '"')
-        return (2);
-    return (0);
-}
+	char	quote_char;
+	int		start;
+	int		len;
+	char	*content;
 
-char *ft_strncpy(char *dest, const char *src, size_t n)
-{
-    size_t i;
-
-    i = 0;
-    while (i < n && src[i])
+	quote_char = line[*i]; // Save quote_char (' or ")
+	(*i)++;
+	start = *i; // Begining of Quote content
+	while (line[*i] && line[*i] != quote_char)
+		(*i)++; // Keep i++ until find closing quote
+	len = *i - start;
+	content = malloc(sizeof(char) * (len + 1));
+    if (!content)
     {
-        dest[i] = src[i];
-        i++;
+        return (NULL);
     }
-    while (i < n)
-    {
-        dest[i] = '\0';
-        i++;
-    }
-    return (dest);
+    ft_strncpy(content, line + start, len); // copy content between quotes
+	content[len] = '\0';
+	if (line[*i] == quote_char)
+		(*i)++;
+	return (content);
 }
 
-void append_str(char **dest, const char *src) 
+char	*wrap_merged(char *merged, char quote, int count)
 {
-    int len;
-    char *new_str;
-    
-    if (*dest == NULL) 
-        *dest = ft_strdup(src);
-    else 
-    {
-        len = ft_strlen(*dest) + ft_strlen(src) + 1;
-        new_str = malloc(len);
-        if (!new_str)
-            return;
-         new_str[0] = '\0';
-        ft_strlcat(new_str, *dest, len);
-        ft_strlcat(new_str, src, len);
-        free(*dest);
-        *dest = new_str;
-    }
+	char	wrapper[2];
+	char	*res;
+
+	res = NULL;
+	if (count == 1) // if only one count --> use the same quote
+	{
+		wrapper[0] = quote;
+		wrapper[1] = '\0';
+		append_str(&res, wrapper);
+		append_str(&res, merged);
+		append_str(&res, wrapper);
+	}
+	else
+	{
+		append_str(&res, "'");
+		append_str(&res, merged);
+		append_str(&res, "'");
+	}
+	free(merged);
+	return (res);
 }
 
-char *extract_quoted(const char *line, int *i) 
+char	*handle_quotes(const char *line, int *i)
 {
-    char quote_char;
-    int start;
-    int len;
-    char *content;
-    
-    quote_char = line[*i];
-    (*i)++;
-    start = *i;
-    while (line[*i] && line[*i] != quote_char) 
-        (*i)++;
-    len = *i - start;
-    content = malloc(len + 1);
-    ft_strncpy(content, line + start, len);
-    content[len] = '\0';
-    if (line[*i] == quote_char)
-        (*i)++;
-    return (content);
+	char	*merged;
+	char	*tmp;
+	char	first_quote;
+	int		count;
+	int		start;
+
+	count = 0;
+	first_quote = '\0';
+	merged = NULL;
+	while (line[*i] && line[*i] != ' ')
+	{
+		if (is_quote(line[*i]))
+		{
+			if (first_quote == '\0')
+				first_quote = line[*i];
+			tmp = extract_quoted(line, i);
+			count++;
+		}
+		else
+		{
+			start = *i;
+			while (line[*i] && line[*i] != ' ' && !is_quote(line[*i]))
+				(*i)++;
+			tmp = malloc(*i - start + 1);
+            if (!tmp)
+                return (NULL);
+			ft_strncpy(tmp, line + start, *i - start);
+			tmp[*i - start] = '\0';
+		}
+		append_str(&merged, tmp);
+		free(tmp);
+	}
+	if (first_quote)
+		return (wrap_merged(merged, first_quote, count));
+	else
+		return (merged);
 }
 
-char *merge_adjacent_quotes(const char *line) 
+char	*merge_quotes(const char *line)
 {
-    int i;
-    int start;
-    int len;
-    char *spaces;
-    char *result;
-    char *merged;
-    char *token;
-    char quote_type;
-    int merged_count;
-    char this_quote;
-    char *part;
-    
-    i = 0;
-    result = NULL;
-    while (line[i]) 
-    {
-        if (isspace(line[i])) 
-        {
-            start = i;
-            while (line[i] && isspace(line[i]))
-                i++;
-            len = i - start;
-            spaces = malloc(len + 1);
-            ft_strncpy(spaces, line + start, len);
-            spaces[len] = '\0';
-            append_str(&result, spaces);
-            free(spaces);
-        }
-        else if (is_quote(line[i])) 
-        {
-            merged = NULL;
-            quote_type = line[i];
-            merged_count = 0;
-            while (line[i] && is_quote(line[i])) 
-            {
-                char this_quote = line[i];
-                char *part = extract_quoted(line, &i);
-                append_str(&merged, part);
-                free(part);
-                merged_count++;
-                if (!line[i] || isspace(line[i]) || !is_quote(line[i]))
-                    break;
-            }
-            if (merged_count == 1) 
-            {
-                char wrapper[2] = {quote_type, '\0'};
-                append_str(&result, wrapper);
-                append_str(&result, merged);
-                append_str(&result, wrapper);
-            } 
-            else 
-            {
-                append_str(&result, "'");
-                append_str(&result, merged);
-                append_str(&result, "'");
-            }
-            free(merged);
-        }
-        else 
-        {
-            start = i;
-            while (line[i] && !isspace(line[i]) && !is_quote(line[i]))
-                i++;
-            len = i - start;
-            token = malloc(len + 1);
-            ft_strncpy(token, line + start, len);
-            token[len] = '\0';
-            append_str(&result, token);
-            free(token);
-        }
-    }
-    return (result);
+	int		i;
+	char	*result;
+	char	*part;
+
+	i = 0;
+	result = NULL;
+	while (line[i])
+	{
+		while (line[i] == ' ')
+		{
+			append_str(&result, " ");
+			i++;
+		}
+		part = handle_quotes(line, &i);
+		append_str(&result, part);
+		free(part);
+	}
+	return (result);
 }
 
+// int	main(void)
+// {
+// 	char	**split;
+// 	char	line[] = "'e'\"c\"ho \"hello\" | rev";
+//     // char	line[] = "echo \"helloworls\"";
+// 	char	*res;
 
-int main(void)
-{
-    char **split;
-    char line[] = "echo 'l'\"s -al\"      \"hello\" 'ex'";
-    char *res = merge_adjacent_quotes(line);
-    printf("%s\n", res);
-    // printf("%d\n", count_char_in_quote("sds"));
-    // split = ft_split(line, ' ');
-    // int i = 0;
-    // while (split[i])
-    // {
-    //     printf("%s\n", split[i]);
-    //     i++;
-    // }
-    return (0);
-}
+// 	res = merge_quotes(line);
+// 	printf("%s\n", res);
+//     free(res);
+// 	// printf("%d\n", count_char_in_quote("sds"));
+// 	// split = ft_split(line, ' ');
+// 	// int i = 0;
+// 	// while (split[i])
+// 	// {
+// 	//     printf("%s\n", split[i]);
+// 	//     i++;
+// 	// }
+// 	return (0);
+// }
