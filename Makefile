@@ -88,6 +88,7 @@ FILES = main.c \
 		${BUILTIN_DIR}/ft_cd.c \
 		${BUILTIN_DIR}/ft_env.c \
 		${BUILTIN_DIR}/ft_export.c \
+		${BUILTIN_DIR}/ft_exit.c \
 		${BUILTIN_DIR}/ft_export_utils.c \
 		${BUILTIN_DIR}/ft_export_no_args.c \
 		${BUILTIN_DIR}/ft_export_valid_key.c \
