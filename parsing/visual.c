@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visual.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:30:04 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/08 17:40:48 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/10 13:24:38 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void 	print_cmd_elements(t_cmd_element *cmd_element)
 	printf("*    cmd_element quoted: %d\n", cmd_element->quoted);
 }
 
-void	print_node(t_tree *node)
+void	print_node(t_tree *node, t_env *lst)
 {
 	t_file *temp_file;
 	t_cmd_element *temp_cmd_element;
@@ -34,6 +34,7 @@ void	print_node(t_tree *node)
 	printf("***************************************************\n");
 	printf("* Content: |%s|\n", node->content);
 	printf("* Type: %s\n", types_text[node->type]);
+	add_expansions(node, lst);
 	if (node->left)
 		printf("* Left link: %s\n", types_text[node->left->type]);
 	if (node->right)
@@ -63,19 +64,19 @@ void	print_node(t_tree *node)
 	printf("***************************************************\n\n");
 }
 
-void	print_recursive_tree(t_tree *node)
+void	print_recursive_tree(t_tree *node, t_env *lst)
 {
-	print_node(node);
+	print_node(node, lst);
 	if(node->left)
-		print_recursive_tree(node->left);
+		print_recursive_tree(node->left, lst);
 	if(node->right)
-		print_recursive_tree(node->right);
+		print_recursive_tree(node->right, lst);
 }
 
-void	print_all(t_data *request)
+void	print_all(t_data *request, t_env *lst)
 {
 	printf("********************************************************\n");
 	printf("* REQUEST DATASHEET:\n*\n");
 	printf("********************************************************\n\n");
-	print_recursive_tree(request->ast);
+	print_recursive_tree(request->ast, lst);
 }

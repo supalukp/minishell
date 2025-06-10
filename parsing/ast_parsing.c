@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/09 17:57:20 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/10 13:24:13 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_tree *ast_maker(char *substr, int *error)
 
 t_tree	*mns_parse(char *line)
 {
-	t_tree	*request;
+	t_tree			*request;
 	int				error;
 
 	error = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/09 17:57:00 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/10 13:20:00 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	handle_line(char *line, t_data *request)
 		// printf("exit status = %d\n", request->last_exit);
 		clean_data(request);
 	}
+	// print_env(request.env);
+	printf( "find var USER = %s\n", find_expansion_match("USER", request.env));
 }
 
 int	main(int ac, char **av, char **env)
