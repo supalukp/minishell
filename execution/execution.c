@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/09 13:37:43 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:01:15 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,15 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	if (!args)
 		return (1);
 	minishell_env = convert_env_lst_double_arrays(data->env);
-	paths = get_path(args[0], minishell_env);
-	if (!paths)
-		return (free_matrix(minishell_env), free_program(data),
-			command_not_found(args));
+	if (prepare_exec_path(args, minishell_env, &paths))
+		return (free_matrix(minishell_env), free_matrix(args), 127);
+	// else
+	// {
+	// 	paths = get_path(args[0], minishell_env);
+	// 	if (!paths)
+	// 		return (free_matrix(minishell_env), free_program(data),
+	// 			command_not_found(args));
+	// }
 	execve(paths, args, minishell_env);
 	perror("execve failed");
 	free_matrix(minishell_env);

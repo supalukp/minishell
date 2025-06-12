@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/09 17:13:24 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/12 18:10:41 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,20 @@ int	exec_buildin(t_tree *tree, t_data *data)
 	else if (!ft_strcmp(cmd[0], "env"))
 		exit_status = ft_env(tree, data);
 	else if (!ft_strcmp(cmd[0], "exit"))
+	{
 		exit_status = ft_exit(tree, exit_status);
+		if (exit_status != 2)
+		{
+			free_env(data->env);
+			free_matrix(cmd);
+			clean_data(data);
+			rl_clear_history();
+			exit(exit_status);
+		}
+	}
 	else
 		return (free_matrix(cmd), 1);
-	return (free_matrix(cmd), exit_status);
+	if (cmd != NULL)
+		free_matrix(cmd);
+	return (exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/09 17:57:00 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:18:37 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	handle_line(char *line, t_data *request)
 		request->last_exit = exit_status;
 		return;
 	}
+	if (only_space(line))
+		return ;
 	lexer = merge_quotes(line);
 	free(line);
 	tree = mns_parse(lexer);
@@ -50,18 +52,17 @@ int	main(int ac, char **av, char **env)
 	init_signal();
 	request.env = env_init(env);
 	request.last_exit = 0;
-	prompt = build_prompt(request.last_exit);
-	line = readline(prompt);
-	if (prompt)
-		free(prompt);
-	while (line != NULL)
+	while (1)
 	{
-		add_history(line);
-		handle_line(line, &request);
 		prompt = build_prompt(request.last_exit);
 		line = readline(prompt);
 		if (prompt)
 			free(prompt);
+		if (line == NULL)
+			break;
+		if (*line)
+			add_history(line);
+		handle_line(line, &request);
 	}
 	if (request.env)
 		free_env(request.env);
@@ -70,4 +71,3 @@ int	main(int ac, char **av, char **env)
 	rl_clear_history();
 	return (0);
 }
-
