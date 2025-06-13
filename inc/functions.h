@@ -24,6 +24,7 @@
 
 // error_checking.c
 int		only_space(char *line);
+int only_colon(const char *line);
 int		open_quotes(char *line);
 int		no_files(char *line);
 int		pipe_no_args(char *line);

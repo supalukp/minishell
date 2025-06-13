@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/09 14:39:23 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:50:04 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, t_data *data)
 	int	exit_status;
 
 	exit_status = 0;
+	set_signal_to_default();
 	close_unused_pipes(i, pipes);
 	setup_inout(i, pipes);
 	if (redirect_io(cmd_lst->cmd, pipes, data) == -1)
@@ -49,11 +50,53 @@ int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, t_data *data)
 	return (exit_status);
 }
 
+// int	process_parent(t_pipes *pipes)
+// {
+// 	int	i;
+// 	int	status;
+// 	int	last_exit_status = 0;
+// 	pid_t	last_pid = pipes->pid[pipes->process - 1]; // Track last command PID
+
+// 	// Close all pipe fds
+// 	for (i = 0; i < pipes->pipes_count; i++) {
+// 		close(pipes->pipefd[i][0]);
+// 		close(pipes->pipefd[i][1]);
+// 	}
+
+// 	// Wait for all children
+// 	for (i = 0; i < pipes->process; i++) {
+// 		pid_t pid = waitpid(pipes->pid[i], &status, 0);
+// 		if (pid == -1)
+// 			perror("waitpid");
+
+// 		// Save the status of the last command
+// 		if (pid == last_pid) {
+// 			if (WIFEXITED(status))
+// 				last_exit_status = WEXITSTATUS(status);
+// 			else if (WIFSIGNALED(status)) {
+// 				if (WTERMSIG(status) == SIGINT)
+// 					write(1, "\n", 1);
+// 				else if (WTERMSIG(status) == SIGQUIT)
+// 					write(1, "Quit (core dumped)\n", 20);
+// 				last_exit_status = 128 + WTERMSIG(status);
+// 			}
+// 		}
+// 	}
+
+// 	if (pipes)
+// 		free_pipes_struct(pipes);
+// 	return (last_exit_status);
+// }
+
+
 int	process_parent(t_pipes *pipes)
 {
 	int	i;
 	int	status;
 	int	last_exit_status;
+	pid_t	last_pid;
+	pid_t pid;
+
 
 	i = -1;
 	last_exit_status = 0;
@@ -65,12 +108,47 @@ int	process_parent(t_pipes *pipes)
 	i = -1;
 	while (++i < pipes->process)
 	{
-		if (waitpid(pipes->pid[i], &status, 0) == -1)
+		pid = waitpid(pipes->pid[i], &status, 0);
+		if (pid == -1)
 			perror("waitpid");
-		if (WIFEXITED(status))
-			last_exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			last_exit_status = 128 + WTERMSIG(status);
+		last_pid = pipes->pid[pipes->process - 1];
+		if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) == SIGINT)
+				write(1, "\n", 1);
+			else if (WTERMSIG(status) == SIGQUIT)
+				write(1, "Quit (core dumped)\n", 20);
+		}
+		if (pid == last_pid)
+		{
+			if (WIFEXITED(status))
+				last_exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				last_exit_status = 128 + WTERMSIG(status);
+		}
+		// if (pid == last_pid) 
+		// {
+		// 	if (WIFEXITED(status))
+		// 		last_exit_status = WEXITSTATUS(status);
+		// 	else if (WIFSIGNALED(status)) 
+		// 	{
+		// 		if (WTERMSIG(status) == SIGINT)
+		// 			write(1, "\n", 1);
+		// 		else if (WTERMSIG(status) == SIGQUIT)
+		// 			write(1, "Quit (core dumped)\n", 20);
+		// 		last_exit_status = 128 + WTERMSIG(status);
+		// 	}
+		// }
+		// if (WIFEXITED(status))
+		// 	last_exit_status = WEXITSTATUS(status);
+		// else if (WIFSIGNALED(status))
+		// {
+		// 	if (WTERMSIG(status) == SIGINT)
+		// 		write(1, "\n", 1);
+		// 	else if (WTERMSIG(status) == SIGQUIT)
+		// 		write(1, "Quit (core dumped)\n", 20);
+		// 	return (128 + WTERMSIG(status));
+		// }
 	}
 	if (pipes)
 		free_pipes_struct(pipes);

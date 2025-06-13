@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/12 18:01:15 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:58:08 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main_execution(t_tree *tree, t_data *data)
 {
 	int	exit_status;
 
+	signal(SIGINT, SIG_IGN);
 	exit_status = 0;
 	if (!tree)
 		return (0);
@@ -102,13 +103,35 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	char	**args;
 	char	*paths;
 	char	**minishell_env;
-
+	
+	int		stdin_backup;
+	
+	stdin_backup = dup(STDIN_FILENO);
 	args = combine_cmdline(tree->cmd_line);
 	if (!args)
 		return (1);
 	minishell_env = convert_env_lst_double_arrays(data->env);
-	if (prepare_exec_path(args, minishell_env, &paths))
-		return (free_matrix(minishell_env), free_matrix(args), 127);
+	if (args[0][0] == '/' || args[0][0] == '.')
+	{
+		if (prepare_exec_path(args, &paths, minishell_env))
+		{
+			if (paths)
+				free(paths);
+			if (minishell_env)
+				free_matrix(minishell_env);
+			if (args)
+				free_matrix(args);
+			close(stdin_backup);
+			return (127);
+		}
+	}
+	else 
+	{
+		if (init_path(&paths, args, minishell_env))
+			return (close(stdin_backup), 127);
+	}
+	// if (prepare_exec_path(args, &paths))
+	// 	return (free_matrix(minishell_env), free_matrix(args), 127);
 	// else
 	// {
 	// 	paths = get_path(args[0], minishell_env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_separator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 13:25:49 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/06 15:07:04 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/13 17:27:16 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ size_t	parse_len_first(char *substr, t_type operator)
 	}
 	return (pos);
 }
-
 
 char	*parse_get_first(char *substr, t_type operator, int *error)
 {

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/12 18:09:26 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/13 12:23:26 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ t_pipe_cmds	*create_pipe_cmd_node(t_tree *token);
 void		ft_lstadd_cmd_front(t_pipe_cmds **lst, t_pipe_cmds *new);
 t_pipe_cmds	*create_cmd_lst(t_tree *tree);
 int			exec_cmd_line(t_tree *tree, t_data *data, int exit_status);
-int prepare_exec_path(char **args, char **env, char **path);
+int prepare_exec_path(char **args, char **path, char **env);
+int	init_path(char **path, char **args, char **env);
 /* -------------------------------------------------------------------------- */
 /*                                    pipes                                   */
 /* -------------------------------------------------------------------------- */

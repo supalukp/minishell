@@ -6,11 +6,13 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/12 18:18:37 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:58:04 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/headings.h"
+
+volatile sig_atomic_t g_signal = 0;
 
 void	handle_line(char *line, t_data *request)
 {
@@ -24,7 +26,7 @@ void	handle_line(char *line, t_data *request)
 		request->last_exit = exit_status;
 		return;
 	}
-	if (only_space(line))
+	if (only_space(line) || only_colon(line))
 		return ;
 	lexer = merge_quotes(line);
 	free(line);
@@ -49,6 +51,8 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	
+	// signal(SIGPIPE, SIG_IGN);
+
 	init_signal();
 	request.env = env_init(env);
 	request.last_exit = 0;
@@ -59,7 +63,10 @@ int	main(int ac, char **av, char **env)
 		if (prompt)
 			free(prompt);
 		if (line == NULL)
+		{
+			write(1, "exit\n", 5);
 			break;
+		}
 		if (*line)
 			add_history(line);
 		handle_line(line, &request);

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:00:06 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/12 18:22:40 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:01:07 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,12 +167,22 @@ int	unsupported_syntax(char *line)
 	return (0);
 }
 
+int only_colon(const char *line)
+{
+	if (ft_strlen(line) == 1)
+	{
+		if (line[0] == ':')
+			return (1);
+	}
+	return (0);
+}
+
 int	error_checking(char *line, t_data *data)
 {
 	int exit_status;
 
 	exit_status = 0;
-	if (only_space(line))
+	if (only_space(line) || only_colon(line))
 		exit_status = data->last_exit;
 	if (open_quotes(line))
 	{

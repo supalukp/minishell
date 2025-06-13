@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/12 16:55:04 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:34:49 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	init_args_env(char ***args, char ***env, t_tree *tree, t_data *data)
 	return (0);
 }
 
-static int	init_path(char **path, char **args, char **env)
+int	init_path(char **path, char **args, char **env)
 {
 	*path = get_path(args[0], env);
 	if (!*path)
@@ -45,6 +45,7 @@ char *get_program_name(char *path)
 	char **split;
 	char *res;
 	int count;
+	int i;
 	
 	count = 0;
 	split = ft_split(path, '/');
@@ -53,6 +54,9 @@ char *get_program_name(char *path)
 	while (split[count])
 		count++;
 	res = ft_strdup(split[count - 1]);
+	i = -1;
+	while(split[++i])
+		free(split[i]);	
 	free(split);
 	return (res);
 }
@@ -82,7 +86,7 @@ int check_access_path(char *path)
 	return (0);
 }
 
-int prepare_exec_path(char **args, char **env, char **path)
+int prepare_exec_path(char **args, char **path, char **env)
 {
 	char *program_name;
 
@@ -91,21 +95,24 @@ int prepare_exec_path(char **args, char **env, char **path)
 		if (check_access_path(args[0]))
 			return (1);
 		program_name = get_program_name(args[0]);
+		free(args[0]);  
 		args[0] = program_name;
 		if (init_path(path, args, env))
 			return (1);
 	}
 	else if (args[0][0] == '.')
 	{
+		// *path = args[0];
 		*path = ft_strdup(args[0]);
 		program_name = get_program_name(args[0]);
+		free(args[0]);  
 		args[0] = program_name;
 	}
-	else
-	{
-		if (init_path(path, args, env))
-			return (1);
-	}
+	// else
+	// {
+	// 	if (init_path(path, args, env))
+	// 		return (1);
+	// }
 	return (0);
 }
 
@@ -117,18 +124,38 @@ int	external_single(t_tree *tree, t_data *data)
 	char	**env;
 	char	*path;
 	int		stdin_backup;
+	int status;
 
 	stdin_backup = dup(STDIN_FILENO);
 	if (handle_redirect(tree))
 		return (1);
 	if (init_args_env(&args, &env, tree, data))
 		return (close(stdin_backup), 1);
-	if (prepare_exec_path(args, env, &path))
-		return (free_matrix(env), free_matrix(args), close(stdin_backup), 127);
+	if (args[0][0] == '/' || args[0][0] == '.')
+	{
+		if (prepare_exec_path(args, &path, env))
+		{
+			if (path)
+				free(path);
+			if (env)
+				free_matrix(env);
+			if (args)
+				free_matrix(args);
+			close(stdin_backup);
+			return (127);
+		}
+	}
+	else 
+	{
+		if (init_path(&path, args, env))
+			return (close(stdin_backup), 127);
+	}
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork failed");
+		if (path)
+            free(path);
 		return (free_matrix(env), free_matrix(args), 1);
 	}
 	if (pid == 0)
@@ -136,5 +163,6 @@ int	external_single(t_tree *tree, t_data *data)
 	free_matrix(env);
 	dup2(stdin_backup, STDIN_FILENO);
 	close(stdin_backup);
-	return (wait_and_clean(0, pid, args, path));
+	status = wait_and_clean(0, pid, args, path);
+	return (status);
 }
