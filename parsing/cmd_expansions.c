@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:11:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 12:12:02 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/14 17:48:59 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	*find_expansion_match(const char *search, t_env *lst)
 {
-	
 	while (lst)
 	{
 		if (ft_strlen(search) == ft_strlen(lst->env_name))
@@ -24,7 +23,7 @@ char	*find_expansion_match(const char *search, t_env *lst)
 		}
 		lst = lst->next;
 	}
-	return (NULL);
+	return ("");
 }
 
 void	exchange_expansion_values(t_cmd_element *el, char *new, int i, int len)
@@ -42,12 +41,6 @@ void	exchange_expansion_values(t_cmd_element *el, char *new, int i, int len)
 		j++;
 	}
 	while (new[y])
-	{
-		rtnstr[j] = new[y];
-		j++;
-		y++;
-	}
-	while (new[y])
 		rtnstr[j++] = new[y++];
 	i++;
 	while (ft_isalnum(el->content[i]))
@@ -58,19 +51,48 @@ void	exchange_expansion_values(t_cmd_element *el, char *new, int i, int len)
 	el->content = rtnstr;
 }
 
-int	replace_expansion(t_cmd_element *line, t_env *lst)
+int	current_pos_dollar(char *line, int count)
+{
+	int	i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (line[i])
+	{
+		if (line[i] == '$')
+		{
+			if (j == count)
+			{
+				printf("current_pos_dollar = %c which is %d | count = %d\n", line[i], i, count);
+				return (i);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (-1);
+}
+
+void	replace_expansion(t_cmd_element *line, t_env *lst, int *count)
 {
 	int 	i;
 	int		j;
 	int		len;
-
 	char	*searchword;
 	char	*rtnvalue;
+	int		slashed;
 
-	i = 0;
 	j = 0;
-	while (line->content[i] != '$')
-		i++;
+	slashed = 0;
+	i = current_pos_dollar(line->content, *count);
+	if (i > 0 && line->content[i - 1] == '\\')
+	{
+		slashed = 1;
+		(*count)++;
+		memmove(&line->content[i - 1], &line->content[i], strlen(&line->content[i]) + 1);
+		i--;
+	}
 	i++;
 	while (ft_isalnum(line->content[i + j]))
 		j++;
@@ -79,26 +101,50 @@ int	replace_expansion(t_cmd_element *line, t_env *lst)
 	rtnvalue = find_expansion_match(searchword, lst);
 	len = ft_strlen(line->content) - j + ft_strlen(rtnvalue);
 	i--;
-	// free(rtnvalue);
 	free(searchword);
-	exchange_expansion_values(line, rtnvalue, i, len);
-	return (0);
+	if (slashed != 1)
+	{
+		printf("GETTING SLASHED\n");
+		exchange_expansion_values(line, rtnvalue, i, len);
+	}
+}
+
+int	counterchar(char const *s1, char letter)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (s1[i])
+	{
+		if (s1[i] == letter)
+			j++;
+		i++;
+	}
+	return (j);
 }
 
 int	add_expansions(t_tree *node, t_env *lst)
 {
-	t_cmd_element *cmd;
+	t_cmd_element	*cmd;
+	int				expansions;
+	int				count;
 
 	cmd = node->cmd_line;
+	count = 0;
 	// add_tild(node, lst);
 	while (cmd)
 	{
-		while (includedchar('$', cmd->content))
+		expansions = counterchar(cmd->content, '$');
+		
+		while (includedchar('$', cmd->content) && cmd->quoted != 1 && count < counterchar(cmd->content, '$'))
 		{
-			if (replace_expansion(cmd, lst) == 0)
-				return (1);
+			replace_expansion(cmd, lst, &count);
+			printf( "is count moving? %d\n", count);
 		}
 		cmd = cmd->next;
+		count = 0;
 	}
 	return (0);
 }

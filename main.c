@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 12:44:16 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/14 15:17:24 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_line(char *line, t_data *request)
 	if (request->ast)
 	{
 		request->last_exit = main_execution(request->ast, request);
-		print_all(request);
+		// print_all(request);
 		// printf("exit status = %d\n", request->last_exit);
 		clean_data(request);
 	}
@@ -65,7 +65,6 @@ int	main(int ac, char **av, char **env)
 		free_env(request.env);
 	if (line)
     	free(line);
-	rl_clear_history();
+	rl_clear_history(); // TODO = this is never called, and probably belongs in ft_exit
 	return (0);
 }
-

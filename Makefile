@@ -71,6 +71,7 @@ FILES = main.c \
 		${PARS_DIR}/cmd_elements.c \
 		${PARS_DIR}/cmd_ll_files.c \
 		${PARS_DIR}/cmd_expansions.c \
+		${PARS_DIR}/cmd_mergequotes.c \
 		${PARS_DIR}/visual.c \
 		${PARS_DIR}/clean.c \
 		${EXEC_DIR}/my_tree.c \

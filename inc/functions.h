@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 12:15:40 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/14 15:17:55 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int			error_checking(char *line, t_data *data);
 char		*build_prompt(int exit_status);
 
 // prelexer.c
-char		*merge_quotes(const char *line);
-char		*handle_quotes(const char *line, int *i);
-char		*wrap_merged(char *merged, char quote, int count);
-char		*extract_quoted(const char *line, int *i);
+// char		*merge_quotes(const char *line);
+// char		*handle_quotes(const char *line, int *i);
+// char		*wrap_merged(char *merged, char quote, int count);
+// char		*extract_quoted(const char *line, int *i);
 int			have_pipes(t_tree *tree);
-int			is_quote(char character);
-char		*ft_strncpy(char *dest, const char *src, size_t n);
-void		append_str(char **dest, const char *src);
+// int			is_quote(char character);
+// char		*ft_strncpy(char *dest, const char *src, size_t n);
+// void		append_str(char **dest, const char *src);
 
 // separator.c
 void		parse_separator(char *substr, t_tree *parent, int *error);
@@ -83,6 +83,9 @@ void		clean_recursive_tree(t_tree *node);
 
 // expansions.c
 int			add_expansions(t_tree *node, t_env *lst);
+
+// cmd_mergequotes.c
+void		merge_cmd_quotes(t_tree *node);
 
 /* ************************************************************************** */
 /* ***********************************EXEC*********************************** */

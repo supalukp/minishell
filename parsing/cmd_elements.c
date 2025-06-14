@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:44:08 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 12:26:32 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/14 15:17:16 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	get_element_len(char *line, int quoted)
 	char	end_letter;
 
 	i = 1;
-	printf("get len from |%s| \n", line);
 	if (quoted == 2)
 		end_letter = '"';
 	else if (quoted == 1)
@@ -40,7 +39,6 @@ int	get_element_len(char *line, int quoted)
 	}
 	if (quoted)
 		i--;
-	printf("Len = %d \n",i);
 	return (i);
 }
 
@@ -114,7 +112,6 @@ void	remove_cmd_element(t_tree *cmd_line, int quoted, int *error)
 	else 
 	{
 		rtnstr = ft_calloc(ft_strlen(cmd_line->content) + 1 - rmlen , sizeof(char));
-		printf("rtn str len = %lu\n", ft_strlen(cmd_line->content) + 1 - rmlen);
 		if (!rtnstr)
 		{
 			*error = 1;
@@ -145,7 +142,7 @@ void	add_cmd_element(t_tree *cmd_line, int quoted, int len, int *error)
 		return ;
 	}
 	if (quoted >= 1)
-		gap = 1;
+		gap = 2;
 	else
 		gap = 0;
 	element->quoted = quoted;
@@ -199,5 +196,4 @@ void	split_cmd_elements(t_tree *cmd_line, int *error)
 		else
 			handle_cmd_element(cmd_line, 0, error);
 	}
-	print_node(cmd_line);
 }
