@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/09 17:02:19 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/12 17:16:25 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int			exec_buildin(t_tree *tree, t_data *data);
 int			ft_echo(t_tree *tree);
 int			ft_pwd(t_tree *tree);
 int			ft_cd(t_tree *tree);
-int			ft_exit(t_tree *tree, int exit_status);
+int			ft_exit(t_tree *tree, int exit_status, t_data *request);
 int			ft_env(t_tree *tree, t_data *data);
 t_env		**ascii_env_lst(t_data *data);
 int			print_export_no_option(t_data *data);

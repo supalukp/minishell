@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:43:39 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/09 17:27:41 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/12 17:15:49 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int str_is_digit(char *str)
 	return (1);
 }
 
-int	ft_exit(t_tree *tree, int exit_status)
+int	ft_exit(t_tree *tree, int exit_status, t_data *request)
 { 
+	clean_data(request);
 	if (tree->cmd_line->next)
 	{
 		if (tree->cmd_line->next->next)

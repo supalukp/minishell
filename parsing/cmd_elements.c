@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:44:08 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/29 15:11:01 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/14 12:26:32 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,29 @@ int	get_element_len(char *line, int quoted)
 	char	end_letter;
 
 	i = 1;
+	printf("get len from |%s| \n", line);
 	if (quoted == 2)
 		end_letter = '"';
 	else if (quoted == 1)
 		end_letter = '\'';
 	else
+	{
 		end_letter = ' ';
-	while (line[i] != end_letter && line[i])
-		i++;
+		i = 0;
+	}
+	if (end_letter == ' ')
+	{
+		while(line[i] && !includedchar(line[i], " '\""))
+			i++;
+	}
+	else
+	{
+		while (line[i] && line[i] != end_letter)
+			i++;
+	}
+	if (quoted)
+		i--;
+	printf("Len = %d \n",i);
 	return (i);
 }
 
@@ -40,10 +55,10 @@ char	*get_element(char *line, int quoted, int len)
 		j = 1;
 	else
 		j = 0;
-	rtnstr = ft_calloc(len, sizeof(char));
+	rtnstr = ft_calloc(len + 1, sizeof(char));
 	if (!rtnstr)
 		return (NULL);
-	while (i < len - 1)
+	while (i < len)
 	{
 		rtnstr[i] = line[i + j];
 		i++;
@@ -70,8 +85,12 @@ size_t	remove_cmd_element_len(t_tree *cmd_line, int quoted)
 		end_letter = ' ';
 		rmlen = 0;
 	}
-	while (cmd_line->content[rmlen] != end_letter && cmd_line->content[rmlen])
-		rmlen++;
+	if (quoted == 0)
+		while(cmd_line->content[rmlen] && !includedchar(cmd_line->content[rmlen], " '\""))
+			rmlen++;
+	else
+		while (cmd_line->content[rmlen] != end_letter && cmd_line->content[rmlen])
+			rmlen++;
 	if (cmd_line->content[rmlen] == end_letter)
 		rmlen++;
 	while (cmd_line->content[rmlen] == ' ' && cmd_line->content[rmlen])
@@ -94,7 +113,8 @@ void	remove_cmd_element(t_tree *cmd_line, int quoted, int *error)
 	}
 	else 
 	{
-		rtnstr = ft_calloc(ft_strlen(cmd_line->content) - rmlen + 1, sizeof(char));
+		rtnstr = ft_calloc(ft_strlen(cmd_line->content) + 1 - rmlen , sizeof(char));
+		printf("rtn str len = %lu\n", ft_strlen(cmd_line->content) + 1 - rmlen);
 		if (!rtnstr)
 		{
 			*error = 1;
@@ -116,6 +136,7 @@ void	add_cmd_element(t_tree *cmd_line, int quoted, int len, int *error)
 {
 	t_cmd_element	*element;
 	t_cmd_element	*eltmp;
+	int				gap;
 
 	element = ft_calloc(1, sizeof(t_cmd_element));
 	if (!element)
@@ -123,8 +144,16 @@ void	add_cmd_element(t_tree *cmd_line, int quoted, int len, int *error)
 		*error = 1;
 		return ;
 	}
+	if (quoted >= 1)
+		gap = 1;
+	else
+		gap = 0;
 	element->quoted = quoted;
 	element->content = get_element(cmd_line->content, quoted, len);
+	if (cmd_line->content[len + gap] && cmd_line->content[len + gap] != ' ')
+		element->space_after = 0;
+	else
+		element->space_after = 1;
 	if (!element->content)
 	{
 		*error = 1;
@@ -146,8 +175,6 @@ void	handle_cmd_element(t_tree *cmd_line, int quoted, int *error)
 	int len;
 
 	len = get_element_len(cmd_line->content, quoted);
-	if (quoted == 0)
-		len++;
 	add_cmd_element(cmd_line, quoted, len, error);
 	remove_cmd_element(cmd_line, quoted, error);
 	// if (error && cmd_line->cmd_line)
@@ -172,4 +199,5 @@ void	split_cmd_elements(t_tree *cmd_line, int *error)
 		else
 			handle_cmd_element(cmd_line, 0, error);
 	}
+	print_node(cmd_line);
 }

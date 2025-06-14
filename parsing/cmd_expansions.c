@@ -6,22 +6,12 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:11:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/03 18:50:22 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/14 12:12:02 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-static int	includedchar(char c, char const *set)
-{
-	while (*set)
-	{
-		if (c == *set)
-			return (1);
-		set++;
-	}
-	return (0);
-}
 char	*find_expansion_match(const char *search, t_env *lst)
 {
 	
@@ -73,6 +63,7 @@ int	replace_expansion(t_cmd_element *line, t_env *lst)
 	int 	i;
 	int		j;
 	int		len;
+
 	char	*searchword;
 	char	*rtnvalue;
 
@@ -87,9 +78,9 @@ int	replace_expansion(t_cmd_element *line, t_env *lst)
 	ft_strlcpy(searchword, &line->content[i], j + 1);
 	rtnvalue = find_expansion_match(searchword, lst);
 	len = ft_strlen(line->content) - j + ft_strlen(rtnvalue);
-	rtnvalue = ft_calloc(len, sizeof(char));
-	rtnvalue = find_expansion_match(searchword, lst);
 	i--;
+	// free(rtnvalue);
+	free(searchword);
 	exchange_expansion_values(line, rtnvalue, i, len);
 	return (0);
 }
@@ -99,6 +90,7 @@ int	add_expansions(t_tree *node, t_env *lst)
 	t_cmd_element *cmd;
 
 	cmd = node->cmd_line;
+	// add_tild(node, lst);
 	while (cmd)
 	{
 		while (includedchar('$', cmd->content))

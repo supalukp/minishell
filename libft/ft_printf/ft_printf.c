@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:19:11 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/29 15:32:44 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/13 16:24:21 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,6 @@
 #include "ft_printf.h"
 #include <stdio.h>
 #include <unistd.h>
-
-static int	includedchar(char c, char const *set)
-{
-	while (*set)
-	{
-		if (c == *set)
-			return (1);
-		set++;
-	}
-	return (0);
-}
 
 int	handle_str(char *str)
 {

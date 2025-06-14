@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/10 13:24:13 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/14 12:40:49 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ t_tree *ast_maker(char *substr, int *error)
 		if (substr)
 			free(substr);
 		node->type = CMD_LINE;
-		command_line_maker(node, error);
 		if (*error)
 		{
 			free(node);

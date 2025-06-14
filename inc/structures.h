@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/10 13:21:41 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/13 15:37:05 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_cmd_element
 {
 	char					*content;
 	int						quoted;
+	int						space_after;
 	struct s_cmd_element	*next;
 }							t_cmd_element;
 

@@ -6,45 +6,11 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/10 13:18:09 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:44:45 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-
-void    free_matrix(char **matrix)
-{
-    int i;
-
-    i = 0;
-    if (!matrix)
-        return ;
-    while (matrix[i])
-    {
-        free(matrix[i]);
-        matrix[i] = NULL;
-        i++;
-    }
-    free(matrix);
-    matrix = NULL;
-}
-
-void    free_matrix(char **matrix)
-{
-    int i;
-
-    i = 0;
-    if (!matrix)
-        return ;
-    while (matrix[i])
-    {
-        free(matrix[i]);
-        matrix[i] = NULL;
-        i++;
-    }
-    free(matrix);
-    matrix = NULL;
-}
 
 char	**split_env(char *env)
 {

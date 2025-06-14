@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_line.c                                         :+:      :+:    :+:   */
+/*   cmd_spec_expansions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 14:35:34 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 12:35:22 by syukna           ###   ########.fr       */
+/*   Created: 2025/06/12 15:04:06 by syukna            #+#    #+#             */
+/*   Updated: 2025/06/13 15:04:09 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	command_line_maker(t_tree *cmd_line, int *error, t_env *env)
-{
-	// char *lexer;
+// int	is_tild()
 
-	identify_redirections(cmd_line, error);
-	split_cmd_elements(cmd_line, error);
-	if (*error)
-		return ;
-	add_expansions(cmd_line, env);
-	// lexer = merge_quotes(cmd_line->content);
-	// free(cmd_line->content);
-	// cmd_line->content = lexer;
-}
+// int	add_tild(t_tree *node, t_env *lst)
+// {
+	
+// }

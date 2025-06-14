@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/09 17:13:24 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/12 17:16:09 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	exec_buildin(t_tree *tree, t_data *data)
 	else if (!ft_strcmp(cmd[0], "env"))
 		exit_status = ft_env(tree, data);
 	else if (!ft_strcmp(cmd[0], "exit"))
-		exit_status = ft_exit(tree, exit_status);
+		exit_status = ft_exit(tree, exit_status, data);
 	else
 		return (free_matrix(cmd), 1);
 	return (free_matrix(cmd), exit_status);
