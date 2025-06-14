@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/13 16:58:04 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:02:59 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_line(char *line, t_data *request)
 		request->last_exit = exit_status;
 		return;
 	}
-	if (only_space(line) || only_colon(line))
+	if (only_space(line) || only_colon(line) || only_exclamation(line))
 		return ;
 	lexer = merge_quotes(line);
 	free(line);
@@ -58,6 +58,7 @@ int	main(int ac, char **av, char **env)
 	request.last_exit = 0;
 	while (1)
 	{
+		g_signal = 0;
 		prompt = build_prompt(request.last_exit);
 		line = readline(prompt);
 		if (prompt)

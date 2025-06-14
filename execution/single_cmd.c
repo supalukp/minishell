@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/13 16:34:49 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:23:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 static int	handle_redirect(t_tree *tree)
 {
+	int ret;
+	
 	if (tree->files)
-		if (redirect_one_cmd(tree) == -1)
-			return (1);
+	{
+		ret = redirect_one_cmd(tree);
+		if (ret)
+			return (ret);
+	}
 	return (0);
 }
 
@@ -64,24 +69,37 @@ char *get_program_name(char *path)
 
 int check_access_path(char *path)
 {
+	struct stat	st;
+
 	if (access(path, F_OK) == -1)
 	{
 		if (errno == ENOENT)
 		{
 			stderr_msg(path);
 			stderr_msg(": No such file or directory\n");
+			return (127);
 		}
 		else if (errno == EACCES)
 		{
 			stderr_msg(path);
 			stderr_msg(": Permission denied\n");
+			return (126);
 		}
 		else if (errno == ENOTDIR)
 		{
 			stderr_msg(path);
 			stderr_msg(": Not a directory\n");
+			return (126);
 		}
-		return (127);
+	}
+	if (stat(path, &st) == 0)
+    {
+		if (S_ISDIR(st.st_mode))
+        {
+            stderr_msg(path);
+			stderr_msg(": Is a directory\n");
+            return (126);
+        }
 	}
 	return (0);
 }
@@ -89,11 +107,13 @@ int check_access_path(char *path)
 int prepare_exec_path(char **args, char **path, char **env)
 {
 	char *program_name;
-
+	int check;
+	
 	if (args[0][0] == '/')
 	{
-		if (check_access_path(args[0]))
-			return (1);
+		check = check_access_path(args[0]);
+		if (check)
+			return (check);
 		program_name = get_program_name(args[0]);
 		free(args[0]);  
 		args[0] = program_name;
@@ -102,17 +122,11 @@ int prepare_exec_path(char **args, char **path, char **env)
 	}
 	else if (args[0][0] == '.')
 	{
-		// *path = args[0];
 		*path = ft_strdup(args[0]);
 		program_name = get_program_name(args[0]);
 		free(args[0]);  
 		args[0] = program_name;
 	}
-	// else
-	// {
-	// 	if (init_path(path, args, env))
-	// 		return (1);
-	// }
 	return (0);
 }
 
@@ -125,30 +139,42 @@ int	external_single(t_tree *tree, t_data *data)
 	char	*path;
 	int		stdin_backup;
 	int status;
-
+	int check;
+	int redirect_status;
+	
 	stdin_backup = dup(STDIN_FILENO);
-	if (handle_redirect(tree))
-		return (1);
+	redirect_status =  handle_redirect(tree);
+	// if (redirect_status)
+	// 	return (close(stdin_backup), redirect_status)
+	// signal(SIGINT, SIG_IGN);
 	if (init_args_env(&args, &env, tree, data))
 		return (close(stdin_backup), 1);
 	if (args[0][0] == '/' || args[0][0] == '.')
 	{
-		if (prepare_exec_path(args, &path, env))
+		check = prepare_exec_path(args, &path, env);
+		if (check)
 		{
-			if (path)
-				free(path);
 			if (env)
 				free_matrix(env);
 			if (args)
 				free_matrix(args);
 			close(stdin_backup);
-			return (127);
+			return (check);
 		}
 	}
 	else 
 	{
 		if (init_path(&path, args, env))
 			return (close(stdin_backup), 127);
+	}
+	if (g_signal == SIGINT)
+	{
+		free_matrix(env);
+		if (args)
+			free_matrix(args);
+		if (path)
+			free(path);
+		return(130);
 	}
 	pid = fork();
 	if (pid == -1)

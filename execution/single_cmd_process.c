@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 13:11:00 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/13 16:29:46 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:28:59 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	child_execution(char *paths, char **args, char **minishell_env)
 {
 	set_signal_to_default();
-	execve(paths, args, minishell_env);
+	if (g_signal == SIGINT)
+		exit(130);
+	else
+		execve(paths, args, minishell_env);
 	perror("execve failed");
 	free_matrix(minishell_env);
 	if (args)

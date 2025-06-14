@@ -6,19 +6,37 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:18:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 15:28:27 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:25:40 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	heredoc_get_line(char *delimiter, int fd_tty, int fd_write)
+void	handle_heredoc_sigint(int sig)
+{
+	g_signal = sig;
+	write(STDOUT_FILENO, "\n", 1);
+}
+
+void setup_heredoc_signal(void)
+{
+    struct sigaction sa;
+    sa.sa_handler = handle_heredoc_sigint;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT, &sa, NULL);
+}
+
+int	heredoc_get_line(char *delimiter, int fd_tty, int fd_write)
 {
 	char	*line;
 
 	while (1)
 	{
 		write(fd_tty, "> ", 2);
+		setup_heredoc_signal();
+		if (g_signal == SIGINT)
+			return (130);
 		line = get_next_line(fd_tty);
 		if (!line)
 			break ;
@@ -34,6 +52,7 @@ void	heredoc_get_line(char *delimiter, int fd_tty, int fd_write)
 	}
 	close(fd_tty);
 	close(fd_write);
+	return (0);
 }
 
 int	read_tmp_file(char *tmpfile)
@@ -53,12 +72,20 @@ int	read_tmp_file(char *tmpfile)
 	return (0);
 }
 
+
+void reset_signal(void)
+{
+    signal(SIGINT, SIG_DFL);
+}
+
 int	redirect_heredoc(char *delimiter)
 {
 	int		fd_write;
 	int		fd_tty;
 	char	*tmpfile;
-
+	
+	g_signal = 0;
+	setup_heredoc_signal();
 	tmpfile = create_random_filename();
 	fd_write = open(tmpfile, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	if (fd_write == -1)
@@ -70,13 +97,21 @@ int	redirect_heredoc(char *delimiter)
 		close(fd_write);
 		return (-1);
 	}
-	heredoc_get_line(delimiter, fd_tty, fd_write);
+	if (heredoc_get_line(delimiter, fd_tty, fd_write))
+	{
+		unlink(tmpfile);
+		free(tmpfile);
+		set_signal_to_default();
+		return (130);
+	}
 	if (read_tmp_file(tmpfile) != 0)
 		return (-1);
 	unlink(tmpfile);
 	free(tmpfile);
+	set_signal_to_default();
 	return (0);
 }
+
 
 char	*create_random_filename(void)
 {
@@ -106,3 +141,5 @@ char	*create_random_filename(void)
 	free(tmp_file);
 	return (filename);
 }
+
+

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:00:06 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/13 10:01:07 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:06:44 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,11 @@ int	unsupported_syntax(char *line)
 	}
 	while (line[i])
 	{
+		if (line[i] == '(' || line[i] == ')')
+		{
+			stderr_msg("minishell: syntax error near unexpected token ')'\n");
+			return (2);
+		}
 		if (line[i] == '&' && line[i + 1] != '&')
 		{
 			stderr_msg("minishell: syntax error near unexpected token '&'\n");
@@ -177,6 +182,16 @@ int only_colon(const char *line)
 	return (0);
 }
 
+int only_exclamation(const char *line)
+{
+	if (ft_strlen(line) == 1)
+	{
+		if (line[0] == '!')
+			return (1);
+	}
+	return (0);
+}
+
 int	error_checking(char *line, t_data *data)
 {
 	int exit_status;
@@ -184,19 +199,21 @@ int	error_checking(char *line, t_data *data)
 	exit_status = 0;
 	if (only_space(line) || only_colon(line))
 		exit_status = data->last_exit;
+	if (only_exclamation(line))
+		exit_status = 1;
 	if (open_quotes(line))
 	{
 		stderr_msg("minishell: syntax error: unexpected end of file\n");
 		return (2);
 	}
-	if (no_files(line))
-	{
-		stderr_msg("minishell: syntax error near unexpected token 'newline'\n");
-		return (2);
-	}
 	if (pipe_no_args(line))
 	{
 		stderr_msg("minishell: syntax error near unexpected token '|'\n");
+		return (2);
+	}
+	if (no_files(line))
+	{
+		stderr_msg("minishell: syntax error near unexpected token 'newline'\n");
 		return (2);
 	}
 	if (unsupported_syntax(line))

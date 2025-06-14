@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 18:46:44 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 15:30:31 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:34:50 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	handle_redirection_type(t_file *file, int *infile_fd)
 {
+	int ret;
+	
 	if (file->type == INFILE)
 	{
 		if (redirect_infile(file->content) == -1)
@@ -31,8 +33,10 @@ static int	handle_redirection_type(t_file *file, int *infile_fd)
 	}
 	else if (file->type == HEREDOC)
 	{
-		if (redirect_heredoc(file->content) == -1 || *infile_fd == -1)
-			return (-1);
+		if (*infile_fd == -1)
+			return (1);
+		ret = redirect_heredoc(file->content);
+			return (ret);
 	}
 	else
 		return (-1);
@@ -59,13 +63,15 @@ int	redirect_one_cmd(t_tree *token)
 {
 	t_file	*file;
 	int		infile_fd;
+	int ret;
 
 	file = token->files;
 	infile_fd = 0;
 	while (file)
 	{
-		if (handle_redirection_type(file, &infile_fd) == -1)
-			return (-1);
+		ret = handle_redirection_type(file, &infile_fd);
+		if (ret)
+			return (ret);
 		file = file->next;
 	}
 	return (0);

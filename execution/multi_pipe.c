@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/13 16:50:04 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:07:24 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,29 +126,6 @@ int	process_parent(t_pipes *pipes)
 			else if (WIFSIGNALED(status))
 				last_exit_status = 128 + WTERMSIG(status);
 		}
-		// if (pid == last_pid) 
-		// {
-		// 	if (WIFEXITED(status))
-		// 		last_exit_status = WEXITSTATUS(status);
-		// 	else if (WIFSIGNALED(status)) 
-		// 	{
-		// 		if (WTERMSIG(status) == SIGINT)
-		// 			write(1, "\n", 1);
-		// 		else if (WTERMSIG(status) == SIGQUIT)
-		// 			write(1, "Quit (core dumped)\n", 20);
-		// 		last_exit_status = 128 + WTERMSIG(status);
-		// 	}
-		// }
-		// if (WIFEXITED(status))
-		// 	last_exit_status = WEXITSTATUS(status);
-		// else if (WIFSIGNALED(status))
-		// {
-		// 	if (WTERMSIG(status) == SIGINT)
-		// 		write(1, "\n", 1);
-		// 	else if (WTERMSIG(status) == SIGQUIT)
-		// 		write(1, "Quit (core dumped)\n", 20);
-		// 	return (128 + WTERMSIG(status));
-		// }
 	}
 	if (pipes)
 		free_pipes_struct(pipes);
