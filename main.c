@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 17:02:59 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/15 00:05:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,12 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	
-	// signal(SIGPIPE, SIG_IGN);
-
-	init_signal();
 	request.env = env_init(env);
 	request.last_exit = 0;
 	while (1)
 	{
 		g_signal = 0;
+		init_signal();
 		prompt = build_prompt(request.last_exit);
 		line = readline(prompt);
 		if (prompt)

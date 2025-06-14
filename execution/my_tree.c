@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:20:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 15:27:49 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 22:59:50 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,36 +60,3 @@ void	init_s_main(t_data **data, t_tree *tree, char **env)
 	(*data)->env = env_init(env);
 	(*data)->last_exit = 0;
 }
-
-// void	print_ast(t_tree *node)
-// {
-// 	char	**res;
-// 	t_file	*file;
-// 	int		i;
-
-// 	i = 0;
-// 	if (!node)
-// 		return ;
-// 	if (node->type == PIPE)
-// 		printf("PIPE: %s\n", node->content);
-// 	else if (node->type == CMD_LINE)
-// 	{
-// 		res = combine_cmdline(node->cmd_line);
-// 		while (res[i])
-// 		{
-// 			printf("%s ", res[i]);
-// 			if (!res[i + 1])
-// 				printf("\n");
-// 			i++;
-// 		}
-// 		free_matrix(res);
-// 		file = node->files;
-// 		while (file)
-// 		{
-// 			printf("file = %s\n", file->content);
-// 			file = file->next;
-// 		}
-// 	}
-// 	print_ast(node->left);
-// 	print_ast(node->right);
-// }

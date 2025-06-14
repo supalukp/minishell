@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 15:07:24 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:00:07 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, t_data *data)
 	int	exit_status;
 
 	exit_status = 0;
-	set_signal_to_default();
 	close_unused_pipes(i, pipes);
 	setup_inout(i, pipes);
 	if (redirect_io(cmd_lst->cmd, pipes, data) == -1)
@@ -49,45 +48,6 @@ int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, t_data *data)
 		exit_status = external_cmd_process(cmd_lst->cmd, data);
 	return (exit_status);
 }
-
-// int	process_parent(t_pipes *pipes)
-// {
-// 	int	i;
-// 	int	status;
-// 	int	last_exit_status = 0;
-// 	pid_t	last_pid = pipes->pid[pipes->process - 1]; // Track last command PID
-
-// 	// Close all pipe fds
-// 	for (i = 0; i < pipes->pipes_count; i++) {
-// 		close(pipes->pipefd[i][0]);
-// 		close(pipes->pipefd[i][1]);
-// 	}
-
-// 	// Wait for all children
-// 	for (i = 0; i < pipes->process; i++) {
-// 		pid_t pid = waitpid(pipes->pid[i], &status, 0);
-// 		if (pid == -1)
-// 			perror("waitpid");
-
-// 		// Save the status of the last command
-// 		if (pid == last_pid) {
-// 			if (WIFEXITED(status))
-// 				last_exit_status = WEXITSTATUS(status);
-// 			else if (WIFSIGNALED(status)) {
-// 				if (WTERMSIG(status) == SIGINT)
-// 					write(1, "\n", 1);
-// 				else if (WTERMSIG(status) == SIGQUIT)
-// 					write(1, "Quit (core dumped)\n", 20);
-// 				last_exit_status = 128 + WTERMSIG(status);
-// 			}
-// 		}
-// 	}
-
-// 	if (pipes)
-// 		free_pipes_struct(pipes);
-// 	return (last_exit_status);
-// }
-
 
 int	process_parent(t_pipes *pipes)
 {
@@ -106,6 +66,7 @@ int	process_parent(t_pipes *pipes)
 		close(pipes->pipefd[i][1]);
 	}
 	i = -1;
+
 	while (++i < pipes->process)
 	{
 		pid = waitpid(pipes->pid[i], &status, 0);
@@ -127,6 +88,7 @@ int	process_parent(t_pipes *pipes)
 				last_exit_status = 128 + WTERMSIG(status);
 		}
 	}
+
 	if (pipes)
 		free_pipes_struct(pipes);
 	return (last_exit_status);
@@ -147,10 +109,12 @@ static int	fork_and_exec_children(t_pipes *pipes, t_data *data)
 			return (perror_free_pipes("Fork failed", pipes));
 		if (pipes->pid[i] == 0)
 		{
+			set_signal_to_default();
 			exit_status = process_child(i, pipes, tmp, data);
 			free_pipes_struct(pipes);
 			exit(exit_status);
 		}
+		set_signal_to_ignore();
 		tmp = tmp->next;
 	}
 	return (0);

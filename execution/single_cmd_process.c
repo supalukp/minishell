@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 13:11:00 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 18:28:59 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 22:59:02 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 void	child_execution(char *paths, char **args, char **minishell_env)
 {
-	set_signal_to_default();
-	if (g_signal == SIGINT)
-		exit(130);
-	else
-		execve(paths, args, minishell_env);
+	execve(paths, args, minishell_env);
 	perror("execve failed");
 	free_matrix(minishell_env);
 	if (args)
@@ -30,6 +26,7 @@ void	child_execution(char *paths, char **args, char **minishell_env)
 
 int	wait_and_clean(int exit_status, pid_t pid, char **args, char *paths)
 {
+
 	if (waitpid(pid, &exit_status, 0) == -1)
 	{
 		perror("waitpid");

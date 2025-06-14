@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 18:23:28 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 22:59:13 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,8 @@ int	external_single(t_tree *tree, t_data *data)
 	
 	stdin_backup = dup(STDIN_FILENO);
 	redirect_status =  handle_redirect(tree);
-	// if (redirect_status)
-	// 	return (close(stdin_backup), redirect_status)
-	// signal(SIGINT, SIG_IGN);
+	if (redirect_status)
+		return (close(stdin_backup), redirect_status);
 	if (init_args_env(&args, &env, tree, data))
 		return (close(stdin_backup), 1);
 	if (args[0][0] == '/' || args[0][0] == '.')
@@ -167,15 +166,6 @@ int	external_single(t_tree *tree, t_data *data)
 		if (init_path(&path, args, env))
 			return (close(stdin_backup), 127);
 	}
-	if (g_signal == SIGINT)
-	{
-		free_matrix(env);
-		if (args)
-			free_matrix(args);
-		if (path)
-			free(path);
-		return(130);
-	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -185,7 +175,12 @@ int	external_single(t_tree *tree, t_data *data)
 		return (free_matrix(env), free_matrix(args), 1);
 	}
 	if (pid == 0)
+	{
+		set_signal_to_default();
 		child_execution(path, args, env);
+	}
+	else
+		set_signal_to_ignore();
 	free_matrix(env);
 	dup2(stdin_backup, STDIN_FILENO);
 	close(stdin_backup);

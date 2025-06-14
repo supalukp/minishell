@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:18:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 18:25:40 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:13:52 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	handle_heredoc_sigint(int sig)
 void setup_heredoc_signal(void)
 {
     struct sigaction sa;
+	
     sa.sa_handler = handle_heredoc_sigint;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
@@ -30,16 +31,16 @@ void setup_heredoc_signal(void)
 int	heredoc_get_line(char *delimiter, int fd_tty, int fd_write)
 {
 	char	*line;
-
 	while (1)
 	{
 		write(fd_tty, "> ", 2);
-		setup_heredoc_signal();
-		if (g_signal == SIGINT)
-			return (130);
 		line = get_next_line(fd_tty);
 		if (!line)
+		{
+			if (g_signal == SIGINT)
+				return (130);
 			break ;
+		}
 		if (ft_strlen(line) == ft_strlen(delimiter) + 1 && ft_strncmp(line,
 				delimiter, ft_strlen(delimiter)) == 0
 			&& line[ft_strlen(delimiter)] == '\n')
