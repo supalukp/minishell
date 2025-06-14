@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/15 00:05:28 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/15 00:51:03 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	main(int ac, char **av, char **env)
 	
 	request.env = env_init(env);
 	request.last_exit = 0;
+	g_signal = 0;
 	while (1)
 	{
 		g_signal = 0;
