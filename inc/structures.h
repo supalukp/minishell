@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/16 16:20:58 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:24:39 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ typedef struct s_data
 	t_tree					*ast;
 	t_env					*env;
 	int						last_exit;
-	int						std_in;
-	int						std_out;
 }							t_data;
 
 #endif
