@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 09:50:08 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 23:31:15 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:36:31 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*build_prompt(int exit_status)
     char *tmp;
     char *res;
     
+    if (g_signal == 130)
+        exit_status = 130;
     exit_str = ft_itoa(exit_status);
     tmp = ft_strdup("minishell[");
     res = ft_strjoin(tmp, exit_str);

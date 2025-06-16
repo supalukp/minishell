@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:18:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 23:13:52 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:25:01 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ int	heredoc_get_line(char *delimiter, int fd_tty, int fd_write)
 		if (!line)
 		{
 			if (g_signal == SIGINT)
+			{
+				close(fd_tty);
+				close(fd_write);
 				return (130);
+			}
 			break ;
 		}
 		if (ft_strlen(line) == ft_strlen(delimiter) + 1 && ft_strncmp(line,
@@ -84,21 +88,24 @@ int	redirect_heredoc(char *delimiter)
 	int		fd_write;
 	int		fd_tty;
 	char	*tmpfile;
+	int status;
 	
 	g_signal = 0;
 	setup_heredoc_signal();
 	tmpfile = create_random_filename();
 	fd_write = open(tmpfile, O_CREAT | O_WRONLY | O_TRUNC, 0600);
-	if (fd_write == -1)
+	if (fd_write == 1)
 		return (-1);
 	fd_tty = open("/dev/tty", O_RDWR);
 	if (fd_tty == -1)
 	{
 		perror("open /dev/tty failed");
 		close(fd_write);
-		return (-1);
+		free(tmpfile);
+		return (1);
 	}
-	if (heredoc_get_line(delimiter, fd_tty, fd_write))
+	status = heredoc_get_line(delimiter, fd_tty, fd_write);
+	if (status == 130)
 	{
 		unlink(tmpfile);
 		free(tmpfile);
@@ -106,7 +113,12 @@ int	redirect_heredoc(char *delimiter)
 		return (130);
 	}
 	if (read_tmp_file(tmpfile) != 0)
-		return (-1);
+	{
+		unlink(tmpfile);
+		free(tmpfile);
+		set_signal_to_default();
+		return (1);
+	}
 	unlink(tmpfile);
 	free(tmpfile);
 	set_signal_to_default();
@@ -142,5 +154,3 @@ char	*create_random_filename(void)
 	free(tmp_file);
 	return (filename);
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 23:00:07 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:12:09 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,20 @@ static int	fork_and_exec_children(t_pipes *pipes, t_data *data)
 	return (0);
 }
 
+// void prepare_heredoc(t_pipe_cmds *lst)
+// {
+// 	while (lst)
+// 	{
+// 		while (lst->cmd->files)
+// 		{
+// 			if (lst->cmd->files == HEREDOC)
+// 				lst->fd_in = redirect_heredoc(lst->cmd->files->content);
+// 			lst->cmd->files = lst->cmd->files->next;
+// 		}
+// 		lst = lst->next;
+// 	}
+// }
+
 int	pipe_multi_process(t_tree *tree, t_data *data)
 {
 	t_pipes	*pipes;
@@ -129,6 +143,8 @@ int	pipe_multi_process(t_tree *tree, t_data *data)
 	if (!pipes)
 		return (perror("malloc failed"), EXIT_FAILURE);
 	create_pipes(pipes);
+	// prepare_heredoc(); 
+	// get_expansion();
 	if (fork_and_exec_children(pipes, data) != 0)
 		return (EXIT_FAILURE);
 	status = process_parent(pipes);

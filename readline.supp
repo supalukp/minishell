@@ -28,3 +28,9 @@
   ...
   obj:/usr/bin/sleep
 }
+{
+  <cat>
+  Memcheck:Leak
+  ...
+  obj:/usr/bin/cat
+}

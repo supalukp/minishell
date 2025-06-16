@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/15 00:51:03 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:08:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void	handle_line(char *line, t_data *request)
 	}
 }
 
+int signal_event(void)
+{
+	return (0);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	*line;
@@ -51,21 +56,24 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	
+	rl_event_hook = signal_event;
 	request.env = env_init(env);
 	request.last_exit = 0;
 	g_signal = 0;
 	while (1)
 	{
-		g_signal = 0;
 		init_signal();
 		prompt = build_prompt(request.last_exit);
+		g_signal = 0;
 		line = readline(prompt);
 		if (prompt)
 			free(prompt);
 		if (line == NULL)
 		{
 			write(1, "exit\n", 5);
-			break;
+			free_env(request.env);
+			rl_clear_history();
+			exit(131);
 		}
 		if (*line)
 			add_history(line);

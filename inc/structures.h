@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/06 15:17:07 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:20:58 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ typedef struct s_env
 typedef struct s_pipe_cmds
 {
 	t_tree					*cmd;
+	int						fd_in;
+	int						fd_out;
 	struct s_pipe_cmds		*next;
 }							t_pipe_cmds;
 
@@ -81,6 +83,8 @@ typedef struct s_data
 	t_tree					*ast;
 	t_env					*env;
 	int						last_exit;
+	int						std_in;
+	int						std_out;
 }							t_data;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:00:06 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 15:06:44 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:52:09 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,9 +192,11 @@ int only_exclamation(const char *line)
 	return (0);
 }
 
+
 int	error_checking(char *line, t_data *data)
 {
 	int exit_status;
+	int bracket;
 
 	exit_status = 0;
 	if (only_space(line) || only_colon(line))
@@ -216,7 +218,19 @@ int	error_checking(char *line, t_data *data)
 		stderr_msg("minishell: syntax error near unexpected token 'newline'\n");
 		return (2);
 	}
+	bracket = check_bracket(line);
+	if (bracket == 1)
+	{
+		stderr_msg("minishell: open bracket for expansion\n");
+		return (1);
+	}
+	else if (bracket == 2)
+	{
+		stderr_msg("minishell: bad substitution\n");
+		return (1);
+	}
 	if (unsupported_syntax(line))
 		return (2);
 	return (exit_status);
 }
+

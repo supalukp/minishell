@@ -24,14 +24,16 @@
 
 // error_checking.c
 int		only_space(char *line);
-int only_colon(const char *line);
-int only_exclamation(const char *line);
+int		only_colon(const char *line);
+int		only_exclamation(const char *line);
 int		open_quotes(char *line);
 int		no_files(char *line);
 int		pipe_no_args(char *line);
 int		check_semi(char *line);
 int		unsupported_syntax(char *line);
 int		error_checking(char *line, t_data *data);
+int		check_bracket_open(const char *line);
+int		check_bracket(const char *line);
 
 // readline_utils.c
 char	*build_prompt(int exit_status);
@@ -50,9 +52,9 @@ void	append_str(char **dest, const char *src);
 void	parse_separator(char *substr, t_tree *parent, int *error);
 
 // parsing.c
-t_tree			*mns_parse(char *line);
-t_type			has_operator(char *line, t_type	operator);
-t_tree			*ast_maker(char *substr, int *error);
+t_tree	*mns_parse(char *line);
+t_type	has_operator(char *line, t_type operator);
+t_tree	*ast_maker(char *substr, int *error);
 
 // visual.c
 void	print_files(t_file *file);
