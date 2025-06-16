@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 15:17:24 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/16 13:59:50 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	handle_line(char *line, t_data *request)
 		// printf("exit status = %d\n", request->last_exit);
 		clean_data(request);
 	}
-	// print_env(request.env);
 }
 
 int	main(int ac, char **av, char **env)
@@ -48,6 +47,7 @@ int	main(int ac, char **av, char **env)
 	init_signal();
 	request.env = env_init(env);
 	request.last_exit = 0;
+	// print_env(request.env);
 	prompt = build_prompt(request.last_exit);
 	line = readline(prompt);
 	if (prompt)

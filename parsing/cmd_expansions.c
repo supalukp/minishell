@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:11:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 17:48:59 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/14 18:30:44 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	exchange_expansion_values(t_cmd_element *el, char *new, int i, int len)
 	while (new[y])
 		rtnstr[j++] = new[y++];
 	i++;
-	while (ft_isalnum(el->content[i]))
+	while (ft_isalnum(el->content[i]) || el->content[i] == '_')
 		i++;
 	while (el->content[i])
 		rtnstr[j++] = el->content[i++];
@@ -63,10 +63,7 @@ int	current_pos_dollar(char *line, int count)
 		if (line[i] == '$')
 		{
 			if (j == count)
-			{
-				printf("current_pos_dollar = %c which is %d | count = %d\n", line[i], i, count);
 				return (i);
-			}
 			j++;
 		}
 		i++;
@@ -94,7 +91,7 @@ void	replace_expansion(t_cmd_element *line, t_env *lst, int *count)
 		i--;
 	}
 	i++;
-	while (ft_isalnum(line->content[i + j]))
+	while (ft_isalnum(line->content[i + j]) || line->content[i + j] == '_')
 		j++;
 	searchword = ft_calloc(j + 1, sizeof(char));
 	ft_strlcpy(searchword, &line->content[i], j + 1);
@@ -103,10 +100,7 @@ void	replace_expansion(t_cmd_element *line, t_env *lst, int *count)
 	i--;
 	free(searchword);
 	if (slashed != 1)
-	{
-		printf("GETTING SLASHED\n");
 		exchange_expansion_values(line, rtnvalue, i, len);
-	}
 }
 
 int	counterchar(char const *s1, char letter)
@@ -139,10 +133,7 @@ int	add_expansions(t_tree *node, t_env *lst)
 		expansions = counterchar(cmd->content, '$');
 		
 		while (includedchar('$', cmd->content) && cmd->quoted != 1 && count < counterchar(cmd->content, '$'))
-		{
 			replace_expansion(cmd, lst, &count);
-			printf( "is count moving? %d\n", count);
-		}
 		cmd = cmd->next;
 		count = 0;
 	}
