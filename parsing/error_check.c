@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:00:06 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/16 14:52:09 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:51:27 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,11 +152,11 @@ int	unsupported_syntax(char *line)
 	}
 	while (line[i])
 	{
-		if (line[i] == '(' || line[i] == ')')
-		{
-			stderr_msg("minishell: syntax error near unexpected token ')'\n");
-			return (2);
-		}
+		// if (line[i] == '(' || line[i] == ')')
+		// {
+		// 	stderr_msg("minishell: syntax error near unexpected token ')'\n");
+		// 	return (2);
+		// }
 		if (line[i] == '&' && line[i + 1] != '&')
 		{
 			stderr_msg("minishell: syntax error near unexpected token '&'\n");

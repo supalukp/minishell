@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/16 17:24:39 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:43:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_cmd_element
 {
 	char					*content;
 	int						quoted;
+	int 					fd_in;
+	int 					fd_out;
 	struct s_cmd_element	*next;
 }							t_cmd_element;
 
@@ -50,6 +52,9 @@ typedef struct s_tree
 	t_type					type;
 	t_cmd_element			*cmd_line;
 	t_file					*files;
+	int 					fd_in;
+	int 					fd_out;
+	int 					fd_heredoc;
 	struct s_tree			*left;
 	struct s_tree			*right;
 }							t_tree;
@@ -64,8 +69,6 @@ typedef struct s_env
 typedef struct s_pipe_cmds
 {
 	t_tree					*cmd;
-	int						fd_in;
-	int						fd_out;
 	struct s_pipe_cmds		*next;
 }							t_pipe_cmds;
 

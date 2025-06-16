@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/09 17:57:20 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:21:14 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ t_tree *ast_maker(char *substr, int *error)
 	if (!node)
 		return (*error = 1, NULL);
 	node->content = NULL;
+	node->fd_heredoc = -1;
+	node->fd_in = -1;
+	node->fd_out = -1;
 	if (has_operator(substr, OR))
 	{
 		node->type = OR;

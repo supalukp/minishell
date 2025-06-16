@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:18:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/16 15:25:01 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 00:02:06 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,20 @@ int	heredoc_get_line(char *delimiter, int fd_tty, int fd_write)
 	{
 		write(fd_tty, "> ", 2);
 		line = get_next_line(fd_tty);
+		if (g_signal == SIGINT)
+		{
+			close(fd_tty);
+			close(fd_write);
+			return (130);
+		}
 		if (!line)
 		{
-			if (g_signal == SIGINT)
-			{
-				close(fd_tty);
-				close(fd_write);
-				return (130);
-			}
+			// if (g_signal == SIGINT)
+			// {
+			// 	close(fd_tty);
+			// 	close(fd_write);
+			// 	return (130);
+			// }
 			break ;
 		}
 		if (ft_strlen(line) == ft_strlen(delimiter) + 1 && ft_strncmp(line,

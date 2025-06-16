@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:49:02 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/16 17:27:49 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:15:32 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_pipe_cmds	*create_pipe_cmd_node(t_tree *token)
 	if (!node)
 		return (NULL);
 	node->cmd = token;
-	node->fd_in = -1;
-	node->fd_out = -1;
+	// node->fd_in = -1;
+	// node->fd_out = -1;
 	node->next = NULL;
 	return (node);
 }
