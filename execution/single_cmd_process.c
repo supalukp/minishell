@@ -6,14 +6,15 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 13:11:00 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/16 11:04:33 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 22:58:10 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	child_execution(char *paths, char **args, char **minishell_env)
+void	child_execution(char *paths, char **args, char **minishell_env, t_data *data)
 {
+	(void)data;
 	execve(paths, args, minishell_env);
 	perror("execve failed");
 	free_matrix(minishell_env);
@@ -21,6 +22,7 @@ void	child_execution(char *paths, char **args, char **minishell_env)
 		free_matrix(args);
 	if (paths)
 		free(paths);
+	free_program(data);
 	exit(126);
 }
 

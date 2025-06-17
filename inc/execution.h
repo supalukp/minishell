@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/17 16:31:04 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 22:38:09 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			external_single(t_tree *tree, t_data *data);
 int			external_cmd_process(t_tree *tree, t_data *data);
 int			pipe_process(t_tree *tree, char **env, t_data *data);
 int			command_not_found(char **args);
-void		child_execution(char *paths, char **args, char **env);
+void		child_execution(char *paths, char **args, char **env, t_data *data);
 int			wait_and_clean(int exit_status, pid_t pid, char **args,
 				char *paths);
 void		backup_std_io(int stdin_backup, int stdout_backup);

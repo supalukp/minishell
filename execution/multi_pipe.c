@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/17 16:35:29 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 23:13:45 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,12 +295,7 @@ int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, t_data *data)
 	int	exit_status;
 
 	exit_status = 0;
-	close_unused_pipes(i, pipes); // OK
-	// setup_inout(i, pipes); // Merge with redirect
-	// if (redirect_io(cmd_lst->cmd, pipes, data) == -1)
-	// {
-	// 	return (1);
-	// }
+	close_unused_pipes(i, pipes);
 	if (save_fd_io(cmd_lst->cmd))
 	{
 		free_all_exit(data, pipes);
@@ -308,12 +303,10 @@ int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst, t_data *data)
 	}
 	if (dup_for_pipes(i, cmd_lst->cmd, pipes))
 		return (1);
+	if (cmd_lst->cmd->cmd_line == NULL)
+		return (0);
 	if (is_buildin(cmd_lst->cmd) == true)
-	{
 		exit_status = exec_buildin(cmd_lst->cmd, data);
-		if (data)
-			free_program(data);
-	}
 	else if (cmd_lst->cmd->type == CMD_LINE)
 		exit_status = external_cmd_process(cmd_lst->cmd, data);
 	return (exit_status);
@@ -381,6 +374,7 @@ static int	fork_and_exec_children(t_pipes *pipes, t_data *data)
 		{
 			set_signal_to_default();
 			exit_status = process_child(i, pipes, tmp, data);
+			free_program(data);
 			free_pipes_struct(pipes);
 			exit(exit_status);
 		}
@@ -389,20 +383,6 @@ static int	fork_and_exec_children(t_pipes *pipes, t_data *data)
 	}
 	return (0);
 }
-
-// void prepare_heredoc(t_pipe_cmds *lst)
-// {
-// 	while (lst)
-// 	{
-// 		while (lst->cmd->files)
-// 		{
-// 			if (lst->cmd->files == HEREDOC)
-// 				lst->fd_in = redirect_heredoc(lst->cmd->files->content);
-// 			lst->cmd->files = lst->cmd->files->next;
-// 		}
-// 		lst = lst->next;
-// 	}
-// }
 
 int	pipe_multi_process(t_tree *tree, t_data *data)
 {

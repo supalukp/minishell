@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/17 15:47:19 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 00:33:30 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void	handle_line(char *line, t_data *request)
 	lexer = merge_quotes(line);
 	free(line);
 	tree = mns_parse(lexer);
-	if (have_pipes(tree))
-		free(lexer);
+	// if (have_pipes(tree))
+	// 	free(lexer);
 	request->ast = tree;
 	if (request->ast)
 	{
@@ -180,6 +180,7 @@ int	main(int ac, char **av, char **env)
 		}
 		if (*line)
 			add_history(line);
+		printf("here\n");
 		handle_line(line, &request);
 	}
 	// if (request.env)

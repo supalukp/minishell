@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/17 16:26:28 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 22:39:48 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,18 @@ int prepare_exec_path(char **args, char **path, char **env)
 	{
 		check = check_access_path(args[0]);
 		if (check)
+		{
+			free_matrix(env);
+			free_matrix(args);
 			return (check);
+		}
 		program_name = get_program_name(args[0]);
 		free(args[0]);  
 		args[0] = program_name;
 		if (init_path(path, args, env))
-			return (1);
+		{
+			return (127);
+		}
 	}
 	else if (args[0][0] == '.')
 	{
@@ -167,10 +173,6 @@ int	external_single(t_tree *tree, t_data *data)
 		check = prepare_exec_path(args, &path, env);
 		if (check)
 		{
-			if (env)
-				free_matrix(env);
-			if (args)
-				free_matrix(args);
 			close(stdin_backup);
 			backup_std_io(stdin_backup, stdout_backup);
 			return (check);
@@ -195,15 +197,15 @@ int	external_single(t_tree *tree, t_data *data)
 	if (pid == 0)
 	{
 		set_signal_to_default();
-		child_execution(path, args, env);
+		child_execution(path, args, env, data);
 	}
 	else
 		set_signal_to_ignore();
-	free_matrix(env);
 	dup2(stdin_backup, STDIN_FILENO);
 	dup2(stdout_backup, STDOUT_FILENO);
 	close(stdin_backup);
 	close(stdout_backup);
 	status = wait_and_clean(0, pid, args, path);
+	free_matrix(env);
 	return (status);
 }

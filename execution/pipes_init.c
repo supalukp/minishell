@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:20 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 11:58:48 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 21:41:33 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_pipes	*init_pipes(t_tree *tree)
 {
 	int		i;
 	t_pipes	*pipes;
-
+	
 	pipes = malloc(sizeof(t_pipes));
 	if (!pipes)
 		return (NULL);

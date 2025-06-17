@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:48:52 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:08:19 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 22:28:24 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	unset_variable(char *key, t_data *data)
 	if (!key || !data)
 		return (1);
 	env_lst = data->env;
-	while (env_lst)
+	while (env_lst && env_lst->next)
 	{
 		if (ft_strcmp(env_lst->next->env_name, key) == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/17 15:42:07 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 23:22:52 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	exec_cmd_line(t_tree *tree, t_data *data, int exit_status)
 {
+	if (tree->cmd_line == NULL)
+		return (0);
 	if (is_buildin(tree) == true)
 	{
 		if (tree->files)
@@ -77,6 +79,8 @@ char	**combine_cmdline(t_cmd_element *args)
 	t_cmd_element	*tmp;
 
 	count = count_cmd_element(args);
+	if (count == 0)
+		return (NULL);
 	res = malloc(sizeof(char *) * (count + 1));
 	i = 0;
 	tmp = args;
@@ -102,24 +106,19 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	char	**args;
 	char	*paths;
 	char	**minishell_env;
+	int check;
 	
-	// int		stdin_backup;
-	
-	// stdin_backup = dup(STDIN_FILENO);
 	args = combine_cmdline(tree->cmd_line);
 	if (!args)
 		return (1);
 	minishell_env = convert_env_lst_double_arrays(data->env);
 	if (args[0][0] == '/' || args[0][0] == '.')
 	{
-		if (prepare_exec_path(args, &paths, minishell_env))
+		check = prepare_exec_path(args, &paths, minishell_env);
+		if (check)
 		{
-			if (paths)
-				free(paths);
-			if (minishell_env)
-				free_matrix(minishell_env);
-			if (args)
-				free_matrix(args);
+			// if (minishell_env)
+			// 	free_matrix(minishell_env);
 			return (127);
 		}
 	}
@@ -127,7 +126,7 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	{
 		if (init_path(&paths, args, minishell_env))
 		{
-			close_save_fd(data->ast);
+			// free_program(data);
 			return (127);
 		}
 	}
@@ -136,7 +135,6 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	close_save_fd(data->ast);
 	free_matrix(minishell_env);
 	free_matrix(args);
-	free_program(data);
 	free(paths);
 	return (126);
 }

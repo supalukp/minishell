@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/16 22:21:14 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 00:34:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ t_type	has_operator(char *line, t_type	operator)
 	return (0);
 }
 
-
-
 t_tree *ast_maker(char *substr, int *error)
 {
 	t_tree *node;
@@ -97,8 +95,8 @@ t_tree *ast_maker(char *substr, int *error)
 			free(node);
 			return (*error = 1, NULL);
 		}
-		if (substr)
-			free(substr);
+		// if (substr)
+		// 	free(substr);
 		node->type = CMD_LINE;
 		command_line_maker(node, error);
 		if (*error)
@@ -107,6 +105,8 @@ t_tree *ast_maker(char *substr, int *error)
 			return (NULL);
 		}
 	}
+	if (substr)
+		free(substr);
 	return (node);
 }
 
