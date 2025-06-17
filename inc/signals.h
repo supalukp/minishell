@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:25:13 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 22:44:32 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:34:32 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void							handle_sigint(int sig);
 void							init_signal(void);
 void							set_signal_to_default(void);
 void							set_signal_to_ignore(void);
-
+void setup_heredoc_signal(void);
 #endif

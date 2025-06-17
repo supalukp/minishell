@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 23:00:30 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:42:07 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	char	*paths;
 	char	**minishell_env;
 	
-	int		stdin_backup;
+	// int		stdin_backup;
 	
-	stdin_backup = dup(STDIN_FILENO);
+	// stdin_backup = dup(STDIN_FILENO);
 	args = combine_cmdline(tree->cmd_line);
 	if (!args)
 		return (1);
@@ -120,17 +120,20 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 				free_matrix(minishell_env);
 			if (args)
 				free_matrix(args);
-			close(stdin_backup);
 			return (127);
 		}
 	}
 	else 
 	{
 		if (init_path(&paths, args, minishell_env))
-			return (close(stdin_backup), 127);
+		{
+			close_save_fd(data->ast);
+			return (127);
+		}
 	}
 	execve(paths, args, minishell_env);
 	perror("execve failed");
+	close_save_fd(data->ast);
 	free_matrix(minishell_env);
 	free_matrix(args);
 	free_program(data);

@@ -6,24 +6,24 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 22:59:13 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:26:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-static int	handle_redirect(t_tree *tree)
-{
-	int ret;
+// static int	handle_redirect(t_tree *tree)
+// {
+// 	int ret;
 	
-	if (tree->files)
-	{
-		ret = redirect_one_cmd(tree);
-		if (ret)
-			return (ret);
-	}
-	return (0);
-}
+// 	if (tree->files)
+// 	{
+// 		ret = redirect_one_cmd(tree);
+// 		if (ret)
+// 			return (ret);
+// 	}
+// 	return (0);
+// }
 
 static int	init_args_env(char ***args, char ***env, t_tree *tree, t_data *data)
 {
@@ -130,6 +130,13 @@ int prepare_exec_path(char **args, char **path, char **env)
 	return (0);
 }
 
+void backup_std_io(int stdin_backup, int stdout_backup)
+{
+	dup2(stdin_backup, STDIN_FILENO);
+	dup2(stdout_backup, STDOUT_FILENO);
+	close(stdin_backup);
+	close(stdout_backup);
+}
 
 int	external_single(t_tree *tree, t_data *data)
 {
@@ -138,16 +145,23 @@ int	external_single(t_tree *tree, t_data *data)
 	char	**env;
 	char	*path;
 	int		stdin_backup;
+	int		stdout_backup;
 	int status;
 	int check;
 	int redirect_status;
 	
 	stdin_backup = dup(STDIN_FILENO);
-	redirect_status =  handle_redirect(tree);
+	stdout_backup = dup(STDOUT_FILENO);
+	if (save_fd_io(tree))
+		return (close(stdin_backup), 1);
+	redirect_status = dup_for_one_cmd(tree);
 	if (redirect_status)
 		return (close(stdin_backup), redirect_status);
 	if (init_args_env(&args, &env, tree, data))
+	{
+		backup_std_io(stdin_backup, stdout_backup);
 		return (close(stdin_backup), 1);
+	}
 	if (args[0][0] == '/' || args[0][0] == '.')
 	{
 		check = prepare_exec_path(args, &path, env);
@@ -158,13 +172,17 @@ int	external_single(t_tree *tree, t_data *data)
 			if (args)
 				free_matrix(args);
 			close(stdin_backup);
+			backup_std_io(stdin_backup, stdout_backup);
 			return (check);
 		}
 	}
 	else 
 	{
 		if (init_path(&path, args, env))
+		{
+			backup_std_io(stdin_backup, stdout_backup);
 			return (close(stdin_backup), 127);
+		}
 	}
 	pid = fork();
 	if (pid == -1)
@@ -183,7 +201,9 @@ int	external_single(t_tree *tree, t_data *data)
 		set_signal_to_ignore();
 	free_matrix(env);
 	dup2(stdin_backup, STDIN_FILENO);
+	dup2(stdout_backup, STDOUT_FILENO);
 	close(stdin_backup);
+	close(stdout_backup);
 	status = wait_and_clean(0, pid, args, path);
 	return (status);
 }

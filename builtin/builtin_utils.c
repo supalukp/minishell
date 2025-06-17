@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/12 18:10:41 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:24:58 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	exec_buildin(t_tree *tree, t_data *data)
 		exit_status = ft_env(tree, data);
 	else if (!ft_strcmp(cmd[0], "exit"))
 	{
-		exit_status = ft_exit(tree, exit_status);
+		exit_status = ft_exit(tree, data->last_exit);
 		if (exit_status != 2)
 		{
 			free_env(data->env);

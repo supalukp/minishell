@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/17 00:02:33 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:47:19 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,59 @@ volatile sig_atomic_t g_signal = 0;
 // 	}
 // }
 
+void close_all_heredoc_fd(t_tree *tree)
+{
+	if (tree == NULL)
+		return ;
+    if (tree->type == PIPE || tree->type == OR || tree->type == AND) 
+	{
+        close_all_heredoc_fd(tree->left);
+        close_all_heredoc_fd(tree->right);
+    } 
+	else if (tree->type == CMD_LINE)
+	{
+		if (tree->fd_heredoc != -1)
+			close(tree->fd_heredoc);
+	}
+}
 
-// void traverse_heredoc(t_tree *node)
-// {
-// 	if (node == NULL)
-// 		return ;
-//     if (node->type == PIPE || node->type == OR || node->type == AND) 
-// 	{
-//         traverse_tree(node->left);
-//         traverse_tree(node->right);
-//     } 
-// 	else if (node->type == CMD_LINE)
-// 	{
-// 		while (node->files)
-// 		{
-// 			if (node->files->type == HEREDOC)
-// 				node->fd_heredoc = get_heredoc();
-// 			node->files = node->files->next;
-// 		}
-// 	}
-// }
+int traverse_heredoc(t_tree *tree)
+{
+	int status;
+	t_tree *node;
+	t_file *file;
+
+	node = tree;
+	if (node == NULL)
+		return 0;
+    if (node->type == PIPE || node->type == OR || node->type == AND) 
+	{
+        status = traverse_heredoc(node->left);
+		if (status != 0)
+        	return (status);
+        status = traverse_heredoc(node->right);
+		if (status != 0)
+        	return (status);
+    } 
+	else if (node->type == CMD_LINE)
+	{
+		file = node->files;
+		while (file)
+		{
+			if (file->type == HEREDOC)
+			{
+				status = redirect_heredoc(file, node);
+				if (status != 0)
+				{
+					close_all_heredoc_fd(tree);
+					return (status);
+				}
+			}
+			file = file->next;
+		}
+	}
+	return (0);
+}
 
 // void traverse_tree(t_tree *node)
 // {
@@ -96,6 +129,13 @@ void	handle_line(char *line, t_data *request)
 		// print_all(request);
 		// get_heredoc();
 		// traverse_tree(request->ast);
+		exit_status = traverse_heredoc(request->ast);
+		if (exit_status != 0)
+		{
+			request->last_exit = exit_status;
+			clean_data(request);
+			return ;
+		}
 		request->last_exit = main_execution(request->ast, request);
 		// printf("exit status = %d\n", request->last_exit);
 		clean_data(request);
@@ -125,8 +165,12 @@ int	main(int ac, char **av, char **env)
 		prompt = build_prompt(request.last_exit);
 		g_signal = 0;
 		line = readline(prompt);
-		if (prompt)
-			free(prompt);
+		free(prompt);
+		if (g_signal == 130)
+		{
+			request.last_exit = 130;
+			continue;
+		}
 		if (line == NULL)
 		{
 			write(1, "exit\n", 5);
@@ -138,10 +182,10 @@ int	main(int ac, char **av, char **env)
 			add_history(line);
 		handle_line(line, &request);
 	}
-	if (request.env)
-		free_env(request.env);
-	if (line)
-    	free(line);
+	// if (request.env)
+	free_env(request.env);
+	// if (line)
+    // 	free(line);
 	rl_clear_history();
 	return (0);
 }

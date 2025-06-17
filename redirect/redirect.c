@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 18:46:44 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 17:34:50 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:33:46 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	handle_redirection_type(t_file *file, int *infile_fd)
 {
-	int ret;
+	// int ret;
 	
 	if (file->type == INFILE)
 	{
@@ -31,13 +31,13 @@ static int	handle_redirection_type(t_file *file, int *infile_fd)
 		if (redirect_append(file->content) == -1)
 			return (-1);
 	}
-	else if (file->type == HEREDOC)
-	{
-		if (*infile_fd == -1)
-			return (1);
-		ret = redirect_heredoc(file->content);
-			return (ret);
-	}
+	// else if (file->type == HEREDOC)
+	// {
+	// 	if (*infile_fd == -1)
+	// 		return (1);
+	// 	ret = redirect_heredoc(file->content);
+	// 		return (ret);
+	// }
 	else
 		return (-1);
 	return (0);

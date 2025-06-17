@@ -87,6 +87,7 @@ FILES = main.c \
 		${REDIRECT_DIR}/redirect_utils.c \
 		${EXEC_DIR}/error_msg.c \
 		${REDIRECT_DIR}/heredoc.c \
+		${REDIRECT_DIR}/heredoc_new.c \
 		${BUILTIN_DIR}/builtin_utils.c \
 		${BUILTIN_DIR}/ft_echo.c \
 		${BUILTIN_DIR}/ft_pwd.c \

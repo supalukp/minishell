@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/13 12:23:26 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:31:04 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,21 @@ int			command_not_found(char **args);
 void		child_execution(char *paths, char **args, char **env);
 int			wait_and_clean(int exit_status, pid_t pid, char **args,
 				char *paths);
-
+void		backup_std_io(int stdin_backup, int stdout_backup);
 t_pipe_cmds	*create_pipe_cmd_node(t_tree *token);
 void		ft_lstadd_cmd_front(t_pipe_cmds **lst, t_pipe_cmds *new);
 t_pipe_cmds	*create_cmd_lst(t_tree *tree);
 int			exec_cmd_line(t_tree *tree, t_data *data, int exit_status);
-int prepare_exec_path(char **args, char **path, char **env);
-int	init_path(char **path, char **args, char **env);
+int			prepare_exec_path(char **args, char **path, char **env);
+int			init_path(char **path, char **args, char **env);
 /* -------------------------------------------------------------------------- */
 /*                                    pipes                                   */
 /* -------------------------------------------------------------------------- */
 
 void		close_unused_pipes(int i, t_pipes *pipes);
-void		setup_inout_first(t_pipes *pipes);
-void		setup_inout_last(t_pipes *pipes);
-void		setup_inout(int i, t_pipes *pipes);
+// void		setup_inout_first(t_pipes *pipes);
+// void		setup_inout_last(t_pipes *pipes);
+// void		setup_inout(int i, t_pipes *pipes);
 t_pipe_cmds	*create_pipe_cmd_node(t_tree *token);
 void		ft_lstadd_cmd_front(t_pipe_cmds **lst, t_pipe_cmds *new);
 t_pipe_cmds	*create_cmd_lst(t_tree *tree);
@@ -96,7 +96,13 @@ int			redirect_one_cmd(t_tree *token);
 int			collect_heredoc_input(char *delimeter);
 char		*create_random_filename(void);
 // int redirect_heredoc(int fd_heredoc);
-int			redirect_heredoc(char *delimiter);
+// int			redirect_heredoc(char *delimiter);
+char		*create_random_filename(void);
+int			heredoc_get_line(char *delimiter, int fd_tty, int fd_write);
+int			redirect_heredoc(t_file *file, t_tree *node);
+int			dup_for_one_cmd(t_tree *node);
+int			save_fd_io(t_tree *node);
+void		close_save_fd(t_tree *node);
 
 /* -------------------------------------------------------------------------- */
 /*                                  build_in                                  */

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 23:05:11 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/17 00:10:53 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:06:47 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@
         }
 */
 
-
 char	*create_random_filename(void)
 {
 	int		fd_tmp;
@@ -108,7 +107,9 @@ int	heredoc_get_line(char *delimiter, int fd_tty, int fd_write)
             return (130);
         }
 		if (!line)
+		{
 			break ;
+		}
 		if (ft_strlen(line) == ft_strlen(delimiter) + 1 && ft_strncmp(line,
 				delimiter, ft_strlen(delimiter)) == 0
 			&& line[ft_strlen(delimiter)] == '\n')
@@ -123,6 +124,22 @@ int	heredoc_get_line(char *delimiter, int fd_tty, int fd_write)
 	close(fd_write);
 	return (0);
 }
+
+int clean_exit(char *tmpfile, int fd_write, int fd_tty, int ret)
+{
+    if (fd_write != -1) 
+		close(fd_write);
+    if (fd_tty != -1) 
+		close(fd_tty);
+    if (tmpfile) 
+	{
+        unlink(tmpfile);
+        free(tmpfile);
+    }
+    set_signal_to_default();
+    return (ret);
+}
+
 
 int	redirect_heredoc(t_file *file, t_tree *node)
 {
@@ -140,31 +157,22 @@ int	redirect_heredoc(t_file *file, t_tree *node)
 	{
 		perror("open tmpfile for writing failed");
 		free(tmpfile);
-		return (-1);
+		return (1);
 	}
 	fd_tty = open("/dev/tty", O_RDWR);
 	if (fd_tty == -1)
 	{
 		perror("open /dev/tty failed");
-		free(tmpfile);
-		return (-1);
+		return (clean_exit(tmpfile, fd_write, -1, 1));
 	}
 	status = heredoc_get_line(file->content, fd_tty, fd_write);
 	if (status == 130)
-	{
-		unlink(tmpfile);
-		free(tmpfile);
-		set_signal_to_default();
-		return (130);
-	}
+		return (clean_exit(tmpfile, fd_write, fd_tty, 130));
 	fd_read = open(tmpfile, O_RDONLY);
     if (fd_read == -1)
 	{
 		perror("heredoc open failed");
-		unlink(tmpfile);
-		free(tmpfile);
-		set_signal_to_default();
-		return (-1);
+		return (clean_exit(tmpfile, -1, -1, 1));
 	}
 	if (node->fd_heredoc != -1)
 		close(node->fd_heredoc);
