@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 19:26:22 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/18 19:36:17 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void		remove_redirection(int index, t_tree *cmd_line, int *error);
 char		*get_redirection_file(int index, char *cmd_line, int *error);
 t_type		define_redirection_type(int index, char *cmd_line);
 void		get_redirections(int index, t_tree *cmd_line, int *error);
+void		remove_quotes_redirections(t_tree *cmd_line);
+char		*get_redirection_file(int index, char *cmd_line, int *error);
 void		remove_quotes_redirections(t_tree *cmd_line);
 
 // cmd_ll_files.c

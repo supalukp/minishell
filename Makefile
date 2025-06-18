@@ -69,6 +69,7 @@ FILES = main.c \
 		${PARS_DIR}/cmd_line.c \
 		${PARS_DIR}/cmd_files_get.c \
 		${PARS_DIR}/cmd_files_add.c \
+		${PARS_DIR}/cmd_files_quotes.c \
 		${PARS_DIR}/cmd_elements.c \
 		${PARS_DIR}/cmd_expansions.c \
 		${PARS_DIR}/cmd_exp_tild.c \
