@@ -63,13 +63,17 @@ FILES = main.c \
 		${PARS_DIR}/readline_utils.c \
 		${PARS_DIR}/prelexer_utils.c \
 		${PARS_DIR}/ast_parsing.c \
+		${PARS_DIR}/ast_maker.c \
 		${PARS_DIR}/ast_separator.c \
 		${PARS_DIR}/ast_parenthesis.c \
 		${PARS_DIR}/cmd_line.c \
-		${PARS_DIR}/cmd_redirections.c \
+		${PARS_DIR}/cmd_files_get.c \
+		${PARS_DIR}/cmd_files_add.c \
 		${PARS_DIR}/cmd_elements.c \
-		${PARS_DIR}/cmd_ll_files.c \
 		${PARS_DIR}/cmd_expansions.c \
+		${PARS_DIR}/cmd_exp_tild.c \
+		${PARS_DIR}/cmd_exp_trim.c \
+		${PARS_DIR}/cmd_exp_utils.c \
 		${PARS_DIR}/cmd_spec_expansions.c \
 		${PARS_DIR}/cmd_mergequotes.c \
 		${PARS_DIR}/visual.c \

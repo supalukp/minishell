@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:44:08 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 15:17:16 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/18 18:51:16 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,19 +169,17 @@ void	add_cmd_element(t_tree *cmd_line, int quoted, int len, int *error)
 
 void	handle_cmd_element(t_tree *cmd_line, int quoted, int *error)
 {
-	int len;
+	int	len;
 
 	len = get_element_len(cmd_line->content, quoted);
 	add_cmd_element(cmd_line, quoted, len, error);
 	remove_cmd_element(cmd_line, quoted, error);
-	// if (error && cmd_line->cmd_line)
-	// 	free(cmd_line->cmd_line);
 }
 
 void	split_cmd_elements(t_tree *cmd_line, int *error)
 {
-	int i;
-	char *tmpstr;
+	int		i;
+	char	*tmpstr;
 
 	i = 0;
 	tmpstr = ft_strtrim(cmd_line->content, " ");

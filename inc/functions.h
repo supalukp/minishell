@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/17 19:29:23 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/18 19:26:22 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int			is_letters(char letter, char *substr);
 void		remove_parenthesis(char **substr, int *error);
 
 // cmd_line.c
-void	command_line_maker(t_tree *cmd_line, int *error, t_data *request);
+void		command_line_maker(t_tree *cmd_line, int *error, t_data *request);
+void	add_cmd_file(char *ctt, t_type type, t_tree *ln, int *error);
 
 // redirections.c
 void		identify_redirections(t_tree *cmd_line, int *error);
@@ -86,11 +87,15 @@ void		clean_recursive_tree(t_tree *node);
 int			add_expansions(t_tree *node, t_env *lst, t_data *request);
 int			current_pos_dollar(char *line, int count);
 
-// spec_expansions.c
+// expansions
 char		*find_expansion_match(const char *search, t_env *lst);
 void		add_tild(t_cmd_element *element, t_env *lst);
-void		special_dollar_sign(t_cmd_element *line, t_env *lst, int *count, int exit_code);
+void		spec_dol(t_cmd_element *line, t_env *lst, int *count, int code);
 int			counterchar(char const *s1, char letter);
+void		trim_space(t_cmd_element *cmd);
+int			counterchar(char const *s1, char letter);
+int			current_pos_dollar(char *line, int count);
+char		*find_expansion_match(const char *search, t_env *lst);
 
 // cmd_mergequotes.c
 void		merge_cmd_quotes(t_tree *node);
@@ -100,7 +105,7 @@ void		merge_cmd_quotes(t_tree *node);
 /* ************************************************************************** */
 
 // env_init.c
-t_env 		*env_init(char **env);
-void 		print_env(t_env *lst);
+t_env		*env_init(char **env);
+void		print_env(t_env *lst);
 
 #endif

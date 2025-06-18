@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:25:45 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/17 19:28:56 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/18 15:15:13 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ void	remove_quotes_red(t_file *file)
 void	remove_quotes_redirections(t_tree *cmd_line)
 {
 	t_file	*file;
-	
+
 	file = cmd_line->files;
 	if (file == NULL)
 		return ;
@@ -200,5 +200,4 @@ void	remove_quotes_redirections(t_tree *cmd_line)
 		remove_quotes_red(file);
 		file = file->next;
 	}
-	
 }
