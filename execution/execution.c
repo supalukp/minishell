@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/12 14:45:12 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:25:00 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main_execution(t_tree *tree, t_data *data)
 	}
 	else if (tree->type == CMD_LINE)
 	{
-		command_line_maker(tree, &error, data->env);
+		command_line_maker(tree, &error, data);
 		if (error)
 			return (1);
 		exit_status = exec_cmd_line(tree, data, exit_status);

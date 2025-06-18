@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:30:04 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 12:07:43 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/17 19:30:58 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	print_files(t_file *file)
 {
 	printf("*    File name: |%s|\n", file->content);
 	printf("*    File type: %s\n", types_text[file->type] );
+	printf("*    File quoted: %d\n", file->quoted );
 }
 
 void 	print_cmd_elements(t_cmd_element *cmd_element)

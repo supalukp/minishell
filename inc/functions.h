@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 15:17:55 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/17 19:29:23 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			is_letters(char letter, char *substr);
 void		remove_parenthesis(char **substr, int *error);
 
 // cmd_line.c
-void		command_line_maker(t_tree *cmd_line, int *error, t_env *env);
+void	command_line_maker(t_tree *cmd_line, int *error, t_data *request);
 
 // redirections.c
 void		identify_redirections(t_tree *cmd_line, int *error);
@@ -70,6 +70,7 @@ void		remove_redirection(int index, t_tree *cmd_line, int *error);
 char		*get_redirection_file(int index, char *cmd_line, int *error);
 t_type		define_redirection_type(int index, char *cmd_line);
 void		get_redirections(int index, t_tree *cmd_line, int *error);
+void		remove_quotes_redirections(t_tree *cmd_line);
 
 // cmd_ll_files.c
 void		add_cmd_file(char *ctt, t_type type, t_tree *ln, int *error);
@@ -82,7 +83,14 @@ void		clean_data(t_data *data);
 void		clean_recursive_tree(t_tree *node);
 
 // expansions.c
-int			add_expansions(t_tree *node, t_env *lst);
+int			add_expansions(t_tree *node, t_env *lst, t_data *request);
+int			current_pos_dollar(char *line, int count);
+
+// spec_expansions.c
+char		*find_expansion_match(const char *search, t_env *lst);
+void		add_tild(t_cmd_element *element, t_env *lst);
+void		special_dollar_sign(t_cmd_element *line, t_env *lst, int *count, int exit_code);
+int			counterchar(char const *s1, char letter);
 
 // cmd_mergequotes.c
 void		merge_cmd_quotes(t_tree *node);

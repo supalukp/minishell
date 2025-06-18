@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/16 13:59:50 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/17 18:51:02 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_line(char *line, t_data *request)
 	if (request->ast)
 	{
 		request->last_exit = main_execution(request->ast, request);
-		// print_all(request);
+		print_all(request);
 		// printf("exit status = %d\n", request->last_exit);
 		clean_data(request);
 	}
