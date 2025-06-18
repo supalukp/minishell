@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 17:34:49 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 00:52:56 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	init_path(char **path, char **args, char **env)
 	return (0);
 }
 
+
 int	external_single(t_tree *tree, t_data *data)
 {
 	pid_t	pid;
@@ -52,7 +53,6 @@ int	external_single(t_tree *tree, t_data *data)
 	redirect_status = dup_for_one_cmd(tree);
 	if (redirect_status)
 		return (backup_std_io(stdin_backup, stdout_backup), redirect_status);
-	backup_std_io(stdin_backup, stdout_backup);
 	if (init_args_env(&args, &env, tree, data))
 	{
 		backup_std_io(stdin_backup, stdout_backup);

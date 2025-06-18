@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 11:57:21 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 00:13:45 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	handle_line(char *line, t_data *request)
 {
 	t_tree	*tree;
 	int	exit_status;
-	char *lexer;
+	// char *lexer;
 
 	exit_status = error_checking(line, request);
 	if (exit_status != 0) 
@@ -118,9 +118,9 @@ void	handle_line(char *line, t_data *request)
 	}
 	if (only_space(line) || only_colon(line) || only_exclamation(line))
 		return ;
-	lexer = merge_quotes(line);
-	free(line);
-	tree = mns_parse(lexer);
+	// lexer = merge_quotes(line);
+	// free(line);
+	tree = mns_parse(line);
 	// if (have_pipes(tree))
 	// 	free(lexer);
 	request->ast = tree;
@@ -158,6 +158,7 @@ int	main(int ac, char **av, char **env)
 	
 	rl_event_hook = signal_event;
 	request.env = env_init(env);
+	signal(SIGPIPE, SIG_IGN);
 	request.last_exit = 0;
 	g_signal = 0;
 	while (1)

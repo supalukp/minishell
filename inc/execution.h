@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 18:16:34 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 00:42:38 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		close_save_fd(t_tree *node);
 int			failed_dup(int fd);
 int			dup_for_pipes(int i, t_tree *node, t_pipes *pipes);
 int			dup_for_one_cmd(t_tree *node);
-
+void	update_shlvl(t_env *env_lst);
 /* -------------------------------------------------------------------------- */
 /*                                   builtin                                  */
 /* -------------------------------------------------------------------------- */

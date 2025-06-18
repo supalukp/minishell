@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 18:20:49 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 01:30:05 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static t_env	*create_own_env(void)
 	return (own_lst);
 }
 
-static void	update_shlvl(t_env *env_lst)
+void	update_shlvl(t_env *env_lst)
 {
 	int		level;
 	char	*value;
@@ -90,17 +90,13 @@ static void	update_shlvl(t_env *env_lst)
 			found = true;
 			level = ft_atoi(tmp->env_variable);
 			if (level < 0)
-			{
-				value = ft_itoa(1);
-				tmp->env_variable = value;
-			}
+				level = 1;
 			else
-			{
 				level++;
-				free(tmp->env_variable);
-				value = ft_itoa(level);
-				tmp->env_variable = value;
-			}
+				
+			free(tmp->env_variable);
+			value = ft_itoa(level);
+			tmp->env_variable = value;
 			break ;
 		}
 		tmp = tmp->next;
@@ -130,7 +126,8 @@ t_env	*env_init(char **env)
 			ft_lstadd_env_back(&env_lst, tmp);
 			i++;
 		}
+		update_shlvl(env_lst);
+		// TODO : check if OLDPWD exist if not create with NULL value
 	}
-	update_shlvl(env_lst);
 	return (env_lst);
 }
