@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:11:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 17:55:56 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/18 20:41:29 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	add_expansions(t_tree *node, t_env *lst, t_data *request)
 		q = cmd->quoted;
 		while (includedchar('$', cc) && q != 1 && count < counterchar(cc, '$'))
 		{
-			spec_dol(cmd, lst, &count, request->last_exit);
+			spec_dol(cmd, &count, request->last_exit);
 			replace_expansion(cmd, lst, &count);
 			cc = cmd->content;
 		}

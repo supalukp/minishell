@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 13:22:38 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 13:48:16 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/18 19:53:15 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 void	quotes_merger(t_cmd_element *cmd)
 {
-	char 			*newstr;
+	char			*newstr;
 	t_cmd_element	*tmpcmd;
-	
+
 	if (!cmd || !cmd->next)
 		return ;
 	tmpcmd = cmd->next;
-	// newstr = ft_calloc(ft_strlen(cmd->content) + ft_strlen(cmd->next->content) + 1, sizeof(char));
 	newstr = ft_strjoin(cmd->content, cmd->next->content);
 	free(cmd->content);
 	cmd->content = newstr;
@@ -32,7 +31,7 @@ void	quotes_merger(t_cmd_element *cmd)
 
 void	merge_cmd_quotes(t_tree *node)
 {
-	t_cmd_element *cmd;
+	t_cmd_element	*cmd;
 
 	if (!node->cmd_line)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:04:06 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 16:37:41 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/18 19:55:53 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	exchange_dollar_values(t_cmd_element *el, char *new, int i, int len)
 	char	*rtnstr;
 	int		j;
 	int		y;
-	
+
 	j = 0;
 	y = 0;
 	rtnstr = ft_calloc(len + 1, sizeof(char));
@@ -33,21 +33,18 @@ void	exchange_dollar_values(t_cmd_element *el, char *new, int i, int len)
 		rtnstr[j++] = el->content[i++];
 	free(el->content);
 	el->content = rtnstr;
-	printf("rtnstr = %s\n", el->content);
 }
 
-void	spec_dol(t_cmd_element *line, t_env *lst, int *count, int code)
+void	spec_dol(t_cmd_element *line, int *count, int code)
 {
-	int i;
-	int len;
+	int		i;
+	int		len;
 	char	*codestr;
 	char	*pid;
 
 	i = current_pos_dollar(line->content, *count);
 	if (i == -1)
 		return ;
-	(void)lst;
-
 	if (line->content[i + 1] && line->content[i + 1] == '?')
 	{
 		codestr = ft_itoa(code);

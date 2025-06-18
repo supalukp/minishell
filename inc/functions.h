@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 19:36:17 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/18 20:37:05 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,6 @@ void		remove_quotes_redirections(t_tree *cmd_line);
 // cmd_ll_files.c
 void		add_cmd_file(char *ctt, t_type type, t_tree *ln, int *error);
 
-// cmd_elements.c
-void		split_cmd_elements(t_tree *cmd_line, int *error);
-
 // clean.c
 void		clean_data(t_data *data);
 void		clean_recursive_tree(t_tree *node);
@@ -92,7 +89,7 @@ int			current_pos_dollar(char *line, int count);
 // expansions
 char		*find_expansion_match(const char *search, t_env *lst);
 void		add_tild(t_cmd_element *element, t_env *lst);
-void		spec_dol(t_cmd_element *line, t_env *lst, int *count, int code);
+void		spec_dol(t_cmd_element *line, int *count, int code);
 int			counterchar(char const *s1, char letter);
 void		trim_space(t_cmd_element *cmd);
 int			counterchar(char const *s1, char letter);
@@ -101,6 +98,14 @@ char		*find_expansion_match(const char *search, t_env *lst);
 
 // cmd_mergequotes.c
 void		merge_cmd_quotes(t_tree *node);
+
+void		split_cmd_elements(t_tree *cmd_line, int *error);
+void		remove_cmd_element(t_tree *cmd_line, int quoted, int *error);
+size_t		remove_cmd_element_len(t_tree *cmd_line, int quoted);
+char		*get_element(char *line, int quoted, int len);
+int			get_element_len(char *line, int quoted);
+void		add_cmd_element(t_tree *cmd_line, int quoted, int len, int *error);
+void		handle_remcmd(char *rtnstr, t_tree *cmd_line, size_t rmlen, int *error);
 
 /* ************************************************************************** */
 /* ***********************************EXEC*********************************** */
