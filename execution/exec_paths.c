@@ -6,17 +6,145 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/12 14:07:19 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:40:27 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// int get_program_name(char -*)
+#include "../inc/headings.h"
 
-// int exec_absolute_path(char **path, char ***args, char **env)
-// {
-// 	// check if path exist?
-// 	// if not bash: /bin/hello: No such file or directory
-// 	// get the program name
-// 	// put in the args frist argument
-// 	if (access())
-// }
+int	check_access_path(char *path)
+{
+	struct stat	st;
+
+	if (access(path, F_OK) == -1)
+	{
+		if (errno == ENOENT)
+		{
+			stderr_msg(path);
+			stderr_msg(": No such file or directory\n");
+			return (127);
+		}
+		else if (errno == EACCES)
+		{
+			stderr_msg(path);
+			stderr_msg(": Permission denied\n");
+			return (126);
+		}
+		else if (errno == ENOTDIR)
+		{
+			stderr_msg(path);
+			stderr_msg(": Not a directory\n");
+			return (126);
+		}
+	}
+	if (stat(path, &st) == 0)
+	{
+		if (S_ISDIR(st.st_mode))
+		{
+			stderr_msg(path);
+			stderr_msg(": Is a directory\n");
+			return (126);
+		}
+	}
+	return (0);
+}
+
+char	*get_program_name(char *path)
+{
+	char	**split;
+	char	*res;
+	int		count;
+	int		i;
+
+	count = 0;
+	split = ft_split(path, '/');
+	if (!split)
+		return (NULL);
+	while (split[count])
+		count++;
+	res = ft_strdup(split[count - 1]);
+	i = -1;
+	while (split[++i])
+		free(split[i]);
+	free(split);
+	return (res);
+}
+
+int	prepare_exec_path(char **args, char **path, char **env)
+{
+	char	*program_name;
+	int		check;
+
+	if (args[0][0] == '/')
+	{
+		check = check_access_path(args[0]);
+		if (check)
+		{
+			free_matrix(env);
+			free_matrix(args);
+			return (check);
+		}
+		program_name = get_program_name(args[0]);
+		free(args[0]);
+		args[0] = program_name;
+		if (init_path(path, args, env))
+			return (127);
+	}
+	else if (args[0][0] == '.')
+	{
+		*path = ft_strdup(args[0]);
+		program_name = get_program_name(args[0]);
+		free(args[0]);
+		args[0] = program_name;
+	}
+	return (0);
+}
+
+char	*get_path(char *command, char **envp)
+{
+	int		i;
+	char	**all_path;
+
+	i = 0;
+	if (!command || !envp)
+		return (NULL);
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			all_path = ft_split(ft_strchr(envp[i], '=') + 1, ':');
+			if (!all_path)
+				return (NULL);
+			return (find_executable(all_path, command));
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+char	*find_executable(char **all_path, char *command)
+{
+	int		j;
+	char	*add_slash;
+	char	*path_command;
+
+	j = 0;
+	while (all_path[j] != NULL)
+	{
+		add_slash = ft_strjoin(all_path[j], "/");
+		if (!add_slash)
+			return (free_matrix(all_path), NULL);
+		path_command = ft_strjoin(add_slash, command);
+		if (!path_command)
+			return (free_matrix(all_path), NULL);
+		free(add_slash);
+		if (access(path_command, F_OK | X_OK) == 0)
+		{
+			free_matrix(all_path);
+			return (path_command);
+		}
+		free(path_command);
+		j++;
+	}
+	return (free_matrix(all_path), NULL);
+}

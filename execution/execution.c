@@ -6,29 +6,11 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/17 23:22:52 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:41:17 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-
-int	exec_cmd_line(t_tree *tree, t_data *data, int exit_status)
-{
-	if (tree->cmd_line == NULL)
-		return (0);
-	if (is_buildin(tree) == true)
-	{
-		if (tree->files)
-			if (redirect_one_cmd(tree) == -1)
-				return (1);
-		exit_status = exec_buildin(tree, data);
-	}
-	else if (tree->left == NULL && tree->right == NULL)
-		exit_status = external_single(tree, data);
-	else
-		exit_status = external_cmd_process(tree, data);
-	return (exit_status);
-}
 
 int	main_execution(t_tree *tree, t_data *data)
 {
@@ -53,6 +35,36 @@ int	main_execution(t_tree *tree, t_data *data)
 	}
 	else if (tree->type == CMD_LINE)
 		exit_status = exec_cmd_line(tree, data, exit_status);
+	return (exit_status);
+}
+
+int	exec_cmd_line(t_tree *tree, t_data *data, int exit_status)
+{
+	int	stdin_backup;
+	int	stdout_backup;
+	int	redirect_status;
+
+	if (tree->cmd_line == NULL)
+		return (0);
+	if (is_buildin(tree) == true)
+	{
+		stdin_backup = dup(STDIN_FILENO);
+		stdout_backup = dup(STDOUT_FILENO);
+		if (save_fd_io(tree))
+			return (close(stdin_backup), close(stdout_backup), 1);
+		redirect_status = dup_for_one_cmd(tree);
+		if (redirect_status)
+			return (backup_std_io(stdin_backup, stdout_backup),
+				redirect_status);
+		if (ft_strcmp(tree->cmd_line->content, "exit") == 0)
+			backup_std_io(stdin_backup, stdout_backup);
+		exit_status = exec_buildin(tree, data);
+		backup_std_io(stdin_backup, stdout_backup);
+	}
+	else if (tree->left == NULL && tree->right == NULL)
+		exit_status = external_single(tree, data);
+	else
+		exit_status = external_cmd_process(tree, data);
 	return (exit_status);
 }
 
@@ -106,8 +118,8 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	char	**args;
 	char	*paths;
 	char	**minishell_env;
-	int check;
-	
+	int		check;
+
 	args = combine_cmdline(tree->cmd_line);
 	if (!args)
 		return (1);
@@ -116,19 +128,12 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	{
 		check = prepare_exec_path(args, &paths, minishell_env);
 		if (check)
-		{
-			// if (minishell_env)
-			// 	free_matrix(minishell_env);
 			return (127);
-		}
 	}
-	else 
+	else
 	{
 		if (init_path(&paths, args, minishell_env))
-		{
-			// free_program(data);
 			return (127);
-		}
 	}
 	execve(paths, args, minishell_env);
 	perror("execve failed");

@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   single_cmd_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 15:58:36 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 17:40:18 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/06/18 17:33:04 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/06/18 17:35:04 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	free_matrix(char **matrix)
+void	backup_std_io(int stdin_backup, int stdout_backup)
 {
-	int	i;
-
-	i = 0;
-	if (!matrix)
-		return ;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
-}
-
-void	free_program(t_data *data)
-{
-	if (data->ast)
-		free_ast(data->ast);
-	if (data->env)
-		free_env(data->env);
+	dup2(stdin_backup, STDIN_FILENO);
+	dup2(stdout_backup, STDOUT_FILENO);
+	close(stdin_backup);
+	close(stdout_backup);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_tree.c                                          :+:      :+:    :+:   */
+/*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/06 15:20:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/14 22:59:50 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/06/18 17:42:44 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/06/18 17:42:46 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,4 @@ void	free_ast(t_tree *node)
 	if (node->files)
 		free_file_list(node->files);
 	free(node);
-}
-
-void	init_s_main(t_data **data, t_tree *tree, char **env)
-{
-	*data = malloc(sizeof(t_data));
-	if (!*data)
-		return ;
-	(*data)->ast = tree;
-	(*data)->env = env_init(env);
-	(*data)->last_exit = 0;
 }

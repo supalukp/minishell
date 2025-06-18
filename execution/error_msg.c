@@ -6,13 +6,13 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:51:48 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 12:19:56 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:14:32 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	print_file_err(char *filename, int errnum)
+void	print_file_err(const char *filename, int errnum)
 {
 	write(STDERR_FILENO, "minishell: ", 12);
 	write(STDERR_FILENO, filename, strlen(filename));
@@ -29,12 +29,12 @@ int	command_not_found(char **args)
 	return (127);
 }
 
-void	stderr_msg(char *err_msg)
+void	stderr_msg(const char *err_msg)
 {
 	write(2, err_msg, ft_strlen(err_msg));
 }
 
-void	error_free_pipes(char *err_msg, t_pipes *pipes)
+void	error_free_pipes(const char *err_msg, t_pipes *pipes)
 {
 	stderr_msg(err_msg);
 	if (pipes->pipefd)
@@ -43,7 +43,7 @@ void	error_free_pipes(char *err_msg, t_pipes *pipes)
 		free(pipes);
 }
 
-int	perror_free_pipes(char *err_msg, t_pipes *pipes)
+int	perror_free_pipes(const char *err_msg, t_pipes *pipes)
 {
 	perror(err_msg);
 	free_pipes_struct(pipes);

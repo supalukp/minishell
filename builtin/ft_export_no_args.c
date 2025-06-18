@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:20 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:08:10 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:11:14 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	no_argument(t_tree *tree)
 		return (1);
 }
 
-void	sort_env_lst(int count_env, t_env **env_lst)
+static void	sort_env_lst(int count_env, t_env **env_lst)
 {
 	int		i;
 	int		j;

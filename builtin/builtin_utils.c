@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/17 15:24:58 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:08:02 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,28 @@ bool	is_buildin(t_tree *tree)
 		return (free_matrix(cmd), false);
 }
 
+static int	handle_exit(t_tree *tree, t_data *data, char **cmd)
+{
+	int	status;
+
+	status = ft_exit(tree, data->last_exit);
+	if (status != 2)
+	{
+		free_env(data->env);
+		free_matrix(cmd);
+		clean_data(data);
+		rl_clear_history();
+		exit(status);
+	}
+	return (status);
+}
+
 int	exec_buildin(t_tree *tree, t_data *data)
 {
-	int		exit_status = 0;
+	int		exit_status;
 	char	**cmd;
 
+	exit_status = 0;
 	cmd = combine_cmdline(tree->cmd_line);
 	if (!ft_strcmp(cmd[0], "echo"))
 		exit_status = ft_echo(tree);
@@ -64,19 +81,9 @@ int	exec_buildin(t_tree *tree, t_data *data)
 	else if (!ft_strcmp(cmd[0], "env"))
 		exit_status = ft_env(tree, data);
 	else if (!ft_strcmp(cmd[0], "exit"))
-	{
-		exit_status = ft_exit(tree, data->last_exit);
-		if (exit_status != 2)
-		{
-			free_env(data->env);
-			free_matrix(cmd);
-			clean_data(data);
-			rl_clear_history();
-			exit(exit_status);
-		}
-	}
+		exit_status = handle_exit(tree, data, cmd);
 	else
-		return (free_matrix(cmd), 1);
+		exit_status = 1;
 	if (cmd != NULL)
 		free_matrix(cmd);
 	return (exit_status);

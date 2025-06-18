@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:34:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:16:34 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:13:31 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	create_only_key(t_cmd_element *args, t_data *data)
 	return (flag);
 }
 
-int	process_arguments(t_tree *tree, t_data *data)
+static int	process_arguments(t_tree *tree, t_data *data)
 {
 	int				flag;
 	t_cmd_element	*args;

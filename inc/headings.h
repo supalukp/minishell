@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:37 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/14 14:05:22 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:16:00 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-#include <sys/stat.h>
-
 
 /* ************************************************************************** */
 /* ***************************INTERNAL LIBRARIES***************************** */

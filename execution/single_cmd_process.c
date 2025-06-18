@@ -6,13 +6,14 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 13:11:00 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/17 22:58:10 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:15:02 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	child_execution(char *paths, char **args, char **minishell_env, t_data *data)
+void	child_execution(char *paths, char **args, char **minishell_env,
+		t_data *data)
 {
 	(void)data;
 	execve(paths, args, minishell_env);
@@ -28,7 +29,6 @@ void	child_execution(char *paths, char **args, char **minishell_env, t_data *dat
 
 int	wait_and_clean(int exit_status, pid_t pid, char **args, char *paths)
 {
-
 	if (waitpid(pid, &exit_status, 0) == -1)
 	{
 		perror("waitpid");

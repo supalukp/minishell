@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:25:45 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/07 18:09:38 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:37:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,6 @@ t_type	define_redirection_type(int index, char *cmd_line)
 	}
 	return (INVALID);
 }
-
-// INFILE, <
-// HEREDOC, <<
-// OUTFILE, >
-// OUTFILE_APPEND, >>
 
 void	get_redirections(int index, t_tree *cmd_line, int *error)
 {

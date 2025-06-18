@@ -73,21 +73,23 @@ FILES = main.c \
 		${PARS_DIR}/cmd_ll_files.c \
 		${PARS_DIR}/visual.c \
 		${PARS_DIR}/clean.c \
-		${EXEC_DIR}/my_tree.c \
+		${EXEC_DIR}/free_tree.c \
 		${EXEC_DIR}/execution.c \
 		${EXEC_DIR}/exec_utils.c \
+		${EXEC_DIR}/exec_paths.c \
 		${EXEC_DIR}/multi_pipe.c \
 		${EXEC_DIR}/pipes_init.c \
 		${EXEC_DIR}/pipes_utils.c \
 		${EXEC_DIR}/single_cmd.c \
 		${EXEC_DIR}/single_cmd_process.c \
+		${EXEC_DIR}/single_cmd_utils.c \
 		${EXEC_DIR}/set_io.c \
 		${EXEC_DIR}/pipes_cmd_lst.c \
 		${REDIRECT_DIR}/redirect.c \
 		${REDIRECT_DIR}/redirect_utils.c \
 		${EXEC_DIR}/error_msg.c \
 		${REDIRECT_DIR}/heredoc.c \
-		${REDIRECT_DIR}/heredoc_new.c \
+		${REDIRECT_DIR}/get_fd.c \
 		${BUILTIN_DIR}/builtin_utils.c \
 		${BUILTIN_DIR}/ft_echo.c \
 		${BUILTIN_DIR}/ft_pwd.c \
@@ -103,7 +105,8 @@ FILES = main.c \
 		${ENV_DIR}/env_init.c \
 		${ENV_DIR}/env_utils.c \
 		${ENV_DIR}/env_convert.c \
-		${SIG_DIR}/signals.c
+		${SIG_DIR}/signals.c \
+		${SIG_DIR}/signals_heredoc.c 
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))

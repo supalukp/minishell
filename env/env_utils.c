@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 08:20:51 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 08:38:57 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:20:58 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,37 @@ t_env	*create_env_node(char *env_variable)
 	node->next = NULL;
 	free_matrix(variable);
 	return (node);
+}
+
+t_env	*create_single_node(const char *env_name, char *env_variable)
+{
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
+	new_node->env_name = ft_strdup(env_name);
+	if (!new_node->env_name)
+	{
+		free(new_node);
+		return (NULL);
+	}
+	if (env_variable)
+	{
+		new_node->env_variable = ft_strdup(env_variable);
+		if (!new_node->env_variable)
+		{
+			free(new_node->env_name);
+			free(new_node);
+			return (NULL);
+		}
+	}
+	else
+	{
+		new_node->env_variable = NULL;
+	}
+	new_node->next = NULL;
+	return (new_node);
 }
 
 void	print_env(t_env *lst)

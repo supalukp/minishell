@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   signals_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 15:58:36 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 17:40:18 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/06/18 17:23:23 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/06/18 18:22:54 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	free_matrix(char **matrix)
+void	handle_heredoc_sigint(int sig)
 {
-	int	i;
-
-	i = 0;
-	if (!matrix)
-		return ;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
+	g_signal = sig;
+	write(STDOUT_FILENO, "\n", 1);
 }
 
-void	free_program(t_data *data)
+void	setup_heredoc_signal(void)
 {
-	if (data->ast)
-		free_ast(data->ast);
-	if (data->env)
-		free_env(data->env);
+	struct sigaction	sa;
+
+	sa.sa_handler = handle_heredoc_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
 }

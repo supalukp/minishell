@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:59:04 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 11:47:57 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:16:27 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	count_env_node(t_env *env_lst)
 	return (count);
 }
 
-char	*join_key_value(t_env *env_node)
+static char	*join_key_value(t_env *env_node)
 {
 	char	*tmp;
 	char	*res;

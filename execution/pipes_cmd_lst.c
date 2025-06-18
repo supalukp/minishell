@@ -6,13 +6,13 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:49:02 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/16 20:15:32 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:58:36 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-t_pipe_cmds	*create_pipe_cmd_node(t_tree *token)
+static t_pipe_cmds	*create_pipe_cmd_node(t_tree *token)
 {
 	t_pipe_cmds	*node;
 
@@ -20,13 +20,11 @@ t_pipe_cmds	*create_pipe_cmd_node(t_tree *token)
 	if (!node)
 		return (NULL);
 	node->cmd = token;
-	// node->fd_in = -1;
-	// node->fd_out = -1;
 	node->next = NULL;
 	return (node);
 }
 
-void	ft_lstadd_cmd_front(t_pipe_cmds **lst, t_pipe_cmds *new)
+static void	ft_lstadd_cmd_front(t_pipe_cmds **lst, t_pipe_cmds *new)
 {
 	if (!lst || !new)
 		return ;

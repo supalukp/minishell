@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:00:06 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/16 22:51:27 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:17:11 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	no_files(char *line)
 int	pipe_no_args(char *line)
 {
 	int	i;
-	int len;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(line) - 1;
@@ -105,7 +105,7 @@ int	pipe_no_args(char *line)
 				if (line[i] == '\0')
 					return (0);
 				else if (line[i] == '|')
-					return (1);			
+					return (1);
 			}
 		}
 		i++;
@@ -113,11 +113,11 @@ int	pipe_no_args(char *line)
 	return (0);
 }
 
-int check_semi(char *line)
+int	check_semi(char *line)
 {
-	int i;
-	char **split;
-	
+	int		i;
+	char	**split;
+
 	i = 0;
 	if (ft_strchr(line, ';') == 0)
 		return (0);
@@ -172,7 +172,7 @@ int	unsupported_syntax(char *line)
 	return (0);
 }
 
-int only_colon(const char *line)
+int	only_colon(const char *line)
 {
 	if (ft_strlen(line) == 1)
 	{
@@ -182,7 +182,7 @@ int only_colon(const char *line)
 	return (0);
 }
 
-int only_exclamation(const char *line)
+int	only_exclamation(const char *line)
 {
 	if (ft_strlen(line) == 1)
 	{
@@ -192,11 +192,10 @@ int only_exclamation(const char *line)
 	return (0);
 }
 
-
 int	error_checking(char *line, t_data *data)
 {
-	int exit_status;
-	int bracket;
+	int	exit_status;
+	int	bracket;
 
 	exit_status = 0;
 	if (only_space(line) || only_colon(line))
@@ -233,4 +232,3 @@ int	error_checking(char *line, t_data *data)
 		return (2);
 	return (exit_status);
 }
-
