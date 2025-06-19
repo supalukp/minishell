@@ -6,14 +6,14 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:52:49 by syukna            #+#    #+#             */
-/*   Updated: 2025/01/27 15:22:25 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/13 16:26:23 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-static int	includedchar(char const *buffer, char c)
+static int	includedstrchar(char const *buffer, char c)
 {
 	while (*buffer && *buffer != '\0')
 	{
@@ -68,7 +68,7 @@ static char	*read_line(char *line, char *buffer, int fd)
 	ssize_t		bytes_read;
 
 	bytes_read = 1;
-	while (bytes_read != 0 && !includedchar(buffer, '\n'))
+	while (bytes_read != 0 && !includedstrchar(buffer, '\n'))
 	{
 		line = get_current_line(line, buffer);
 		bytes_read = read(fd, buffer, BUFFER_SIZE);

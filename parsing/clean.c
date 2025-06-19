@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:11 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/09 14:46:11 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:59:11 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,20 @@ void	clean_node(t_tree *node)
 		clean_cmd_line(node->cmd_line);
 	if (node->files)
 		clean_redirections(node->files);
-	// if (node->)
 	free(node);
 }
 
 void	clean_recursive_tree(t_tree *node)
 {
-	if(node->left)
+	if (node->left)
 		clean_recursive_tree(node->left);
-	if(node->right)
+	if (node->right)
 		clean_recursive_tree(node->right);
 	clean_node(node);
 }
 
-void clean_data(t_data *data)
+void	clean_data(t_data *data)
 {
 	if (data->ast)
 		clean_recursive_tree(data->ast);
-	// if (data->env)
-	// 	free_env(data->env);
 }

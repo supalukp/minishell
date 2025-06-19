@@ -6,13 +6,13 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:10:40 by syukna            #+#    #+#             */
-/*   Updated: 2025/05/29 15:31:32 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/13 16:23:35 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	includedchar(char c, char const *set)
+int	includedchar(char c, char const *set)
 {
 	size_t	i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prelexer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 11:29:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/09 16:36:37 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:53:33 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	append_str(char **dest, const char *src)
 	}
 }
 
-int have_pipes(t_tree *tree)
+int	have_pipes(t_tree *tree)
 {
 	while (tree)
 	{

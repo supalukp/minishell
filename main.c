@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 13:32:22 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/19 13:37:12 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	handle_line(char *line, t_data *request)
 {
 	t_tree	*tree;
 	int	exit_status;
-	char *lexer;
 
 	exit_status = error_checking(line, request);
 	if (exit_status != 0) 
@@ -26,21 +25,19 @@ void	handle_line(char *line, t_data *request)
 	}
 	if (only_space(line))
 		return ;
-	lexer = merge_quotes(line);
-	free(line);
-	tree = mns_parse(lexer);
+	// lexer = merge_quotes(line);
+	// free(line);
+	tree = mns_parse(line);
 	if (have_pipes(tree))
-		free(lexer);
+		free(line);
 	request->ast = tree;
 	if (request->ast)
 	{
-		// print_all(request);
 		request->last_exit = main_execution(request->ast, request);
+		print_all(request);
 		// printf("exit status = %d\n", request->last_exit);
 		clean_data(request);
 	}
-	// print_env(request.env);
-	printf( "find var USER = %s\n", find_expansion_match("USER", request.env));
 }
 
 int	main(int ac, char **av, char **env)
@@ -70,6 +67,6 @@ int	main(int ac, char **av, char **env)
 		free_env(request.env);
 	if (line)
     	free(line);
-	rl_clear_history();
+	rl_clear_history(); // TODO = this is never called, and probably belongs in ft_exit
 	return (0);
 }

@@ -6,43 +6,18 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:11:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/03 18:50:22 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/18 20:41:29 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-
-static int	includedchar(char c, char const *set)
-{
-	while (*set)
-	{
-		if (c == *set)
-			return (1);
-		set++;
-	}
-	return (0);
-}
-char	*find_expansion_match(const char *search, t_env *lst)
-{
-	
-	while (lst)
-	{
-		if (ft_strlen(search) == ft_strlen(lst->env_name))
-		{
-			if (ft_strncmp(search, lst->env_name, ft_strlen(search)) == 0)
-				return (lst->env_variable);
-		}
-		lst = lst->next;
-	}
-	return (NULL);
-}
 
 void	exchange_expansion_values(t_cmd_element *el, char *new, int i, int len)
 {
 	char	*rtnstr;
 	int		j;
 	int		y;
-	
+
 	j = 0;
 	y = 0;
 	rtnstr = ft_calloc(len + 1, sizeof(char));
@@ -52,61 +27,98 @@ void	exchange_expansion_values(t_cmd_element *el, char *new, int i, int len)
 		j++;
 	}
 	while (new[y])
-	{
-		rtnstr[j] = new[y];
-		j++;
-		y++;
-	}
-	while (new[y])
 		rtnstr[j++] = new[y++];
 	i++;
-	while (ft_isalnum(el->content[i]))
+	while (ft_isalnum(el->content[i]) || el->content[i] == '_')
+		i++;
+	if (el->expand_curly_brackets == 2 && el->content[i] == '}')
 		i++;
 	while (el->content[i])
 		rtnstr[j++] = el->content[i++];
 	free(el->content);
 	el->content = rtnstr;
+	trim_space(el);
 }
 
-int	replace_expansion(t_cmd_element *line, t_env *lst)
+int	expansion_logic(int	*i, t_cmd_element *line, int *slashed, int *count)
 {
-	int 	i;
+	int		j;
+	char	*lc;
+
+	j = 0;
+	lc = line->content;
+	if (!line->content[*i + 1] || line->content[*i + 1] == ' ')
+		(*count)++;
+	if (*i > 0 && line->content[*i - 1] == '\\')
+	{
+		*slashed = 1;
+		(*count)++;
+		memmove(&lc[*i - 1], &lc[*i], strlen(&lc[*i]) + 1);
+		(*i)--;
+	}
+	else if (line->content[*i + 1] == '{')
+	{
+		line->expand_curly_brackets = 2;
+		memmove(&lc[*i + 1], &lc[*i + 2], strlen(&lc[*i + 2]) + 1);
+	}
+	(*i)++;
+	while (ft_isalnum(line->content[*i + j]) || line->content[*i + j] == '_')
+		j++;
+	return (j);
+}
+
+void	replace_expansion(t_cmd_element *l, t_env *lst, int *count)
+{
+	int		i;
 	int		j;
 	int		len;
 	char	*searchword;
 	char	*rtnvalue;
+	int		slashed;
 
-	i = 0;
-	j = 0;
-	while (line->content[i] != '$')
-		i++;
-	i++;
-	while (ft_isalnum(line->content[i + j]))
-		j++;
+	slashed = 0;
+	i = current_pos_dollar(l->content, *count);
+	if (i == -1 || *count >= counterchar(l->content, '$'))
+		return ;
+	if (l->content[i + 1] && includedchar(l->content[i + 1], "$? "))
+		return ;
+	if (!l->content[i + 1])
+		return ;
+	j = expansion_logic(&i, l, &slashed, count);
 	searchword = ft_calloc(j + 1, sizeof(char));
-	ft_strlcpy(searchword, &line->content[i], j + 1);
+	ft_strlcpy(searchword, &l->content[i], j + 1);
 	rtnvalue = find_expansion_match(searchword, lst);
-	len = ft_strlen(line->content) - j + ft_strlen(rtnvalue);
-	rtnvalue = ft_calloc(len, sizeof(char));
-	rtnvalue = find_expansion_match(searchword, lst);
+	len = ft_strlen(l->content) - j + ft_strlen(rtnvalue);
 	i--;
-	exchange_expansion_values(line, rtnvalue, i, len);
-	return (0);
+	free(searchword);
+	if (slashed != 1)
+		exchange_expansion_values(l, rtnvalue, i, len);
 }
 
-int	add_expansions(t_tree *node, t_env *lst)
+int	add_expansions(t_tree *node, t_env *lst, t_data *request)
 {
-	t_cmd_element *cmd;
+	t_cmd_element	*cmd;
+	int				expansions;
+	int				count;
+	char			*cc;
+	int				q;
 
 	cmd = node->cmd_line;
+	count = 0;
 	while (cmd)
 	{
-		while (includedchar('$', cmd->content))
+		add_tild(cmd, lst);
+		cc = cmd->content;
+		expansions = counterchar(cc, '$');
+		q = cmd->quoted;
+		while (includedchar('$', cc) && q != 1 && count < counterchar(cc, '$'))
 		{
-			if (replace_expansion(cmd, lst) == 0)
-				return (1);
+			spec_dol(cmd, &count, request->last_exit);
+			replace_expansion(cmd, lst, &count);
+			cc = cmd->content;
 		}
 		cmd = cmd->next;
+		count = 0;
 	}
 	return (0);
 }

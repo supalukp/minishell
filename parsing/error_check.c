@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:00:06 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/12 18:22:40 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:35:10 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	no_files(char *line)
 int	pipe_no_args(char *line)
 {
 	int	i;
-	int len;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(line) - 1;
@@ -105,7 +105,7 @@ int	pipe_no_args(char *line)
 				if (line[i] == '\0')
 					return (0);
 				else if (line[i] == '|')
-					return (1);			
+					return (1);
 			}
 		}
 		i++;
@@ -113,11 +113,11 @@ int	pipe_no_args(char *line)
 	return (0);
 }
 
-int check_semi(char *line)
+int	check_semi(char *line)
 {
-	int i;
-	char **split;
-	
+	int		i;
+	char	**split;
+
 	i = 0;
 	if (ft_strchr(line, ';') == 0)
 		return (0);
@@ -157,6 +157,8 @@ int	unsupported_syntax(char *line)
 			stderr_msg("minishell: syntax error near unexpected token '&'\n");
 			return (2);
 		}
+		else if (line[i] == '&' && line[i + 1] == '&')
+			i++;
 		else if (line[ft_strlen(line) - 1] == '\\')
 		{
 			stderr_msg("minishell: syntax error near unexpected token '\\'\n");
@@ -169,7 +171,7 @@ int	unsupported_syntax(char *line)
 
 int	error_checking(char *line, t_data *data)
 {
-	int exit_status;
+	int	exit_status;
 
 	exit_status = 0;
 	if (only_space(line))

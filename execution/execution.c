@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/12 18:01:15 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:35:46 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ int	exec_cmd_line(t_tree *tree, t_data *data, int exit_status)
 int	main_execution(t_tree *tree, t_data *data)
 {
 	int	exit_status;
+	int	error;
 
 	exit_status = 0;
+	error = 0;
 	if (!tree)
 		return (0);
 	if (tree->type == PIPE)
@@ -50,7 +52,12 @@ int	main_execution(t_tree *tree, t_data *data)
 			exit_status = main_execution(tree->right, data);
 	}
 	else if (tree->type == CMD_LINE)
+	{
+		command_line_maker(tree, &error, data);
+		if (error)
+			return (1);
 		exit_status = exec_cmd_line(tree, data, exit_status);
+	}
 	return (exit_status);
 }
 

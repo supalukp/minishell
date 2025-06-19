@@ -6,38 +6,37 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 13:25:49 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/06 15:07:04 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:40:53 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-size_t	parse_len_first(char *substr, t_type operator)
+size_t	parse_len_first(char *ss, t_type op)
 {
 	size_t	i;
-	int		parenthesis;
+	int		par;
 	int		pos;
 
 	i = 0;
 	pos = 0;
-	parenthesis = 0;
-	while (substr[i])
+	par = 0;
+	while (ss[i])
 	{
-		if (substr[i]  == '(')
-			parenthesis += 1;
-		if (substr[i]  == ')')
-			parenthesis -= 1;
-		if (operator == PIPE && substr[i] == '|' && parenthesis == 0)
+		if (ss[i] == '(')
+			par += 1;
+		if (ss[i] == ')')
+			par -= 1;
+		if (op == PIPE && ss[i] == '|' && par == 0)
 			pos = i;
-		if (operator == AND && substr[i] == '&' && substr[i + 1] == '&' && parenthesis == 0)
+		if (op == AND && ss[i] == '&' && ss[i + 1] == '&' && par == 0)
 			pos = i;
-		if (operator == OR && substr[i] == '|' && substr[i + 1] == '|' && parenthesis == 0)
+		if (op == OR && ss[i] == '|' && ss[i + 1] == '|' && par == 0)
 			pos = i;
 		i++;
 	}
 	return (pos);
 }
-
 
 char	*parse_get_first(char *substr, t_type operator, int *error)
 {
@@ -52,26 +51,26 @@ char	*parse_get_first(char *substr, t_type operator, int *error)
 	return (subfirst);
 }
 
-size_t	parse_pos_second(char *substr, t_type operator)
+size_t	parse_pos_second(char *ss, t_type op)
 {
 	size_t	i;
 	int		pos;
-	int		parenthesis;
+	int		par;
 
 	i = 0;
 	pos = 0;
-	parenthesis = 0;
-	while (substr[i])
+	par = 0;
+	while (ss[i])
 	{
-		if (substr[i]  == '(')
-			parenthesis += 1;
-		if (substr[i]  == ')')
-			parenthesis -= 1;
-		if (operator == PIPE && substr[i] == '|' && parenthesis == 0)
+		if (ss[i] == '(')
+			par += 1;
+		if (ss[i] == ')')
+			par -= 1;
+		if (op == PIPE && ss[i] == '|' && par == 0)
 			pos = i;
-		if (operator == AND && substr[i] == '&' && substr[i - 1] == '&' && parenthesis == 0)
+		if (op == AND && ss[i] == '&' && ss[i - 1] == '&' && par == 0)
 			pos = i;
-		if (operator == OR && substr[i] == '|' && substr[i - 1] == '|' && parenthesis == 0)
+		if (op == OR && ss[i] == '|' && ss[i - 1] == '|' && par == 0)
 			pos = i;
 		i++;
 	}
@@ -95,7 +94,7 @@ void	parse_separator(char *substr, t_tree *parent, int *error)
 {
 	char	*first;
 	char	*second;
-	
+
 	first = parse_get_first(substr, parent->type, error);
 	parent->left = ast_maker(first, error);
 	second = parse_get_second(substr, parent->type, error);
