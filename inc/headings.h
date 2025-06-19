@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:37 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/08 11:43:30 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:16:00 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 /* ***************************EXTERNAL LIBRARIES***************************** */
 /* ************************************************************************** */
 
+# include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -26,6 +27,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 

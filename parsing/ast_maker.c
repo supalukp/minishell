@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_maker.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:49:13 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 19:26:30 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/19 14:48:43 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ t_tree	*ast_maker(char *substr, int *error)
 	if (!node)
 		return (*error = 1, NULL);
 	node->content = NULL;
+	node->fd_in = -1;
+	node->fd_out = -1;
+	node->fd_heredoc = -1;
 	if (!ast_breaker(substr, node, error))
 	{
 		if (contains_letter(substr, '('))

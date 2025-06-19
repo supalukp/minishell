@@ -8,7 +8,7 @@
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-FLAGS += -fsanitize=address -g
+FLAGS += -fsanitize=address -g3
 
 # **************************************************************************** #
 # **********************************COLORS************************************ #
@@ -60,8 +60,8 @@ HEADERS =	${INC_DIR}/execution.h \
 
 FILES = main.c \
 		${PARS_DIR}/error_check.c \
+		${PARS_DIR}/error_check_utils.c \
 		${PARS_DIR}/readline_utils.c \
-		${PARS_DIR}/prelexer_utils.c \
 		${PARS_DIR}/ast_parsing.c \
 		${PARS_DIR}/ast_maker.c \
 		${PARS_DIR}/ast_separator.c \
@@ -80,20 +80,32 @@ FILES = main.c \
 		${PARS_DIR}/cmd_mergequotes.c \
 		${PARS_DIR}/visual.c \
 		${PARS_DIR}/clean.c \
-		${EXEC_DIR}/my_tree.c \
+		${EXEC_DIR}/free_tree.c \
 		${EXEC_DIR}/execution.c \
 		${EXEC_DIR}/exec_utils.c \
+		${EXEC_DIR}/cmd_check.c \
+		${EXEC_DIR}/exec_paths_utils.c \
+		${EXEC_DIR}/pipes_exec_cmd.c \
+		${EXEC_DIR}/exec_paths.c \
+		${EXEC_DIR}/cmd_combine.c \
 		${EXEC_DIR}/multi_pipe.c \
+		${EXEC_DIR}/pipes_childs.c \
+		${EXEC_DIR}/pipes_parent.c \
 		${EXEC_DIR}/pipes_init.c \
 		${EXEC_DIR}/pipes_utils.c \
 		${EXEC_DIR}/single_cmd.c \
 		${EXEC_DIR}/single_cmd_process.c \
+		${EXEC_DIR}/single_cmd_utils.c \
 		${EXEC_DIR}/set_io.c \
 		${EXEC_DIR}/pipes_cmd_lst.c \
 		${REDIRECT_DIR}/redirect.c \
 		${REDIRECT_DIR}/redirect_utils.c \
 		${EXEC_DIR}/error_msg.c \
 		${REDIRECT_DIR}/heredoc.c \
+		${REDIRECT_DIR}/heredoc_tmp_files.c \
+		${REDIRECT_DIR}/heredoc_utils.c \
+		${REDIRECT_DIR}/get_fd.c \
+		${REDIRECT_DIR}/set_io_pipes.c \
 		${BUILTIN_DIR}/builtin_utils.c \
 		${BUILTIN_DIR}/ft_echo.c \
 		${BUILTIN_DIR}/ft_pwd.c \
@@ -109,7 +121,9 @@ FILES = main.c \
 		${ENV_DIR}/env_init.c \
 		${ENV_DIR}/env_utils.c \
 		${ENV_DIR}/env_convert.c \
-		${SIG_DIR}/signals.c
+		${ENV_DIR}/env_node.c \
+		${SIG_DIR}/signals.c \
+		${SIG_DIR}/signals_heredoc.c 
 
 
 OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))

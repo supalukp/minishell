@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/16 14:20:11 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/19 14:32:40 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ typedef struct s_tree
 	t_type					type;
 	t_cmd_element			*cmd_line;
 	t_file					*files;
+	int						fd_in;
+	int						fd_out;
+	int						fd_heredoc;
 	struct s_tree			*left;
 	struct s_tree			*right;
 }							t_tree;
@@ -84,5 +87,11 @@ typedef struct s_data
 	t_env					*env;
 	int						last_exit;
 }							t_data;
+
+typedef struct s_stdio_backup
+{
+	int						stdin;
+	int						stdout;
+}							t_stdio_backup;
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 13:36:21 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/19 14:30:40 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
-bool	is_buildin(t_tree *tree)
+bool	is_builtin(t_tree *tree)
 {
 	char	**cmd;
 
@@ -45,11 +45,28 @@ bool	is_buildin(t_tree *tree)
 		return (free_matrix(cmd), false);
 }
 
-int	exec_buildin(t_tree *tree, t_data *data)
+static int	handle_exit(t_tree *tree, t_data *data, char **cmd)
 {
-	int		exit_status = 0;
+	int	status;
+
+	status = ft_exit(tree, data->last_exit);
+	if (status != 2)
+	{
+		free_env(data->env);
+		free_matrix(cmd);
+		clean_data(data);
+		rl_clear_history();
+		exit(status);
+	}
+	return (status);
+}
+
+int	exec_builtin(t_tree *tree, t_data *data)
+{
+	int		exit_status;
 	char	**cmd;
 
+	exit_status = 0;
 	cmd = combine_cmdline(tree->cmd_line);
 	if (!ft_strcmp(cmd[0], "echo"))
 		exit_status = ft_echo(tree);
@@ -64,19 +81,9 @@ int	exec_buildin(t_tree *tree, t_data *data)
 	else if (!ft_strcmp(cmd[0], "env"))
 		exit_status = ft_env(tree, data);
 	else if (!ft_strcmp(cmd[0], "exit"))
-	{
-		exit_status = ft_exit(tree, exit_status);
-		if (exit_status != 2)
-		{
-			free_env(data->env);
-			free_matrix(cmd);
-			clean_data(data);
-			rl_clear_history();
-			exit(exit_status);
-		}
-	}
+		exit_status = handle_exit(tree, data, cmd);
 	else
-		return (free_matrix(cmd), 1);
+		exit_status = 1;
 	if (cmd != NULL)
 		free_matrix(cmd);
 	return (exit_status);

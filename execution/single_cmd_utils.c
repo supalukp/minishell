@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   multi_pipe.c                                       :+:      :+:    :+:   */
+/*   single_cmd_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 13:06:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 11:16:47 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/06/18 17:33:04 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/06/19 09:12:45 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	pipe_multi_process(t_tree *tree, t_data *data)
+void	backup_std_io(int stdin_backup, int stdout_backup)
 {
-	t_pipes	*pipes;
-	int		status;
-
-	pipes = init_pipes(tree);
-	if (!pipes)
-		return (perror("malloc failed"), EXIT_FAILURE);
-	create_pipes(pipes);
-	if (fork_and_exec_children(pipes, data) != 0)
-	{
-		close_save_fd(data->ast);
-		return (EXIT_FAILURE);
-	}
-	status = process_parent(pipes);
-	close_save_fd(data->ast);
-	return (status);
+	dup2(stdin_backup, STDIN_FILENO);
+	dup2(stdout_backup, STDOUT_FILENO);
+	close(stdin_backup);
+	close(stdout_backup);
 }

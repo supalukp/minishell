@@ -22,3 +22,21 @@
   ...
   obj:/usr/bin/grep
 }
+{
+  <sleep>
+  Memcheck:Leak
+  ...
+  obj:/usr/bin/sleep
+}
+{
+  <cat>
+  Memcheck:Leak
+  ...
+  obj:/usr/bin/cat
+}
+{
+  <rev>
+  Memcheck:Leak
+  ...
+  obj:/usr/bin/rev
+}

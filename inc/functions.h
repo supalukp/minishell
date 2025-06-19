@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 20:37:05 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/19 14:37:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@
 /* ************************************************************************** */
 
 // error_checking.c
-int			only_space(char *line);
-int			open_quotes(char *line);
-int			no_files(char *line);
-int			pipe_no_args(char *line);
-int			check_semi(char *line);
-int			unsupported_syntax(char *line);
-int			error_checking(char *line, t_data *data);
+int		only_space(char *line);
+int		only_colon(const char *line);
+int		only_exclamation(const char *line);
+int		open_quotes(char *line);
+int		no_files(char *line);
+int		pipe_no_args(char *line);
+int		check_semi(char *line);
+int		unsupported_syntax(char *line);
+int		error_checking(char *line, t_data *data);
+int		check_bracket_open(const char *line);
+int		check_bracket(const char *line);
 
 // readline_utils.c
 char		*build_prompt(int exit_status);

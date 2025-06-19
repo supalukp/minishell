@@ -6,13 +6,13 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:48:52 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:08:19 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:14:06 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	unset_variable(char *key, t_data *data)
+static int	unset_variable(char *key, t_data *data)
 {
 	t_env	*tmp;
 	t_env	*env_lst;
@@ -20,7 +20,7 @@ int	unset_variable(char *key, t_data *data)
 	if (!key || !data)
 		return (1);
 	env_lst = data->env;
-	while (env_lst)
+	while (env_lst && env_lst->next)
 	{
 		if (ft_strcmp(env_lst->next->env_name, key) == 0)
 		{
@@ -39,7 +39,7 @@ int	unset_variable(char *key, t_data *data)
 	return (0);
 }
 
-int	unset_process(t_tree *tree, t_data *data)
+static int	unset_process(t_tree *tree, t_data *data)
 {
 	int				flag;
 	t_cmd_element	*args;

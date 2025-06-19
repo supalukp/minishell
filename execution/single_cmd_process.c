@@ -6,14 +6,16 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 13:11:00 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/12 17:05:21 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:15:02 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	child_execution(char *paths, char **args, char **minishell_env)
+void	child_execution(char *paths, char **args, char **minishell_env,
+		t_data *data)
 {
+	(void)data;
 	execve(paths, args, minishell_env);
 	perror("execve failed");
 	free_matrix(minishell_env);
@@ -21,6 +23,7 @@ void	child_execution(char *paths, char **args, char **minishell_env)
 		free_matrix(args);
 	if (paths)
 		free(paths);
+	free_program(data);
 	exit(126);
 }
 
@@ -38,7 +41,13 @@ int	wait_and_clean(int exit_status, pid_t pid, char **args, char *paths)
 	if (WIFEXITED(exit_status))
 		return (WEXITSTATUS(exit_status));
 	else if (WIFSIGNALED(exit_status))
+	{
+		if (WTERMSIG(exit_status) == SIGINT)
+			write(1, "\n", 1);
+		else if (WTERMSIG(exit_status) == SIGQUIT)
+			write(1, "Quit (core dumped)\n", 20);
 		return (128 + WTERMSIG(exit_status));
+	}
 	else
 		return (EXIT_FAILURE);
 }

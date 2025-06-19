@@ -6,50 +6,50 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 08:20:51 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 08:38:57 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:44:17 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	ft_lstadd_env_back(t_env **lst, t_env *new)
+char	**split_env(const char *env)
 {
-	t_env	*temp;
+	char	**res;
+	int		i;
 
-	if (!lst || !new)
-		return ;
-	if (!(*lst))
-	{
-		*lst = new;
-		return ;
-	}
-	temp = *lst;
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
-	return ;
+	i = 0;
+	if (!env)
+		return (NULL);
+	while (env[i] && env[i] != '=')
+		i++;
+	res = malloc(sizeof(char *) * 3);
+	if (!res)
+		return (NULL);
+	res[0] = ft_substr(env, 0, i);
+	res[1] = ft_substr(env, i + 1, ft_strlen(env) - i - 1);
+	res[2] = NULL;
+	return (res);
 }
 
-t_env	*create_env_node(char *env_variable)
+char	**split_env_plus_equal(const char *env)
 {
-	t_env	*node;
-	char	**variable;
+	char	**res;
+	int		i;
 
-	node = malloc(sizeof(t_env));
-	if (!node)
+	i = 0;
+	if (!env)
 		return (NULL);
-	variable = split_env(env_variable);
-	if (!variable || !variable[0] || !variable[1])
-	{
-		free_matrix(variable);
-		free(node);
+	while (env[i] && env[i] != '+')
+		i++;
+	if (!(env[i] == '+' && env[i + 1] == '='))
 		return (NULL);
-	}
-	node->env_name = ft_strdup(variable[0]);
-	node->env_variable = ft_strdup(variable[1]);
-	node->next = NULL;
-	free_matrix(variable);
-	return (node);
+	res = malloc(sizeof(char *) * 3);
+	if (!res)
+		return (NULL);
+	res[0] = ft_substr(env, 0, i);
+	res[1] = ft_substr(env, i + 2, ft_strlen(env) - i - 2);
+	res[2] = NULL;
+	return (res);
 }
 
 void	print_env(t_env *lst)

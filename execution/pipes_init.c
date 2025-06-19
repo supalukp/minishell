@@ -6,13 +6,13 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:20 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 11:58:48 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:56:17 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	count_pipes(t_tree *tree)
+static int	count_pipes(t_tree *tree)
 {
 	t_tree	*token;
 	int		count;
@@ -27,7 +27,7 @@ int	count_pipes(t_tree *tree)
 	return (count);
 }
 
-int	**create_double_fd(int pipe_count)
+static int	**create_double_fd(int pipe_count)
 {
 	int	i;
 	int	**fd;
