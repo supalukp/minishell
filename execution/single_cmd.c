@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 13:22:15 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:57:44 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	resolve_path(char **args, char **env, char **path)
 	return (0);
 }
 
-int	fork_and_exec(char *path, char **args, char **env, t_data *data)
+int	fork_and_exec(char *path, char **args, char **env, t_data *data, t_stdio_backup *backup)
 {
 	pid_t	pid;
 
@@ -57,6 +57,8 @@ int	fork_and_exec(char *path, char **args, char **env, t_data *data)
 	}
 	if (pid == 0)
 	{
+		close(backup->stdin);
+		close(backup->stdout);
 		set_signal_to_default();
 		child_execution(path, args, env, data);
 	}
@@ -87,7 +89,7 @@ int	external_single(t_tree *tree, t_data *data)
 		return (backup_std_io(backup.stdin, backup.stdout), 1);
 	if (resolve_path(args, env, &path))
 		return (backup_std_io(backup.stdin, backup.stdout), 127);
-	status = fork_and_exec(path, args, env, data);
+	status = fork_and_exec(path, args, env, data, &backup);
 	backup_std_io(backup.stdin, backup.stdout);
 	return (status);
 }
