@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 14:52:02 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:28:17 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	main_execution(t_tree *tree, t_data *data)
 	else if (tree->type == CMD_LINE)
 	{
 		command_line_maker(tree, &error, data);
-		print_all(data);
 		if (error)
 			return (1);
 		exit_status = exec_cmd_line(tree, data, exit_status);

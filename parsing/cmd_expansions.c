@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_expansions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:11:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 15:07:49 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:12:00 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,11 @@ void	replace_expansion(t_cmd_element *l, t_env *lst, int *count)
 		return ;
 	if (l->content[i + 1] && includedchar(l->content[i + 1], "$? "))
 		return ;
-	if (!l->content[i + 1])
+	if (!l->content[i + 1] || ft_isalpha(l->content[i + 1]))
+	{
+		(*count)++;
 		return ;
+	}
 	j = expansion_logic(&i, l, &slashed, count);
 	searchword = ft_calloc(j + 1, sizeof(char));
 	ft_strlcpy(searchword, &l->content[i], j + 1);
