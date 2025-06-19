@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 16:51:04 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:54:43 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	handle_exit(t_tree *tree, t_data *data, char **cmd)
 	int	status;
 
 	status = ft_exit(tree, data->last_exit);
-	if (status != 2 || data->last_exit == 2)
+	if ((status != 2 || data->last_exit == 2) && status != 127)
 	{
 		free_env(data->env);
 		free_matrix(cmd);

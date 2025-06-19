@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:11:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 16:12:00 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:45:51 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	replace_expansion(t_cmd_element *l, t_env *lst, int *count)
 		return ;
 	if (l->content[i + 1] && includedchar(l->content[i + 1], "$? "))
 		return ;
-	if (!l->content[i + 1] || ft_isalpha(l->content[i + 1]))
+	if (!l->content[i + 1] || !ft_isalpha(l->content[i + 1]))
 	{
 		(*count)++;
 		return ;
@@ -94,8 +94,13 @@ void	replace_expansion(t_cmd_element *l, t_env *lst, int *count)
 	len = ft_strlen(l->content) - j + ft_strlen(rtnvalue);
 	i--;
 	free(searchword);
-	if (slashed != 1)
+	if (slashed != 1 && rtnvalue && rtnvalue != NULL)
 		exchange_expansion_values(l, rtnvalue, i, len);
+	else
+	{
+		exchange_expansion_values(l, "", i, len);
+		(*count)++;
+	}
 }
 
 int	add_expansions(t_tree *node, t_env *lst, t_data *request)
