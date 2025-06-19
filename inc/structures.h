@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 17:16:05 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:57:36 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ typedef struct s_cmd_element
 {
 	char					*content;
 	int						quoted;
-	int						fd_in;
-	int						fd_out;
 	struct s_cmd_element	*next;
 }							t_cmd_element;
 
@@ -87,5 +85,11 @@ typedef struct s_data
 	t_env					*env;
 	int						last_exit;
 }							t_data;
+
+typedef struct s_stdio_backup
+{
+	int						stdin;
+	int						stdout;
+}							t_stdio_backup;
 
 #endif

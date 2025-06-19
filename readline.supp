@@ -34,3 +34,9 @@
   ...
   obj:/usr/bin/cat
 }
+{
+  <rev>
+  Memcheck:Leak
+  ...
+  obj:/usr/bin/rev
+}

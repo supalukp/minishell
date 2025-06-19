@@ -74,8 +74,14 @@ FILES = main.c \
 		${EXEC_DIR}/free_tree.c \
 		${EXEC_DIR}/execution.c \
 		${EXEC_DIR}/exec_utils.c \
+		${EXEC_DIR}/cmd_check.c \
+		${EXEC_DIR}/exec_paths_utils.c \
+		${EXEC_DIR}/pipes_exec_cmd.c \
 		${EXEC_DIR}/exec_paths.c \
+		${EXEC_DIR}/cmd_combine.c \
 		${EXEC_DIR}/multi_pipe.c \
+		${EXEC_DIR}/pipes_childs.c \
+		${EXEC_DIR}/pipes_parent.c \
 		${EXEC_DIR}/pipes_init.c \
 		${EXEC_DIR}/pipes_utils.c \
 		${EXEC_DIR}/single_cmd.c \
@@ -87,7 +93,10 @@ FILES = main.c \
 		${REDIRECT_DIR}/redirect_utils.c \
 		${EXEC_DIR}/error_msg.c \
 		${REDIRECT_DIR}/heredoc.c \
+		${REDIRECT_DIR}/heredoc_tmp_files.c \
+		${REDIRECT_DIR}/heredoc_utils.c \
 		${REDIRECT_DIR}/get_fd.c \
+		${REDIRECT_DIR}/set_io_pipes.c \
 		${BUILTIN_DIR}/builtin_utils.c \
 		${BUILTIN_DIR}/ft_echo.c \
 		${BUILTIN_DIR}/ft_pwd.c \
@@ -103,6 +112,7 @@ FILES = main.c \
 		${ENV_DIR}/env_init.c \
 		${ENV_DIR}/env_utils.c \
 		${ENV_DIR}/env_convert.c \
+		${ENV_DIR}/env_node.c \
 		${SIG_DIR}/signals.c \
 		${SIG_DIR}/signals_heredoc.c 
 

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 18:08:02 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:20:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
-bool	is_buildin(t_tree *tree)
+bool	is_builtin(t_tree *tree)
 {
 	char	**cmd;
 
@@ -61,7 +61,7 @@ static int	handle_exit(t_tree *tree, t_data *data, char **cmd)
 	return (status);
 }
 
-int	exec_buildin(t_tree *tree, t_data *data)
+int	exec_builtin(t_tree *tree, t_data *data)
 {
 	int		exit_status;
 	char	**cmd;

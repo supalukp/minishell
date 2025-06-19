@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:42:38 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:35:06 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		ft_lstadd_env_back(t_env **lst, t_env *new);
 t_env		*create_env_node(char *env_variable);
 void		print_env(t_env *lst);
 void		free_env(t_env *env_lst);
-int	count_env_node(t_env *env_lst);
+int			count_env_node(t_env *env_lst);
 
 /* -------------------------------------------------------------------------- */
 /*                                 redirection                                */
@@ -43,12 +43,21 @@ void		close_save_fd(t_tree *node);
 int			failed_dup(int fd);
 int			dup_for_pipes(int i, t_tree *node, t_pipes *pipes);
 int			dup_for_one_cmd(t_tree *node);
-void	update_shlvl(t_env *env_lst);
+char		*create_random_filename(void);
+int			open_tmpfile(char **tmpfile);
+int			open_tty(char *tmpfile, int fd_write);
+int			handle_heredoc_open_fail(char *tmpfile);
+int			clean_exit(char *tmpfile, int fd_write, int fd_tty, int ret);
+void		assign_heredoc_fd(t_tree *node, int fd_read);
+int			setup_inout_middle(int i, t_pipes *pipes, t_tree *node);
+int			setup_inout_last(int i, t_pipes *pipes, t_tree *node);
+int			setup_inout_first(t_pipes *pipes, t_tree *node);
+
 /* -------------------------------------------------------------------------- */
 /*                                   builtin                                  */
 /* -------------------------------------------------------------------------- */
-bool		is_buildin(t_tree *tree);
-int			exec_buildin(t_tree *tree, t_data *data);
+bool		is_builtin(t_tree *tree);
+int			exec_builtin(t_tree *tree, t_data *data);
 int			ft_cd(t_tree *tree);
 int			ft_echo(t_tree *tree);
 int			ft_env(t_tree *tree, t_data *data);
@@ -57,7 +66,7 @@ int			add_value_variable(char *args, t_data *data);
 int			add_new_variable(char *args, t_data *data);
 int			is_exist_variable(char *args, t_data *data);
 int			change_value_variable(char *args, t_data *data);
-int	create_new_variable(char *args, t_data *data);
+int			create_new_variable(char *args, t_data *data);
 int			no_argument(t_tree *tree);
 t_env		**ascii_env_lst(t_data *data);
 int			print_export_no_option(t_data *data);
@@ -93,6 +102,8 @@ int			pipe_multi_process(t_tree *tree, t_data *data);
 t_pipes		*init_pipes(t_tree *tree);
 void		create_pipes(t_pipes *pipes);
 t_pipe_cmds	*create_cmd_lst(t_tree *tree);
+int			fork_and_exec_children(t_pipes *pipes, t_data *data);
+int			process_parent(t_pipes *pipes);
 
 // Single command
 int			external_cmd_process(t_tree *tree, t_data *data);
