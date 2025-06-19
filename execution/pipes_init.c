@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:46:20 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 17:56:17 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:31:03 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	**create_double_fd(int pipe_count)
 	return (fd);
 }
 
-t_pipes	*init_pipes(t_tree *tree)
+t_pipes	*init_pipes(t_tree *tree, t_data *data)
 {
 	int		i;
 	t_pipes	*pipes;
@@ -70,7 +70,7 @@ t_pipes	*init_pipes(t_tree *tree)
 	i = -1;
 	while (++i < pipes->process)
 		pipes->pid[i] = -1;
-	pipes->cmd_lst = create_cmd_lst(tree);
+	pipes->cmd_lst = create_cmd_lst(tree, data);
 	if (!pipes->cmd_lst)
 	{
 		free_pipes_struct(pipes);

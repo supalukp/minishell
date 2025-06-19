@@ -6,35 +6,13 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 14:33:38 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:46:39 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/headings.h"
 
 volatile sig_atomic_t g_signal = 0;
-
-
-// int get_heredoc(t_tree *tree)
-// {
-// 	// Case 1 : only one commmand
-// 	if (tree->type == CMD_LINE && tree->left == NULL && tree->right == NULL)
-// 	{
-// 		while (tree->files)
-// 		{
-// 			if (tree->files->type == HEREDOC)
-// 				tree->fd_heredoc = call_heredoc();
-// 			tree->files = tree->files->next;
-// 		}
-// 	}
-// 	else if (tree->type == PIPE)
-// 	{
-// 		while (tree->type == PIPE)
-// 		{
-			
-// 		}
-// 	}
-// }
 
 void close_all_heredoc_fd(t_tree *tree)
 {
@@ -90,20 +68,6 @@ int traverse_heredoc(t_tree *tree)
 	return (0);
 }
 
-// void traverse_tree(t_tree *node)
-// {
-// 	if (node == NULL)
-// 		return ;
-//     if (node->type == PIPE || node->type == OR || node->type == AND) 
-// 	{
-//         traverse_tree(node->left);
-//         traverse_tree(node->right);
-//     } 
-// 	else if (node->type == CMD_LINE) 
-//         printf("%s\n", node->cmd_line->content);
-// }
-
-
 void	handle_line(char *line, t_data *request)
 {
 	t_tree	*tree;
@@ -113,7 +77,7 @@ void	handle_line(char *line, t_data *request)
 	if (exit_status != 0) 
 	{
 		request->last_exit = exit_status;
-		return;
+		return ;
 	}
 	if (only_space(line) || only_colon(line) || only_exclamation(line))
 		return ;
