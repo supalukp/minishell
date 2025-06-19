@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 19:44:27 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 00:06:11 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,14 @@ int	main(int ac, char **av, char **env)
 		init_signal();
 		prompt = build_prompt(request.last_exit);
 		g_signal = 0;
-		line = readline(prompt);
+        if (isatty(fileno(stdin)))
+            line = readline(prompt);
+        else
+        {
+            char *temp_line = get_next_line(fileno(stdin));
+            line = ft_strtrim(temp_line, "\n");
+            free(temp_line);
+        }
 		free(prompt);
 		if (g_signal == 130)
 		{
@@ -141,10 +148,10 @@ int	main(int ac, char **av, char **env)
 		}
 		if (line == NULL)
 		{
-			write(1, "exit\n", 5);
+			// write(1, "exit\n", 5);
 			free_env(request.env);
 			rl_clear_history();
-			exit(0);
+			exit(request.last_exit);
 		}
 		if (*line)
 			add_history(line);

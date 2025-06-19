@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_expansions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:11:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 16:12:00 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/19 22:30:09 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	replace_expansion(t_cmd_element *l, t_env *lst, int *count)
 int	add_expansions(t_tree *node, t_env *lst, t_data *request)
 {
 	t_cmd_element	*cmd;
-	int				expansions;
+	// int				expansions;
 	int				count;
 	char			*cc;
 	int				q;
@@ -112,7 +112,7 @@ int	add_expansions(t_tree *node, t_env *lst, t_data *request)
 	{
 		add_tild(cmd, lst);
 		cc = cmd->content;
-		expansions = counterchar(cc, '$');
+		// expansions = counterchar(cc, '$');
 		q = cmd->quoted;
 		while (includedchar('$', cc) && q != 1 && count < counterchar(cc, '$'))
 		{

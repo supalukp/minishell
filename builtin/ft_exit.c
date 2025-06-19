@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:43:39 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 14:30:51 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 23:47:45 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_exit(t_tree *tree, int exit_status)
 			ft_putstr_fd(": numeric argument required\n", 2);
 			return (255);
 		}
-		write(2, "exit\n", 5);
+		// write(2, "exit\n", 5);
 		exit_num = ft_atoi(tree->cmd_line->next->content) % 256;
 		return (exit_num);
 	}

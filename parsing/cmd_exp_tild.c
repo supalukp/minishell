@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exp_tild.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:37:08 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 16:48:14 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/19 22:30:18 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void	tild_logic(t_cmd_element *element, char *rtnvalue, int len)
 
 void	add_tild(t_cmd_element *element, t_env *lst)
 {
-	int		i;
+	// int		i;
 	char	*rtnvalue;
 	int		len;
 
-	i = 0;
+	// i = 0;
 	rtnvalue = find_expansion_match("HOME", lst);
 	if (!rtnvalue)
 		return ;

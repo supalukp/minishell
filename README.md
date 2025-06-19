@@ -35,3 +35,4 @@ got 2
 dfs: command not found
 
 [] " " only this segfault
+[] .d minishell[126]> .d execve failed: No such file or directory -> command not found

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 20:13:20 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 23:40:13 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,15 @@ static int	handle_absolute_path(char **args, char **path, char **env)
 
 static void	handle_relative_path(char **args, char **path)
 {
-	char	*program_name;
-
+	// char	*program_name;
+	// printf("%s\n", args[0]);
 	*path = ft_strdup(args[0]);
-	program_name = get_program_name(args[0]);
-	free(args[0]);
-	args[0] = program_name;
+	// printf("realtive\n");
+	// printf("%s\n", args[0]);
+	// printf("%s\n", args[0]);
+	// program_name = get_program_name(args[0]);
+	// free(args[0]);
+	// args[0] = program_name;
 }
 
 int only_dot(char *args)
@@ -76,7 +79,6 @@ int path_only_slash(char *path)
     }
     return (1);
 }
-
 
 int	prepare_exec_path(char **args, char **path, char **env)
 {
