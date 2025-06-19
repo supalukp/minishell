@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 11:03:17 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:13:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,58 @@ static void	handle_relative_path(char **args, char **path)
 	args[0] = program_name;
 }
 
+int only_dot(char *args)
+{
+    int i;
+
+    if (!args)
+        return (0);
+    i = 0;
+    while (args[i])
+    {
+        if (args[i] == '.' && args[i + 1] == '.')
+            return (1);
+		else if (args[i] == '.' && args[i + 1] == '\0')
+			return (1);
+        i++;
+    }
+    return (0);
+}
+
+int path_only_slash(char *path)
+{
+    int i;
+
+    if (!path || path[0] != '.')
+        return (0);
+
+    i = 1;
+    while (path[i])
+    {
+        if (path[i] != '/')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
+
 int	prepare_exec_path(char **args, char **path, char **env)
 {
 	if (args[0][0] == '/')
 		return (handle_absolute_path(args, path, env));
+	if (path_only_slash(args[0]))
+	{
+		stderr_msg(args[0]);
+		stderr_msg(": Is a directory\n");
+		return (126);
+	}
 	else if (args[0][0] == '.')
+	{
+		if (only_dot(args[0]))
+			return (command_not_found(args));
 		handle_relative_path(args, path);
+	}
 	return (0);
 }
 

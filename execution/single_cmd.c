@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 16:03:03 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:16:33 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	external_single(t_tree *tree, t_data *data)
 	char			**env;
 	char			*path;
 	int				status;
+	int path_ret;
 
 	backup.stdin = dup(STDIN_FILENO);
 	backup.stdout = dup(STDOUT_FILENO);
@@ -86,8 +87,14 @@ int	external_single(t_tree *tree, t_data *data)
 		return (backup_std_io(backup.stdin, backup.stdout), 0);
 	if (init_args_env(&args, &env, tree, data))
 		return (backup_std_io(backup.stdin, backup.stdout), 1);
-	if (resolve_path(args, env, &path))
-		return (backup_std_io(backup.stdin, backup.stdout), 127);
+	path_ret = resolve_path(args, env, &path);
+	if (path_ret)
+	{
+		free_matrix(args);
+		free(path);
+		free_matrix(env);
+		return (backup_std_io(backup.stdin, backup.stdout), path_ret);
+	}
 	status = fork_and_exec(path, args, env, data, &backup);
 	backup_std_io(backup.stdin, backup.stdout);
 	return (status);

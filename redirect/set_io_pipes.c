@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:31:48 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 16:37:42 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:02:33 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ int	setup_inout_first(t_pipes *pipes, t_tree *node)
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
 			return (failed_dup(node->fd_in));
 		close(node->fd_in);
+		node->fd_in = -1;
 	}
 	if (node->fd_out != -1)
 	{
 		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
 			return (failed_dup(node->fd_out));
 		close(node->fd_out);
+		node->fd_out = -1;
 		close(pipes->pipefd[0][1]);
 	}
 	else
@@ -43,6 +45,7 @@ int	setup_inout_last(int i, t_pipes *pipes, t_tree *node)
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
 			return (failed_dup(node->fd_in));
 		close(node->fd_in);
+		node->fd_in = -1;
 		close(pipes->pipefd[i - 1][0]);
 	}
 	else
@@ -56,6 +59,7 @@ int	setup_inout_last(int i, t_pipes *pipes, t_tree *node)
 		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
 			return (failed_dup(node->fd_out));
 		close(node->fd_out);
+		node->fd_out = -1;
 	}
 	return (0);
 }
@@ -67,6 +71,7 @@ static int	setup_middle_input(int i, t_pipes *pipes, t_tree *node)
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
 			return (failed_dup(node->fd_in));
 		close(node->fd_in);
+		node->fd_in = -1;
 		close(pipes->pipefd[i - 1][0]);
 	}
 	else
@@ -85,6 +90,7 @@ static int	setup_middle_output(int i, t_pipes *pipes, t_tree *node)
 		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
 			return (failed_dup(node->fd_out));
 		close(node->fd_out);
+		node->fd_out = -1;
 		close(pipes->pipefd[i][1]);
 	}
 	else

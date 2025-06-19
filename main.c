@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 16:46:39 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:44:27 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,29 @@ void close_all_heredoc_fd(t_tree *tree)
 	}
 }
 
-int traverse_heredoc(t_tree *tree)
+int traverse_heredoc(t_tree *tree, t_data *data)
 {
 	int status;
 	t_tree *node;
 	t_file *file;
+	int error;
 
+	error = 0;
 	node = tree;
 	if (node == NULL)
 		return 0;
     if (node->type == PIPE || node->type == OR || node->type == AND) 
 	{
-        status = traverse_heredoc(node->left);
+        status = traverse_heredoc(node->left, data);
 		if (status != 0)
         	return (status);
-        status = traverse_heredoc(node->right);
+        status = traverse_heredoc(node->right, data);
 		if (status != 0)
         	return (status);
     } 
 	else if (node->type == CMD_LINE)
 	{
+		command_line_maker(node, &error, data);
 		file = node->files;
 		while (file)
 		{
@@ -92,7 +95,7 @@ void	handle_line(char *line, t_data *request)
 		// print_all(request);
 		// get_heredoc();
 		// traverse_tree(request->ast);
-		exit_status = traverse_heredoc(request->ast);
+		exit_status = traverse_heredoc(request->ast, request);
 		if (exit_status != 0)
 		{
 			request->last_exit = exit_status;
@@ -141,7 +144,7 @@ int	main(int ac, char **av, char **env)
 			write(1, "exit\n", 5);
 			free_env(request.env);
 			rl_clear_history();
-			exit(131);
+			exit(0);
 		}
 		if (*line)
 			add_history(line);

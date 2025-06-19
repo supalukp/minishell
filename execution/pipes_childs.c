@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:16:30 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 16:35:17 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:29:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ static int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst,
 	if (save_fd_io(cmd_lst->cmd))
 	{
 		free_data_pipes(data, pipes);
+		close_save_fd(data->ast);
 		return (1);
 	}
 	if (dup_for_pipes(i, cmd_lst->cmd, pipes))
-		return (1);
+		return (close_save_fd(data->ast), 1);
 	close_save_fd(data->ast);
 	if (cmd_lst->cmd->cmd_line == NULL)
 	{
-		printf("null\n");
 		return (free_data_pipes(data, pipes), 0);
 	}
 	if (is_builtin(cmd_lst->cmd) == true)
@@ -56,6 +56,7 @@ static int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst,
 	}
 	else if (cmd_lst->cmd->type == CMD_LINE)
 		exit_status = external_cmd_process(cmd_lst->cmd, data);
+	// close_save_fd(data->ast);
 	return (exit_status);
 }
 
