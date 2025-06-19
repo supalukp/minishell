@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 18:08:52 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/09 15:54:46 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:43:42 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ char	*merge_quotes(const char *line)
 
 	i = 0;
 	result = NULL;
+	if (!line)
+		return (NULL);
 	while (line[i])
 	{
 		while (line[i] == ' ')

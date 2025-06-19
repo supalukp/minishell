@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 13:11:00 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/06 14:54:09 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:05:21 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	child_execution(char *paths, char **args, char **minishell_env)
 	execve(paths, args, minishell_env);
 	perror("execve failed");
 	free_matrix(minishell_env);
-	free_matrix(args);
-	free(paths);
+	if (args)
+		free_matrix(args);
+	if (paths)
+		free(paths);
 	exit(126);
 }
 
@@ -29,8 +31,10 @@ int	wait_and_clean(int exit_status, pid_t pid, char **args, char *paths)
 		perror("waitpid");
 		return (EXIT_FAILURE);
 	}
-	free_matrix(args);
-	free(paths);
+	if (args)
+		free_matrix(args);
+	if (paths)
+		free(paths);
 	if (WIFEXITED(exit_status))
 		return (WEXITSTATUS(exit_status));
 	else if (WIFSIGNALED(exit_status))
