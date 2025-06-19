@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:33:04 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:56:19 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:12:45 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,3 @@ void	backup_std_io(int stdin_backup, int stdout_backup)
 	close(stdin_backup);
 	close(stdout_backup);
 }
-

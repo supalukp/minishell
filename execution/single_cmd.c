@@ -6,12 +6,11 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:52:56 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:13:48 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-
 
 static int	init_args_env(char ***args, char ***env, t_tree *tree, t_data *data)
 {
@@ -32,7 +31,6 @@ int	init_path(char **path, char **args, char **env)
 	}
 	return (0);
 }
-
 
 int	external_single(t_tree *tree, t_data *data)
 {

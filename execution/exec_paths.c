@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 22:54:24 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:12:11 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,35 +78,74 @@ char	*get_program_name(char *path)
 	return (res);
 }
 
-int	prepare_exec_path(char **args, char **path, char **env)
+static int	handle_absolute_path(char **args, char **path, char **env)
 {
 	char	*program_name;
 	int		check;
 
-	if (args[0][0] == '/')
+	check = check_access_path(args[0]);
+	if (check)
 	{
-		check = check_access_path(args[0]);
-		if (check)
-		{
-			free_matrix(env);
-			free_matrix(args);
-			return (check);
-		}
-		program_name = get_program_name(args[0]);
-		free(args[0]);
-		args[0] = program_name;
-		if (init_path(path, args, env))
-			return (127);
+		free_matrix(env);
+		free_matrix(args);
+		return (check);
 	}
-	else if (args[0][0] == '.')
-	{
-		*path = ft_strdup(args[0]);
-		program_name = get_program_name(args[0]);
-		free(args[0]);
-		args[0] = program_name;
-	}
+	program_name = get_program_name(args[0]);
+	free(args[0]);
+	args[0] = program_name;
+	if (init_path(path, args, env))
+		return (127);
 	return (0);
 }
+
+static void	handle_relative_path(char **args, char **path)
+{
+	char	*program_name;
+
+	*path = ft_strdup(args[0]);
+	program_name = get_program_name(args[0]);
+	free(args[0]);
+	args[0] = program_name;
+}
+
+int	prepare_exec_path(char **args, char **path, char **env)
+{
+	if (args[0][0] == '/')
+		return (handle_absolute_path(args, path, env));
+	else if (args[0][0] == '.')
+		handle_relative_path(args, path);
+	return (0);
+}
+
+// int	prepare_exec_path(char **args, char **path, char **env)
+// {
+// 	char	*program_name;
+// 	int		check;
+
+// 	if (args[0][0] == '/')
+// 	{
+// 		check = check_access_path(args[0]);
+// 		if (check)
+// 		{
+// 			free_matrix(env);
+// 			free_matrix(args);
+// 			return (check);
+// 		}
+// 		program_name = get_program_name(args[0]);
+// 		free(args[0]);
+// 		args[0] = program_name;
+// 		if (init_path(path, args, env))
+// 			return (127);
+// 	}
+// 	else if (args[0][0] == '.')
+// 	{
+// 		*path = ft_strdup(args[0]);
+// 		program_name = get_program_name(args[0]);
+// 		free(args[0]);
+// 		args[0] = program_name;
+// 	}
+// 	return (0);
+// }
 
 char	*get_path(char *command, char **envp)
 {

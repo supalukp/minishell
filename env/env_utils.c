@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 08:20:51 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 01:17:01 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:10:39 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,7 @@ t_env	*create_single_node(const char *env_name, char *env_variable)
 		}
 	}
 	else
-	{
 		new_node->env_variable = NULL;
-	}
 	new_node->next = NULL;
 	return (new_node);
 }

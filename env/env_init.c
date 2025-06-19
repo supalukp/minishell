@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 01:30:05 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:10:26 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	update_shlvl(t_env *env_lst)
 				level = 1;
 			else
 				level++;
-				
 			free(tmp->env_variable);
 			value = ft_itoa(level);
 			tmp->env_variable = value;

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:10:05 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:00:25 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:12:56 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	count_cmd_element(t_cmd_element *args)
 
 static char	**alloc_cmd_array(int count)
 {
-	char **res;
+	char	**res;
 
 	res = malloc(sizeof(char *) * (count + 1));
 	if (!res)
@@ -201,8 +201,8 @@ char	**combine_cmdline(t_cmd_element *args)
 static int	prepare_exec(char **args, char **path, char **env)
 {
 	if (args[0][0] == '/' || args[0][0] == '.')
-		return prepare_exec_path(args, path, env);
-	return init_path(path, args, env);
+		return (prepare_exec_path(args, path, env));
+	return (init_path(path, args, env));
 }
 
 static char	**prepare_env_and_args(t_tree *tree, t_data *data, char ***args)
@@ -210,7 +210,7 @@ static char	**prepare_env_and_args(t_tree *tree, t_data *data, char ***args)
 	*args = combine_cmdline(tree->cmd_line);
 	if (!*args)
 		return (NULL);
-	return convert_env_lst_double_arrays(data->env);
+	return (convert_env_lst_double_arrays(data->env));
 }
 
 int	external_cmd_process(t_tree *tree, t_data *data)
