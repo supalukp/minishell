@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 14:37:22 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:33:45 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ char		*find_executable(char **all_path, char *command);
 
 // Pipes
 int			pipe_multi_process(t_tree *tree, t_data *data);
-t_pipes		*init_pipes(t_tree *tree);
+t_pipes		*init_pipes(t_tree *tree, t_data *data);
 void		create_pipes(t_pipes *pipes);
-t_pipe_cmds	*create_cmd_lst(t_tree *tree);
+t_pipe_cmds	*create_cmd_lst(t_tree *tree, t_data *data);
 int			fork_and_exec_children(t_pipes *pipes, t_data *data);
 int			process_parent(t_pipes *pipes);
 

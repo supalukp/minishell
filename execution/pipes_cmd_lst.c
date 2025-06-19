@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:49:02 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 17:58:36 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:34:28 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,20 @@ static void	ft_lstadd_cmd_front(t_pipe_cmds **lst, t_pipe_cmds *new)
 	*lst = new;
 }
 
-t_pipe_cmds	*create_cmd_lst(t_tree *tree)
+t_pipe_cmds	*create_cmd_lst(t_tree *tree, t_data *data)
 {
 	t_pipe_cmds	*lst;
 	t_pipe_cmds	*tmp;
+	int			error = 0;
 
 	lst = NULL;
 	if (tree->type != PIPE)
 		return (NULL);
 	while (tree->type == PIPE)
 	{
+		command_line_maker(tree->right, &error, data);
+		if (error)
+			free_cmd_lst(lst);
 		tmp = create_pipe_cmd_node(tree->right);
 		if (!tmp)
 			return (NULL);
@@ -50,9 +54,12 @@ t_pipe_cmds	*create_cmd_lst(t_tree *tree)
 			break ;
 		tree = tree->left;
 	}
+	command_line_maker(tree->left, &error, data);
+	if (error)
+		free_cmd_lst(lst);
 	tmp = create_pipe_cmd_node(tree->left);
 	if (!tmp)
-		return (NULL);
+		free_cmd_lst(lst);
 	ft_lstadd_cmd_front(&lst, tmp);
 	return (lst);
 }

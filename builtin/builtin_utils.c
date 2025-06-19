@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 14:30:40 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:51:04 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ static int	handle_exit(t_tree *tree, t_data *data, char **cmd)
 	int	status;
 
 	status = ft_exit(tree, data->last_exit);
-	if (status != 2)
+	if (status != 2 || data->last_exit == 2)
 	{
 		free_env(data->env);
 		free_matrix(cmd);
 		clean_data(data);
 		rl_clear_history();
+		if (data->last_exit == 2)
+			exit(2);
 		exit(status);
 	}
 	return (status);
