@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/20 13:35:05 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 13:39:42 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int	main(int ac, char **av, char **env)
 		}
 		if (line == NULL)
 		{
-			write(1, "exit\n", 5);
+			// write(1, "exit\n", 5);
 			free_env(request.env);
 			rl_clear_history();
 			exit(request.last_exit);
