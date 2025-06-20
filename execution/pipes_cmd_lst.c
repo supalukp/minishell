@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:49:02 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 18:37:08 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:02:29 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_pipe_cmds	*create_cmd_lst(t_tree *tree, t_data *data)
 {
 	t_pipe_cmds	*lst;
 	t_pipe_cmds	*tmp;
-	// int			error = 0;
 
 	(void)data;
 	lst = NULL;

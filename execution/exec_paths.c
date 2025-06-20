@@ -6,84 +6,30 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 09:21:47 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:14:02 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-static int	handle_absolute_path(char **args, char **path, char **env)
+int	path_only_slash(char *path)
 {
-	char	*program_name;
-	int		check;
+	int	i;
 
-	check = check_access_path(args[0]);
-	if (check)
+	if (!path || path[0] != '.')
+		return (0);
+	i = 1;
+	while (path[i])
 	{
-		// free_matrix(env);
-		// free_matrix(args);
-		return (check);
+		if (path[i] != '/')
+			return (0);
+		i++;
 	}
-	program_name = get_program_name(args[0]);
-	free(args[0]);
-	args[0] = program_name;
-	if (init_path(path, args, env))
-		return (127);
-	return (0);
-}
-
-static void	handle_relative_path(char **args, char **path)
-{
-	// char	*program_name;
-	// printf("%s\n", args[0]);
-	*path = ft_strdup(args[0]);
-	// printf("realtive\n");
-	// printf("%s\n", args[0]);
-	// printf("%s\n", args[0]);
-	// program_name = get_program_name(args[0]);
-	// free(args[0]);
-	// args[0] = program_name;
-}
-
-int only_dot(char *args)
-{
-    int i;
-
-    if (!args)
-        return (0);
-    i = 0;
-    while (args[i])
-    {
-        if (args[i] == '.' && args[i + 1] == '.')
-            return (1);
-		else if (args[i] == '.' && args[i + 1] == '\0')
-			return (1);
-        i++;
-    }
-    return (0);
-}
-
-int path_only_slash(char *path)
-{
-    int i;
-
-    if (!path || path[0] != '.')
-        return (0);
-
-    i = 1;
-    while (path[i])
-    {
-        if (path[i] != '/')
-            return (0);
-        i++;
-    }
-    return (1);
+	return (1);
 }
 
 int	prepare_exec_path(char **args, char **path, char **env)
 {
-	struct stat sb;
-	
 	if (args[0][0] == '/')
 		return (handle_absolute_path(args, path, env));
 	if (path_only_slash(args[0]))
@@ -93,57 +39,9 @@ int	prepare_exec_path(char **args, char **path, char **env)
 		return (126);
 	}
 	else if (args[0][0] == '.')
-	{
-		if (only_dot(args[0]))
-			return (command_not_found(args));
-		if (stat(args[0], &sb) == -1)
-			return (command_not_found(args)); // 127
-		if (S_ISDIR(sb.st_mode))
-		{
-			stderr_msg(args[0]);
-			stderr_msg(": Is a directory\n");
-			return (126);
-		}
-		if (!(sb.st_mode & S_IXUSR))
-		{
-			stderr_msg(args[0]);
-			stderr_msg(": Permission denied\n");
-			return (126);
-		}
-		handle_relative_path(args, path);
-	}
+		return (handle_relative_path(args, path));
 	return (0);
 }
-
-// int	prepare_exec_path(char **args, char **path, char **env)
-// {
-// 	char	*program_name;
-// 	int		check;
-
-// 	if (args[0][0] == '/')
-// 	{
-// 		check = check_access_path(args[0]);
-// 		if (check)
-// 		{
-// 			free_matrix(env);
-// 			free_matrix(args);
-// 			return (check);
-// 		}
-// 		program_name = get_program_name(args[0]);
-// 		free(args[0]);
-// 		args[0] = program_name;
-// 		if (init_path(path, args, env))
-// 			return (127);
-// 	}
-// 	else if (args[0][0] == '.')
-// 	{
-//		// *path = ft_strdup(args[0]);
-// 		program_name = get_program_name(args[0]);
-// 		free(args[0]);
-// 		args[0] = program_name;
-// 	}
-// 	return (0);
-// }
 
 char	*get_path(char *command, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 14:32:40 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:55:21 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,9 @@ typedef struct s_stdio_backup
 {
 	int						stdin;
 	int						stdout;
+	char					**args;
+	char					**env;
+	char					*path;
 }							t_stdio_backup;
 
 #endif

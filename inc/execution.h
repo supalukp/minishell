@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 08:36:55 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:14:48 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,13 @@ int			main_execution(t_tree *tree, t_data *data);
 int			exec_cmd_line(t_tree *tree, t_data *data, int exit_status);
 int			count_cmd_element(t_cmd_element *args);
 char		**combine_cmdline(t_cmd_element *args);
-int			check_access_path(char *path);
 char		*get_program_name(char *path);
 int			prepare_exec_path(char **args, char **path, char **env);
 char		*get_path(char *command, char **envp);
 char		*find_executable(char **all_path, char *command);
+int	handle_relative_path(char **args, char **path);
+int	handle_absolute_path(char **args, char **path, char **env);
+
 
 // Pipes
 int			pipe_multi_process(t_tree *tree, t_data *data);

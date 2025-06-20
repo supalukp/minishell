@@ -6,11 +6,29 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:48:52 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 09:09:10 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:23:08 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
+
+static int	unset_head_node(const char *key, t_data *data)
+{
+	t_env	*tmp;
+
+	if (ft_strcmp(data->env->env_name, key) == 0)
+	{
+		tmp = data->env;
+		data->env = data->env->next;
+		if (tmp->env_name)
+			free(tmp->env_name);
+		if (tmp->env_variable)
+			free(tmp->env_variable);
+		free(tmp);
+		return (0);
+	}
+	return (1);
+}
 
 static int	unset_variable(char *key, t_data *data)
 {
@@ -19,15 +37,8 @@ static int	unset_variable(char *key, t_data *data)
 
 	if (!key || !data || !data->env)
 		return (1);
-	if (ft_strcmp(data->env->env_name, key) == 0)
-    {
-        tmp = data->env;
-        data->env = data->env->next;
-        if (tmp->env_name) free(tmp->env_name);
-        if (tmp->env_variable) free(tmp->env_variable);
-        free(tmp);
-        return (0);
-    }
+	if (unset_head_node(key, data) == 0)
+		return (0);
 	env_lst = data->env;
 	while (env_lst && env_lst->next)
 	{

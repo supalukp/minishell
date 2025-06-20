@@ -1,37 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_paths_utils.c                                 :+:      :+:    :+:   */
+/*   exec_paths_absolute.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/19 11:02:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 20:09:24 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/06/20 12:11:41 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/06/20 12:16:17 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-
-char	*get_program_name(char *path)
-{
-	char	**split;
-	char	*res;
-	int		count;
-	int		i;
-
-	count = 0;
-	split = ft_split(path, '/');
-	if (!split)
-		return (NULL);
-	while (split[count])
-		count++;
-	res = ft_strdup(split[count - 1]);
-	i = -1;
-	while (split[++i])
-		free(split[i]);
-	free(split);
-	return (res);
-}
 
 static int	handle_access_error(char *path)
 {
@@ -67,13 +46,33 @@ static int	handle_stat_error(char *path, struct stat *st)
 	return (0);
 }
 
-int	check_access_path(char *path)
+static int	check_access_absolute_path(char *path)
 {
 	struct stat	st;
 
+	if (access(path, X_OK) == -1)
+	{
+		stderr_msg(path);
+		stderr_msg(": Permission denied\n");
+		return (126);
+	}
 	if (access(path, F_OK) == -1)
 		return (handle_access_error(path));
 	if (stat(path, &st) == 0)
 		return (handle_stat_error(path, &st));
+	return (0);
+}
+
+int	handle_absolute_path(char **args, char **path, char **env)
+{
+	int	check;
+
+	(void)env;
+	check = check_access_absolute_path(args[0]);
+	if (check)
+		return (check);
+	*path = ft_strdup(args[0]);
+	if (*path == NULL)
+		return (1);
 	return (0);
 }

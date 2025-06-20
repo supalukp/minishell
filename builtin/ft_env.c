@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:00:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:15:15 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:20:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_env(t_tree *tree, t_data *data)
 {
 	if (!data->env)
-		return (1);
+		return (0);
 	if (!no_argument(tree))
 	{
 		if (tree->cmd_line->next->content[0] == '-')

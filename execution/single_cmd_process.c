@@ -6,29 +6,28 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 13:11:00 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 23:14:46 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:00:57 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	child_execution(char *paths, char **args, char **minishell_env,
-		t_data *data)
+void	child_execution(char *paths, char **args, char **env, t_data *data)
 {
 	(void)data;
 	if (args[0][0] == '\0')
 	{
-		write(2, " ",1);
+		write(2, " ", 1);
 		write(2, ": command not found\n", 20);
 		free_matrix(args);
 		free(paths);
-		free_matrix(minishell_env);
+		free_matrix(env);
 		free_program(data);
-		exit (127);
+		exit(127);
 	}
-	execve(paths, args, minishell_env);
+	execve(paths, args, env);
 	perror("execve failed");
-	free_matrix(minishell_env);
+	free_matrix(env);
 	if (args)
 		free_matrix(args);
 	if (paths)

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:06:26 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 08:23:34 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:09:32 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ static char	**prepare_env_and_args(t_tree *tree, t_data *data, char ***args)
 	if (!*args)
 		return (NULL);
 	return (convert_env_lst_double_arrays(data->env));
+}
+
+static void	free_pipe_cmd(char **env, char **args, char *paths)
+{
+	if (env)
+		free_matrix(env);
+	if (args)
+		free_matrix(args);
+	if (paths)
+		free(paths);
 }
 
 int	external_cmd_process(t_tree *tree, t_data *data)
@@ -47,49 +57,11 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	}
 	if (args[0][0] == '\0')
 	{
-		write(2, " ",1);
-		write(2, ": command not found\n", 20);
-		free_matrix(args);
-		free(paths);
-		free_matrix(minishell_env);
-		close_save_fd(data->ast);
-		return (127);
+		free_pipe_cmd(minishell_env, args, paths);
+		return (command_not_found(args));
 	}
 	execve(paths, args, minishell_env);
 	perror("execve failed");
-	free_matrix(minishell_env);
-	free_matrix(args);
-	free(paths);
+	free_pipe_cmd(minishell_env, args, paths);
 	return (126);
 }
-
-// int	external_cmd_process(t_tree *tree, t_data *data)
-// {
-// 	char	**args;
-// 	char	*paths;
-// 	char	**minishell_env;
-// 	int		check;
-
-// 	args = combine_cmdline(tree->cmd_line);
-// 	if (!args)
-// 		return (1);
-// 	minishell_env = convert_env_lst_double_arrays(data->env);
-// 	if (args[0][0] == '/' || args[0][0] == '.')
-// 	{
-// 		check = prepare_exec_path(args, &paths, minishell_env);
-// 		if (check)
-// 			return (127);
-// 	}
-// 	else
-// 	{
-// 		if (init_path(&paths, args, minishell_env))
-// 			return (127);
-// 	}
-// 	execve(paths, args, minishell_env);
-// 	perror("execve failed");
-// 	close_save_fd(data->ast);
-// 	free_matrix(minishell_env);
-// 	free_matrix(args);
-// 	free(paths);
-// 	return (126);
-// }

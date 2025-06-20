@@ -9,7 +9,7 @@
 
 [x] $ creates loop
 [x] export --> print export KEY="value"
-[ ] when change PATH=value still should be able to run  absolute path
+[x] when change PATH=value still should be able to run  absolute path
 [SANDY] exit si tu met un argument invalid genre "a" "a" doit mettre not numberc ...
 [x]je veux unet PWD par pitie
 [x]ctrl + d doit pas mettre le status a 131
@@ -35,3 +35,4 @@ dfs: command not found
 
 [x] " " only this segfault
 [x] .d minishell[126]> .d execve failed: No such file or directory -> command not found
+[] minishell[127]> exit if cmd false 

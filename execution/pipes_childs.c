@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:16:30 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 08:54:25 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:04:31 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	fork_and_exec_children(t_pipes *pipes, t_data *data)
 			exit(exit_status);
 		}
 		set_signal_to_ignore();
-		// close_all_heredoc_fd(data->ast);
 		close_save_fd(tmp->cmd);
 		tmp = tmp->next;
 	}

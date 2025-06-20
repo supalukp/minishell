@@ -61,6 +61,8 @@ HEADERS =	${INC_DIR}/execution.h \
 FILES = main.c \
 		${PARS_DIR}/error_check.c \
 		${PARS_DIR}/error_check_utils.c \
+		${PARS_DIR}/error_check_bracket.c \
+		${PARS_DIR}/error_unsupported.c \
 		${PARS_DIR}/readline_utils.c \
 		${PARS_DIR}/ast_parsing.c \
 		${PARS_DIR}/ast_maker.c \
@@ -84,7 +86,8 @@ FILES = main.c \
 		${EXEC_DIR}/execution.c \
 		${EXEC_DIR}/exec_utils.c \
 		${EXEC_DIR}/cmd_check.c \
-		${EXEC_DIR}/exec_paths_utils.c \
+		${EXEC_DIR}/exec_paths_absolute.c \
+		${EXEC_DIR}/exec_paths_relative.c \
 		${EXEC_DIR}/pipes_exec_cmd.c \
 		${EXEC_DIR}/exec_paths.c \
 		${EXEC_DIR}/cmd_combine.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 20:54:43 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/20 11:25:02 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,36 @@ static int	handle_exit(t_tree *tree, t_data *data, char **cmd)
 	int	status;
 
 	status = ft_exit(tree, data->last_exit);
-	if ((status != 2 || data->last_exit == 2) && status != 127)
+	if ((status != 127 || data->last_exit == 127))
 	{
 		free_env(data->env);
 		free_matrix(cmd);
 		clean_data(data);
 		rl_clear_history();
-		if (data->last_exit == 2)
-			exit(2);
+		if (data->last_exit == 127)
+			exit(127);
 		exit(status);
 	}
 	return (status);
 }
+
+// static int	handle_exit(t_tree *tree, t_data *data, char **cmd)
+// {
+// 	int	status;
+
+// 	status = ft_exit(tree, data->last_exit);
+// 	if ((status != 2 || data->last_exit == 2) && status != 127)
+// 	{
+// 		free_env(data->env);
+// 		free_matrix(cmd);
+// 		clean_data(data);
+// 		rl_clear_history();
+// 		if (data->last_exit == 2)
+// 			exit(2);
+// 		exit(status);
+// 	}
+// 	return (status);
+// }
 
 int	exec_builtin(t_tree *tree, t_data *data)
 {

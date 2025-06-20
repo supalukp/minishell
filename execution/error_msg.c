@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:51:48 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 07:26:55 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:01:34 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	command_not_found(char **args)
 {
 	write(2, args[0], ft_strlen(args[0]));
 	write(2, ": command not found\n", 20);
-	// free_matrix(args);
 	return (127);
 }
 
