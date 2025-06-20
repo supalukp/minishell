@@ -35,4 +35,9 @@ dfs: command not found
 
 [x] " " only this segfault
 [x] .d minishell[126]> .d execve failed: No such file or directory -> command not found
-[] minishell[127]> exit if cmd false 
+[x] minishell[127]> exit if cmd false 
+[] handle ctrl \ in heredoc
+[] ./minishell | ./minishell -> check tty if it in pipe or not if pipe just block
+[] cat | cat | cat and ctrl c should print only 1 line
+[] cd -
+[] leak when redirect in pipes

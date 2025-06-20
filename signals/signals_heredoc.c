@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:23:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 18:22:54 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:08:07 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	handle_heredoc_sigint(int sig)
 void	setup_heredoc_signal(void)
 {
 	struct sigaction	sa;
-
+	
 	sa.sa_handler = handle_heredoc_sigint;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
