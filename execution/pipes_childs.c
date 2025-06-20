@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:16:30 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 20:29:55 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 08:54:25 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,21 @@ static int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst,
 	if (save_fd_io(cmd_lst->cmd))
 	{
 		free_data_pipes(data, pipes);
-		close_save_fd(data->ast);
+		close_save_fd(cmd_lst->cmd);
 		return (1);
 	}
 	if (dup_for_pipes(i, cmd_lst->cmd, pipes))
-		return (close_save_fd(data->ast), 1);
-	close_save_fd(data->ast);
+		return (close_save_fd(cmd_lst->cmd), 1);
+	close_all_heredoc_fd(data->ast);
 	if (cmd_lst->cmd->cmd_line == NULL)
-	{
 		return (free_data_pipes(data, pipes), 0);
-	}
 	if (is_builtin(cmd_lst->cmd) == true)
 	{
 		signal(SIGPIPE, SIG_IGN);
 		exit_status = exec_builtin(cmd_lst->cmd, data);
-		free_data_pipes(data, pipes);
-		return (exit_status);
 	}
 	else if (cmd_lst->cmd->type == CMD_LINE)
 		exit_status = external_cmd_process(cmd_lst->cmd, data);
-	// close_save_fd(data->ast);
 	return (exit_status);
 }
 
@@ -83,9 +78,12 @@ int	fork_and_exec_children(t_pipes *pipes, t_data *data)
 			set_signal_to_default();
 			signal(SIGPIPE, SIG_DFL);
 			exit_status = process_child(i, pipes, tmp, data);
+			free_data_pipes(data, pipes);
 			exit(exit_status);
 		}
 		set_signal_to_ignore();
+		// close_all_heredoc_fd(data->ast);
+		close_save_fd(tmp->cmd);
 		tmp = tmp->next;
 	}
 	return (0);

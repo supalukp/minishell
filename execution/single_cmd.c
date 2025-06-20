@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 23:56:38 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:24:02 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	init_path(char **path, char **args, char **env)
 	*path = get_path(args[0], env);
 	if (!*path)
 	{
-		free_matrix(env);
+		// free_matrix(env);
 		return (command_not_found(args));
 	}
 	return (0);
@@ -34,16 +34,17 @@ int	init_path(char **path, char **args, char **env)
 
 int	resolve_path(char **args, char **env, char **path)
 {
-	// int error;
+	int error;
 
-	// error = 0;
+	error = 0;
+	
 	if (args[0][0] == '/' || args[0][0] == '.')
-	// {
-	// 	error = prepare_exec_path(args, path, env);
-	// 	if (error)
-	// 		return
-	// }
-		return (prepare_exec_path(args, path, env));
+	{
+		error = prepare_exec_path(args, path, env);
+		if (error)
+			return (error);
+		return (0);
+	}
 	if (init_path(path, args, env))
 	{
 		return (127);
@@ -98,9 +99,9 @@ int	external_single(t_tree *tree, t_data *data)
 	path_ret = resolve_path(args, env, &path);
 	if (path_ret)
 	{
-		// free_matrix(args);
+		free_matrix(args);
 		// free(path);
-		// free_matrix(env);
+		free_matrix(env);
 		return (backup_std_io(backup.stdin, backup.stdout), path_ret);
 	}
 	status = fork_and_exec(path, args, env, data, &backup);

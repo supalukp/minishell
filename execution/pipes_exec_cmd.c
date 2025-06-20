@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:06:26 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 20:43:37 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 08:23:34 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,16 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	char	**minishell_env;
 	char	*paths;
 	int		check;
-	
-	close_save_fd(data->ast);
+
+	close_save_fd(tree);
 	minishell_env = prepare_env_and_args(tree, data, &args);
 	if (!minishell_env)
 		return (1);
 	check = prepare_exec(args, &paths, minishell_env);
 	if (check)
 	{
-		// free_matrix(args);
-		// // free(paths);
-		// free_matrix(minishell_env);
-		// close_save_fd(data->ast);
+		free_matrix(args);
+		free_matrix(minishell_env);
 		return (check);
 	}
 	if (args[0][0] == '\0')
@@ -59,10 +57,9 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	}
 	execve(paths, args, minishell_env);
 	perror("execve failed");
-	// close_save_fd(data->ast);
-	// free_matrix(minishell_env);
-	// free_matrix(args);
-	// free(paths);
+	free_matrix(minishell_env);
+	free_matrix(args);
+	free(paths);
 	return (126);
 }
 

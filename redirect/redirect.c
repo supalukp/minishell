@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 18:46:44 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 16:37:33 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 08:40:59 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	dup_for_pipes(int i, t_tree *node, t_pipes *pipes)
 		ret = setup_inout_middle(i, pipes, node);
 	if (ret)
 		return (1);
+	close_save_fd(node);
 	return (0);
 }
 

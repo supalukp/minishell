@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 23:40:13 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:21:47 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	handle_absolute_path(char **args, char **path, char **env)
 	check = check_access_path(args[0]);
 	if (check)
 	{
-		free_matrix(env);
-		free_matrix(args);
+		// free_matrix(env);
+		// free_matrix(args);
 		return (check);
 	}
 	program_name = get_program_name(args[0]);
@@ -82,6 +82,8 @@ int path_only_slash(char *path)
 
 int	prepare_exec_path(char **args, char **path, char **env)
 {
+	struct stat sb;
+	
 	if (args[0][0] == '/')
 		return (handle_absolute_path(args, path, env));
 	if (path_only_slash(args[0]))
@@ -94,6 +96,20 @@ int	prepare_exec_path(char **args, char **path, char **env)
 	{
 		if (only_dot(args[0]))
 			return (command_not_found(args));
+		if (stat(args[0], &sb) == -1)
+			return (command_not_found(args)); // 127
+		if (S_ISDIR(sb.st_mode))
+		{
+			stderr_msg(args[0]);
+			stderr_msg(": Is a directory\n");
+			return (126);
+		}
+		if (!(sb.st_mode & S_IXUSR))
+		{
+			stderr_msg(args[0]);
+			stderr_msg(": Permission denied\n");
+			return (126);
+		}
 		handle_relative_path(args, path);
 	}
 	return (0);
