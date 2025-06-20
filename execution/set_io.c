@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:47:08 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 16:36:38 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 08:03:47 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,11 @@ int	save_fd_io(t_tree *node)
 			return (1);
 		else if (files->type == HEREDOC)
 		{
+		
 			if (node->fd_in != -1)
 				close(node->fd_in);
 			node->fd_in = node->fd_heredoc;
+			node->fd_heredoc = -1;
 		}
 		else if (files->type == OUTFILE && handle_outfile(node, files))
 			return (1);

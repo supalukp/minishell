@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:00:06 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 16:43:03 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:00:15 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int	pipe_no_args(char *line)
 			else
 			{
 				i++;
-				if (line[i] == '|')
-					i++;
+				// if (line[i] == '|')
+				// 	i++;
 				while (line[i] == ' ')
 					i++;
 				if (line[i] == '\0')

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 16:33:45 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/20 08:36:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void		assign_heredoc_fd(t_tree *node, int fd_read);
 int			setup_inout_middle(int i, t_pipes *pipes, t_tree *node);
 int			setup_inout_last(int i, t_pipes *pipes, t_tree *node);
 int			setup_inout_first(t_pipes *pipes, t_tree *node);
+void close_all_heredoc_fd(t_tree *tree);
 
 /* -------------------------------------------------------------------------- */
 /*                                   builtin                                  */
