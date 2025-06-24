@@ -6,13 +6,13 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:14:54 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 08:35:43 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/25 00:10:17 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-static void	close_all_pipes(t_pipes *pipes)
+void	close_all_pipes(t_pipes *pipes)
 {
 	int	i;
 

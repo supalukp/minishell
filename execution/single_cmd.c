@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 12:02:46 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/24 23:49:58 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ int	init_path(char **path, char **args, char **env)
 
 int	resolve_path(char **args, char **env, char **path)
 {
-	int	error;
-
-	error = 0;
 	if (args[0][0] == '/' || args[0][0] == '.')
 		return (prepare_exec_path(args, path, env));
 	if (init_path(path, args, env))

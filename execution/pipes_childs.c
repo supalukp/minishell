@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:16:30 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 12:04:31 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/25 00:13:15 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst,
 	close_unused_pipes(i, pipes);
 	if (save_fd_io(cmd_lst->cmd))
 	{
-		free_data_pipes(data, pipes);
+		close_all_pipes(pipes);
 		close_save_fd(cmd_lst->cmd);
 		return (1);
 	}
