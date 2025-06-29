@@ -3,16 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:50:54 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/04 15:16:41 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/29 13:49:44 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	ft_pwd(t_tree *tree)
+void	update_oldpwd(char *old_path, t_env *lst)
+{
+	while (lst)
+	{
+		if (ft_strlen(lst->env_name) == 6)
+		{
+			if (ft_strncmp("OLDPWD", lst->env_name, 6) == 0)
+			{
+				free(lst->env_variable);
+				lst->env_variable = ft_strdup(old_path);
+				return ;
+			}
+		}
+		lst = lst->next;
+	}
+}
+
+char	*update_pwd(char *new_path, t_env *lst)
+{
+	char	*old_path;
+	t_env	*tmp;
+
+	old_path = NULL;
+	tmp = lst;
+	while (tmp)
+	{
+		if (ft_strlen(tmp->env_name) == 3)
+		{
+			if (ft_strncmp("PWD", tmp->env_name, 3) == 0)
+			{
+				old_path = tmp->env_variable;
+				update_oldpwd(old_path, lst);
+				tmp->env_variable = new_path;
+				free(old_path);
+			}
+		}
+		tmp = tmp->next;
+	}
+	return ("");
+}
+
+int	ft_pwd(t_tree *tree, t_env *lst)
 {
 	char	*res;
 
@@ -36,7 +77,7 @@ int	ft_pwd(t_tree *tree)
 	if (res)
 	{
 		printf("%s\n", res);
-		free(res);
+		update_pwd(res, lst);
 	}
 	return (0);
 }

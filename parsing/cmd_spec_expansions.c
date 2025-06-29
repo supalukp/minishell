@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:04:06 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 19:55:53 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/29 16:52:30 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,18 @@ void	spec_dol(t_cmd_element *line, int *count, int code)
 	int		i;
 	int		len;
 	char	*codestr;
-	char	*pid;
 
 	i = current_pos_dollar(line->content, *count);
 	if (i == -1)
 		return ;
-	if (line->content[i + 1] && line->content[i + 1] == '?')
+	printf("line->content %s\n", line->content);
+	if (i == 0 && !line->content[i + 1] && line->next->quoted)
+		line->content[i] = '\0';
+	else if (line->content[i + 1] && line->content[i + 1] == '?')
 	{
 		codestr = ft_itoa(code);
 		len = ft_strlen(line->content) - 2 + ft_strlen(codestr);
 		exchange_dollar_values(line, codestr, i, len);
 		free(codestr);
-	}
-	else if (line->content[i + 1] && line->content[i + 1] == '$')
-	{
-		pid = ft_itoa(getpid());
-		len = ft_strlen(line->content) - 2 + ft_strlen(pid);
-		exchange_dollar_values(line, pid, i, len);
-		free(pid);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 12:14:48 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:37:57 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void close_all_heredoc_fd(t_tree *tree);
 /* -------------------------------------------------------------------------- */
 bool		is_builtin(t_tree *tree);
 int			exec_builtin(t_tree *tree, t_data *data);
-int			ft_cd(t_tree *tree);
+int			ft_cd(t_tree *tree, t_env *lst);
 int			ft_echo(t_tree *tree);
 int			ft_env(t_tree *tree, t_data *data);
 int			ft_exit(t_tree *tree, int exit_status);
@@ -80,7 +80,8 @@ int			create_key_value(t_cmd_element *args, t_data *data);
 int			create_only_key(t_cmd_element *args, t_data *data);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_export(t_tree *tree, t_data *data);
-int			ft_pwd(t_tree *tree);
+int			ft_pwd(t_tree *tree,t_env *lst);
+char		*update_pwd(char *new_path, t_env *lst);
 int			ft_unset(t_tree *tree, t_data *data);
 
 /* -------------------------------------------------------------------------- */
@@ -96,8 +97,8 @@ char		*get_program_name(char *path);
 int			prepare_exec_path(char **args, char **path, char **env);
 char		*get_path(char *command, char **envp);
 char		*find_executable(char **all_path, char *command);
-int	handle_relative_path(char **args, char **path);
-int	handle_absolute_path(char **args, char **path, char **env);
+int			handle_relative_path(char **args, char **path);
+int			handle_absolute_path(char **args, char **path, char **env);
 
 
 // Pipes

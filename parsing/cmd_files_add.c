@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:28:09 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 19:39:13 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/29 13:38:41 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*get_redirection_file(int index, char *cmd_line, int *error)
 	if (!file_name)
 	{
 		free(cmd_line);
-		return (*error = 1, NULL); // TODO exit
+		return (*error = 1, NULL);
 	}
 	while (j < i)
 	{

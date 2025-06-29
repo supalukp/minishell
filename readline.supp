@@ -1,4 +1,10 @@
 {
+  <readlinelib>
+  Memcheck:Leak
+  ...
+  obj:/usr/lib/x86_64-linux-gnu/libreadline.so*
+}
+{
   <readline>
   Memcheck:Leak
   ...

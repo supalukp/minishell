@@ -3,73 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_redirections.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:25:45 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 17:37:28 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/29 15:28:57 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int		get_new_redirectionless_str(int index, t_tree *cmd_line)
-{
-	int	i;
-	
-	i = 0;
-	while(is_letters(cmd_line->content[index + i],"< >"))
-		i++;
-	while (cmd_line->content[index + i] != '\0' && cmd_line->content[index + i] != ' ')
-		i++;
-	return (i);
-}
-
-void	remove_redirection(int index, t_tree *cmd_line, int *error)
-{
-	int lenrem;
-	char *replacement;
-	int	i;
-	
-	lenrem = get_new_redirectionless_str(index, cmd_line);
-	replacement = ft_calloc(ft_strlen(cmd_line->content) - lenrem + 1, sizeof(char));
-	if (!replacement)
-	{
-		free(cmd_line->content);
-		*error = 1;
-		return ; \
-	}
-	i = 0;
-	while (i < index)
-	{
-		replacement[i] = cmd_line->content[i];
-		i++;
-	}
-	while (cmd_line->content[i + lenrem])
-	{
-		replacement[i] = cmd_line->content[i  + lenrem];
-		i++;
-	}
-	free(cmd_line->content);
-	cmd_line->content = replacement;
-}
-
 char	*get_redirection_file(int index, char *cmd_line, int *error)
 {
-	int i;
-	int j;
-	char *file_name;
-	
+	int		i;
+	int		j;
+	char	*file_name;
+
 	i = 0;
 	j = 0;
-	while(cmd_line[i + index] == ' ')
+	while (cmd_line[i + index] == ' ')
 		index++;
-	while ( cmd_line[i + index] != ' ' && cmd_line[i + index] != '\0')
+	while (cmd_line[i + index] != ' ' && cmd_line[i + index] != '\0')
 		i++;
 	file_name = ft_calloc(i + 1, sizeof(char));
 	if (!file_name)
 	{
 		free(cmd_line);
-		return (*error = 1, NULL); // TODO exit
+		return (*error = 1, NULL);
 	}
 	while (j < i)
 	{
@@ -98,29 +57,47 @@ t_type	define_redirection_type(int index, char *cmd_line)
 
 void	get_redirections(int index, t_tree *cmd_line, int *error)
 {
-	int 	i;
+	int		i;
 	char	*filename;
 	t_type	filetype;
 
 	if (!cmd_line || !cmd_line->content || *error)
-		return;
+		return ;
 	i = index;
 	filetype = define_redirection_type(i, cmd_line->content);
-	while(is_letters(cmd_line->content[i],"< >"))
+	while (is_letters(cmd_line->content[i], "< >"))
 		i++;
 	filename = get_redirection_file(i, cmd_line->content, error);
 	if (!filename)
 	{
 		*error = 1;
-		return;
+		return ;
 	}
 	remove_redirection(index, cmd_line, error);
 	if (*error)
 	{
 		free(filename);
-		return;
+		return ;
 	}
 	add_cmd_file(filename, filetype, cmd_line, error);
+}
+
+void	define_quoted(t_tree *cmd_line, int i, bool *s_quote, bool *d_quote)
+{
+	if (cmd_line->content[i] == '\'')
+	{
+		if (*s_quote == false)
+			*s_quote = true;
+		else
+			*s_quote = false;
+	}
+	if (cmd_line->content[i] == '\"')
+	{
+		if (*d_quote == false)
+			*d_quote = true;
+		else
+			*d_quote = false;
+	}
 }
 
 void	identify_redirections(t_tree *cmd_line, int *error)
@@ -136,21 +113,9 @@ void	identify_redirections(t_tree *cmd_line, int *error)
 	{
 		if (*error)
 			return ;
-		if (cmd_line->content[i] == '\'')
-		{
-			if (s_quote == false)
-				s_quote = true;
-			else
-				s_quote = false;
-		}
-		if (cmd_line->content[i] == '\"')
-		{
-			if (d_quote == false)
-				d_quote = true;
-			else
-				d_quote = false;
-		}
-		if ((cmd_line->content[i] == '<' || cmd_line->content[i] == '>') && s_quote == false && d_quote == false)
+		define_quoted(cmd_line, i, &s_quote, &d_quote);
+		if (includedchar(cmd_line->content[i], "<>") && \
+			s_quote == false && d_quote == false)
 		{
 			get_redirections(i, cmd_line, error);
 			if (*error)

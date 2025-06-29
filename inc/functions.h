@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/20 12:41:33 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/29 16:51:08 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,12 @@ void	clean_recursive_tree(t_tree *node);
 
 // expansions.c
 int		add_expansions(t_tree *node, t_env *lst, t_data *request);
+void	remove_cmd(t_tree *node, t_cmd_element *after);
 int		current_pos_dollar(char *line, int count);
-
-// expansions
+int		expand_score(t_tree *node, t_env *lst);
+void	replace_expansion(t_cmd_element *l, t_env *lst, int *count);
+void	handle_exp(t_cmd_element *l, t_env *lst, int i, int packed);
+int		expansion_logic(int	*i, t_cmd_element *line, int *slashed, int *count);
 char	*find_expansion_match(const char *search, t_env *lst);
 void	add_tild(t_cmd_element *element, t_env *lst);
 void	spec_dol(t_cmd_element *line, int *count, int code);
@@ -100,6 +103,7 @@ void	trim_space(t_cmd_element *cmd);
 int		counterchar(char const *s1, char letter);
 int		current_pos_dollar(char *line, int count);
 char	*find_expansion_match(const char *search, t_env *lst);
+void	exchange_expansion_values(t_cmd_element *el, char *new, int i, int len);
 
 // cmd_mergequotes.c
 void	merge_cmd_quotes(t_tree *node);

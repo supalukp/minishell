@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:11 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 14:38:02 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/29 13:40:16 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,6 @@ void	clean_data(t_data *data)
 	if (data->ast)
 	{
 		free_ast(data->ast);
-		// clean_recursive_tree(data->ast);
 		data->ast = NULL;
 	}
-	
-	// if (data->env)
-	// 	free_env(data->env);
 }

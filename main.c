@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/20 13:39:42 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/29 13:48:08 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	handle_line(char *line, t_data *request)
 	request->ast = tree;
 	if (request->ast)
 	{
-		// print_all(request);
 		// get_heredoc();
 		// traverse_tree(request->ast);
 		exit_status = traverse_heredoc(request->ast, request);
@@ -102,6 +101,7 @@ void	handle_line(char *line, t_data *request)
 			clean_data(request);
 			return ;
 		}
+		print_all(request);
 		request->last_exit = main_execution(request->ast, request);
 		close_save_fd(request->ast);
 		// printf("exit status = %d\n", request->last_exit);

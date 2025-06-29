@@ -76,7 +76,9 @@ FILES = main.c \
 		${PARS_DIR}/cmd_elements_split.c \
 		${PARS_DIR}/cmd_expansions.c \
 		${PARS_DIR}/cmd_exp_tild.c \
+		${PARS_DIR}/cmd_exp_score.c \
 		${PARS_DIR}/cmd_exp_trim.c \
+		${PARS_DIR}/cmd_exp_replace.c \
 		${PARS_DIR}/cmd_exp_utils.c \
 		${PARS_DIR}/cmd_spec_expansions.c \
 		${PARS_DIR}/cmd_mergequotes.c \
