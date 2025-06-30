@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:42:19 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/23 16:38:27 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:30:14 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	exec_builtin(t_tree *tree, t_data *data)
 	else if (!ft_strcmp(cmd[0], "cd"))
 		exit_status = ft_cd(tree, data->env);
 	else if (!ft_strcmp(cmd[0], "pwd"))
-		exit_status = ft_pwd(tree, data->env);
+		exit_status = ft_pwd(tree, data->env, 0);
 	else if (!ft_strcmp(cmd[0], "export"))
 		exit_status = ft_export(tree, data);
 	else if (!ft_strcmp(cmd[0], "unset"))

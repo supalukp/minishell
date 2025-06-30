@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:48:54 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/29 16:53:24 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:53:33 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	expansion_logic(int	*i, t_cmd_element *line, int *slashed, int *count)
 	{
 		*slashed = 1;
 		(*count)++;
-		memmove(&lc[*i - 1], &lc[*i], strlen(&lc[*i]) + 1);
+		ft_memmove(&lc[*i - 1], &lc[*i], ft_strlen(&lc[*i]) + 1);
 		(*i)--;
 	}
 	else if (line->content[*i + 1] == '{')
 	{
 		line->expand_curly_brackets = 2;
-		memmove(&lc[*i + 1], &lc[*i + 2], strlen(&lc[*i + 2]) + 1);
+		ft_memmove(&lc[*i + 1], &lc[*i + 2], ft_strlen(&lc[*i + 2]) + 1);
 	}
 	(*i)++;
 	while (ft_isalnum(line->content[*i + j]) || line->content[*i + j] == '_')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:51:48 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 12:01:34 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:54:36 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	print_file_err(const char *filename, int errnum)
 {
 	write(STDERR_FILENO, "minishell: ", 12);
-	write(STDERR_FILENO, filename, strlen(filename));
+	write(STDERR_FILENO, filename, ft_strlen(filename));
 	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, strerror(errnum), strlen(strerror(errnum)));
+	write(STDERR_FILENO, strerror(errnum), ft_strlen(strerror(errnum)));
 	write(STDERR_FILENO, "\n", 1);
 }
 

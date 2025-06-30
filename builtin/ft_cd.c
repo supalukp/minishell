@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:06:37 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/23 16:43:11 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:31:00 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_cd(t_tree *tree, t_env *lst)
 	else
 		rtn = chdir(tree->cmd_line->next->content);
 	new_path = getcwd(NULL, 1024);
-	update_pwd(new_path, lst);
+	update_pwd(new_path, lst, 1);
 	if (rtn == -1)
 	{
 		ft_putstr_fd("cd: invalid path\n", 2);

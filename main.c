@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/29 13:48:08 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/30 14:17:17 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,10 @@ void	handle_line(char *line, t_data *request)
 	}
 	if (only_space(line) || only_colon(line) || only_exclamation(line))
 		return ;
-	// lexer = merge_quotes(line);
-	// free(line);
 	tree = mns_parse(line);
-	// if (have_pipes(tree))
-	// 	free(lexer);
 	request->ast = tree;
 	if (request->ast)
 	{
-		// get_heredoc();
-		// traverse_tree(request->ast);
 		exit_status = traverse_heredoc(request->ast, request);
 		if (exit_status != 0)
 		{
@@ -101,10 +95,8 @@ void	handle_line(char *line, t_data *request)
 			clean_data(request);
 			return ;
 		}
-		print_all(request);
 		request->last_exit = main_execution(request->ast, request);
 		close_save_fd(request->ast);
-		// printf("exit status = %d\n", request->last_exit);
 		clean_data(request);
 	}
 }

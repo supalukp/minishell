@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:35:41 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 19:36:59 by syukna           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:51:40 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	remove_quotes_red(t_file *file)
 	if (file->content[0] == '\'')
 	{
 		file->content[len - 1] = '\0';
-		memmove(file->content, &file->content[1], len - 1);
+		ft_memmove(file->content, &file->content[1], len - 1);
 		file->quoted = 1;
 	}
 	if (file->content[0] == '\"')
 	{
 		file->content[len - 1] = '\0';
-		memmove(file->content, &file->content[1], len - 1);
+		ft_memmove(file->content, &file->content[1], len - 1);
 		file->quoted = 2;
 	}
 }
