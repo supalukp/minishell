@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   error_path_msg.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 13:06:37 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/16 13:32:41 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/07/16 13:39:46 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/07/16 13:40:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	ft_cd(t_tree *tree)
+int	filename_argument_required(void)
 {
-	int		rtn;
-	char	*home;
+	write(2, ".: filename argument required\n", 30);
+	return (2);
+}
 
-	home = getenv("HOME");
-	if (!tree->cmd_line->next)
-		rtn = chdir(home);
-	else
-		rtn = chdir(tree->cmd_line->next->content);
-	if (rtn == -1)
-	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(tree->cmd_line->next->content, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		return (1);
-	}
-	return (0);
+int	no_file_or_directory(char **args)
+{
+	write(2, args[0], ft_strlen(args[0]));
+	write(2, ": No such file or directory\n", 29);
+	return (127);
+}
+
+int	command_not_found(char **args)
+{
+	write(2, args[0], ft_strlen(args[0]));
+	write(2, ": command not found\n", 20);
+	return (127);
 }

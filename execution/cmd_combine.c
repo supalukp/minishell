@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:11:16 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 11:11:53 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:44:32 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +61,3 @@ char	**combine_cmdline(t_cmd_element *args)
 		return (NULL);
 	return (res);
 }
-
-// char	**combine_cmdline(t_cmd_element *args)
-// {
-// 	char			**res;
-// 	int				count;
-// 	int				i;
-// 	t_cmd_element	*tmp;
-
-// 	count = count_cmd_element(args);
-// 	if (count == 0)
-// 		return (NULL);
-// 	res = malloc(sizeof(char *) * (count + 1));
-// 	i = 0;
-// 	tmp = args;
-// 	while (tmp)
-// 	{
-// 		res[i] = ft_strdup(tmp->content);
-// 		if (!res[i])
-// 		{
-// 			while (i--)
-// 				free(res[i]);
-// 			free(res);
-// 			return (NULL);
-// 		}
-// 		tmp = tmp->next;
-// 		i++;
-// 	}
-// 	res[i] = NULL;
-// 	return (res);
-// }

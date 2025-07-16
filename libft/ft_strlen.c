@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:11:55 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/12 15:39:18 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:43:34 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
-	if(!str)
+	if (!str)
 		return (0);
 	i = 0;
 	while (str[i] != '\0')

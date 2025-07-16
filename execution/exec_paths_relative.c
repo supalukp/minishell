@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_path_relative.c                               :+:      :+:    :+:   */
+/*   exec_paths_relative.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:11:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 12:13:21 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:41:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,10 @@
 
 static int	only_dot(char *args)
 {
-	int	i;
-
 	if (!args)
 		return (0);
-	i = 0;
-	while (args[i])
-	{
-		if (args[i] == '.' && args[i + 1] == '.')
-			return (1);
-		else if (args[i] == '.' && args[i + 1] == '\0')
-			return (1);
-		i++;
-	}
+	if (!ft_strcmp(args, ".") || !ft_strcmp(args, ".."))
+		return (1);
 	return (0);
 }
 
@@ -35,9 +26,9 @@ static int	check_access_relative_path(char **args)
 	struct stat	sb;
 
 	if (only_dot(args[0]))
-		return (command_not_found(args));
+		return (filename_argument_required());
 	if (stat(args[0], &sb) == -1)
-		return (command_not_found(args));
+		return (no_file_or_directory(args));
 	if (S_ISDIR(sb.st_mode))
 	{
 		stderr_msg(args[0]);

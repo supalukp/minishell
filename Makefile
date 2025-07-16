@@ -104,6 +104,7 @@ FILES = main.c \
 		${REDIRECT_DIR}/redirect.c \
 		${REDIRECT_DIR}/redirect_utils.c \
 		${EXEC_DIR}/error_msg.c \
+		${EXEC_DIR}/error_path_msg.c \
 		${REDIRECT_DIR}/heredoc.c \
 		${REDIRECT_DIR}/heredoc_tmp_files.c \
 		${REDIRECT_DIR}/heredoc_utils.c \
