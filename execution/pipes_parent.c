@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:14:54 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/16 13:45:19 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:42:59 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int	wait_for_children(t_pipes *pipes)
 	int		sig_printed;
 
 	i = 0;
+	sig_printed = 0;
 	last_exit_status = 0;
 	last_pid = pipes->pid[pipes->process - 1];
 	while (i < pipes->process)

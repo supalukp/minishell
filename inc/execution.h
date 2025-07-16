@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/16 13:50:42 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/16 15:54:06 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_env		*create_env_node(char *env_variable);
 void		print_env(t_env *lst);
 void		free_env(t_env *env_lst);
 int			count_env_node(t_env *env_lst);
+void		update_env_underscore(t_env *env_lst, char *cmd_path);
 
 /* -------------------------------------------------------------------------- */
 /*                                 redirection                                */
@@ -80,7 +81,7 @@ int			create_key_value(t_cmd_element *args, t_data *data);
 int			create_only_key(t_cmd_element *args, t_data *data);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_export(t_tree *tree, t_data *data);
-int			ft_pwd(t_tree *tree,t_env *lst, int change);
+int			ft_pwd(t_tree *tree, t_env *lst, int change);
 char		*update_pwd(char *new_path, t_env *lst, int change);
 int			ft_unset(t_tree *tree, t_data *data);
 

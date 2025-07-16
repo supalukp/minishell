@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:43:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 10:43:40 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:15:54 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,3 +80,20 @@ t_env	*create_single_node(const char *env_name, char *env_variable)
 	new_node->next = NULL;
 	return (new_node);
 }
+
+// void update_env_underscore(t_env *env_lst, char *cmd_path)
+// {
+// 	t_env *tmp = env_lst;
+
+// 	while (tmp)
+// 	{
+// 		if (ft_strcmp(tmp->env_name, "_") == 0)
+// 		{
+// 			free(tmp->env_variable);
+// 			tmp->env_variable = ft_strdup(cmd_path);
+// 			return;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	ft_lstadd_env_back(&env_lst, create_single_node("_", cmd_path));
+// }

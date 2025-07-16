@@ -6,14 +6,14 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/16 13:05:10 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:55:02 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
 int	path_only_slash(char *path)
-{
+{ 
 	int	i;
 
 	if (ft_strlen(path) < 2)
@@ -91,5 +91,6 @@ char	*find_executable(char **all_path, char *command)
 		free(path_command);
 		j++;
 	}
-	return (free_matrix(all_path), NULL);
+	free_matrix(all_path);
+	return (NULL);
 }
