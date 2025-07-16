@@ -7,8 +7,8 @@
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
-FLAGS += -fsanitize=address -g3
+CFLAGS = -Wall -Werror -Wextra -g3
+FLAGS += -fsanitize=address
 
 # **************************************************************************** #
 # **********************************COLORS************************************ #

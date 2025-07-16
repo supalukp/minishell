@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/16 13:58:48 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:17:56 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,9 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+		return (1);
 	rl_event_hook = signal_event;
 	request.env = env_init(env);
 	signal(SIGPIPE, SIG_IGN);

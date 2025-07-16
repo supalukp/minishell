@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exp_score.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:43:55 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/29 16:45:30 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/16 20:54:45 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	expand_score(t_tree *node, t_env *lst)
 	t_cmd_element	*cmd;
 
 	cmd = node->cmd_line;
-	if (!ft_strcmp(cmd->content, "cd") && !ft_strcmp(cmd->next->content, "-") \
+	if (cmd && cmd->next && !ft_strcmp(cmd->content, "cd") && !ft_strcmp(cmd->next->content, "-") \
 			&& !cmd->next->next)
 	{
 		score = node->cmd_line->next;
