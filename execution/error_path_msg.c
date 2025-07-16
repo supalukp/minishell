@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   error_path_msg.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 15:11:55 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/16 13:51:00 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/07/16 13:39:46 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/07/16 13:40:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/headings.h"
 
-size_t	ft_strlen(const char *str)
+int	filename_argument_required(void)
 {
-	size_t	i;
+	write(2, ".: filename argument required\n", 30);
+	return (2);
+}
 
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+int	no_file_or_directory(char **args)
+{
+	write(2, args[0], ft_strlen(args[0]));
+	write(2, ": No such file or directory\n", 29);
+	return (127);
+}
+
+int	command_not_found(char **args)
+{
+	write(2, args[0], ft_strlen(args[0]));
+	write(2, ": command not found\n", 20);
+	return (127);
 }

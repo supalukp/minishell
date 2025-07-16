@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:06:37 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/30 12:31:00 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/16 13:48:57 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	ft_cd(t_tree *tree, t_env *lst)
 	update_pwd(new_path, lst, 1);
 	if (rtn == -1)
 	{
-		ft_putstr_fd("cd: invalid path\n", 2);
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(tree->cmd_line->next->content, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return (1);
 	}
 	return (0);

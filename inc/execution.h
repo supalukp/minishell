@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/30 12:31:20 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/16 13:50:42 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		assign_heredoc_fd(t_tree *node, int fd_read);
 int			setup_inout_middle(int i, t_pipes *pipes, t_tree *node);
 int			setup_inout_last(int i, t_pipes *pipes, t_tree *node);
 int			setup_inout_first(t_pipes *pipes, t_tree *node);
-void close_all_heredoc_fd(t_tree *tree);
+void		close_all_heredoc_fd(t_tree *tree);
 
 /* -------------------------------------------------------------------------- */
 /*                                   builtin                                  */
@@ -100,7 +100,6 @@ char		*find_executable(char **all_path, char *command);
 int			handle_relative_path(char **args, char **path);
 int			handle_absolute_path(char **args, char **path, char **env);
 
-
 // Pipes
 int			pipe_multi_process(t_tree *tree, t_data *data);
 t_pipes		*init_pipes(t_tree *tree, t_data *data);
@@ -108,6 +107,7 @@ void		create_pipes(t_pipes *pipes);
 t_pipe_cmds	*create_cmd_lst(t_tree *tree, t_data *data);
 int			fork_and_exec_children(t_pipes *pipes, t_data *data);
 int			process_parent(t_pipes *pipes);
+void		close_all_pipes(t_pipes *pipes);
 
 // Single command
 int			external_cmd_process(t_tree *tree, t_data *data);
@@ -122,6 +122,8 @@ int			external_single(t_tree *tree, t_data *data);
 // Error Message
 void		print_file_err(const char *filename, int errnum);
 int			command_not_found(char **args);
+int			filename_argument_required(void);
+int			no_file_or_directory(char **args);
 void		stderr_msg(const char *err_msg);
 void		error_free_pipes(const char *err_msg, t_pipes *pipes);
 int			perror_free_pipes(const char *err_msg, t_pipes *pipes);

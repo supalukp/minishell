@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 12:14:02 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:05:10 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	path_only_slash(char *path)
 {
 	int	i;
 
+	if (ft_strlen(path) < 2)
+		return (0);
 	if (!path || path[0] != '.')
 		return (0);
 	i = 1;

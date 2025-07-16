@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:51:48 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/30 12:54:36 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/16 13:49:34 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@ void	print_file_err(const char *filename, int errnum)
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, strerror(errnum), ft_strlen(strerror(errnum)));
 	write(STDERR_FILENO, "\n", 1);
-}
-
-int	command_not_found(char **args)
-{
-	write(2, args[0], ft_strlen(args[0]));
-	write(2, ": command not found\n", 20);
-	return (127);
 }
 
 void	stderr_msg(const char *err_msg)

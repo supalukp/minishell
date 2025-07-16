@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/30 14:17:17 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/16 13:58:48 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/headings.h"
 
-volatile sig_atomic_t g_signal = 0;
+volatile sig_atomic_t	g_signal = 0;
 
-void close_all_heredoc_fd(t_tree *tree)
+void	close_all_heredoc_fd(t_tree *tree)
 {
 	if (tree == NULL)
 		return ;
-    if (tree->type == PIPE || tree->type == OR || tree->type == AND) 
+	if (tree->type == PIPE || tree->type == OR || tree->type == AND)
 	{
-        close_all_heredoc_fd(tree->left);
-        close_all_heredoc_fd(tree->right);
-    } 
+		close_all_heredoc_fd(tree->left);
+		close_all_heredoc_fd(tree->right);
+	}
 	else if (tree->type == CMD_LINE)
 	{
 		if (tree->fd_heredoc != -1)
@@ -30,26 +30,26 @@ void close_all_heredoc_fd(t_tree *tree)
 	}
 }
 
-int traverse_heredoc(t_tree *tree, t_data *data)
+int	traverse_heredoc(t_tree *tree, t_data *data)
 {
-	int status;
-	t_tree *node;
-	t_file *file;
-	int error;
+	int		status;
+	t_tree	*node;
+	t_file	*file;
+	int		error;
 
 	error = 0;
 	node = tree;
 	if (node == NULL)
-		return 0;
-    if (node->type == PIPE || node->type == OR || node->type == AND) 
+		return (0);
+	if (node->type == PIPE || node->type == OR || node->type == AND)
 	{
-        status = traverse_heredoc(node->left, data);
+		status = traverse_heredoc(node->left, data);
 		if (status != 0)
-        	return (status);
-        status = traverse_heredoc(node->right, data);
+			return (status);
+		status = traverse_heredoc(node->right, data);
 		if (status != 0)
-        	return (status);
-    } 
+			return (status);
+	}
 	else if (node->type == CMD_LINE)
 	{
 		command_line_maker(node, &error, data);
@@ -74,10 +74,10 @@ int traverse_heredoc(t_tree *tree, t_data *data)
 void	handle_line(char *line, t_data *request)
 {
 	t_tree	*tree;
-	int	exit_status;
+	int		exit_status;
 
 	exit_status = error_checking(line, request);
-	if (exit_status != 0) 
+	if (exit_status != 0)
 	{
 		request->last_exit = exit_status;
 		return ;
@@ -101,7 +101,7 @@ void	handle_line(char *line, t_data *request)
 	}
 }
 
-int signal_event(void)
+int	signal_event(void)
 {
 	return (0);
 }
@@ -110,10 +110,11 @@ int	main(int ac, char **av, char **env)
 {
 	char	*line;
 	t_data	request;
-	char *prompt;
+	char	*prompt;
+	char	*temp_line;
+
 	(void)ac;
 	(void)av;
-	
 	rl_event_hook = signal_event;
 	request.env = env_init(env);
 	signal(SIGPIPE, SIG_IGN);
@@ -124,19 +125,19 @@ int	main(int ac, char **av, char **env)
 		init_signal();
 		prompt = build_prompt(request.last_exit);
 		g_signal = 0;
-        if (isatty(fileno(stdin)))
-            line = readline(prompt);
-        else
-        {
-            char *temp_line = get_next_line(fileno(stdin));
-            line = ft_strtrim(temp_line, "\n");
-            free(temp_line);
-        }
+		if (isatty(fileno(stdin)))
+			line = readline(prompt);
+		else
+		{
+			temp_line = get_next_line(fileno(stdin));
+			line = ft_strtrim(temp_line, "\n");
+			free(temp_line);
+		}
 		free(prompt);
 		if (g_signal == 130)
 		{
 			request.last_exit = 130;
-			continue;
+			continue ;
 		}
 		if (line == NULL)
 		{
@@ -149,10 +150,7 @@ int	main(int ac, char **av, char **env)
 			add_history(line);
 		handle_line(line, &request);
 	}
-	// if (request.env)
 	free_env(request.env);
-	// if (line)
-    // 	free(line);
 	rl_clear_history();
 	return (0);
 }
