@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:48:52 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 12:23:08 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:30:06 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,27 @@ static int	unset_variable(char *key, t_data *data)
 	return (0);
 }
 
+int	unset_not_valid_name(char *args, char *function)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	if (args[i] == '=' || args[i] == '?')
+		return (0);
+	while (args[i] && args[i] != '=' && !(args[i] == '+' && args[i + 1] == '='))
+	{
+		if (i == 0 && (args[i] != '_' && !ft_isalpha(args[i])))
+			return (not_valid_identifier(function));
+		else if (args[i] != '_' && !ft_isalnum(args[i]))
+			return (not_valid_identifier(function));
+		else
+			i++;
+	}
+	return (flag);
+}
+
 static int	unset_process(t_tree *tree, t_data *data)
 {
 	int				flag;
@@ -75,7 +96,7 @@ static int	unset_process(t_tree *tree, t_data *data)
 			if (unset_variable(args->content, data))
 				flag = 1;
 		}
-		else if (not_valid_name(args->content, "unset"))
+		else if (unset_not_valid_name(args->content, "unset"))
 			flag = 1;
 		args = args->next;
 	}

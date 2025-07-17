@@ -6,13 +6,13 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:32:16 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 18:12:21 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:30:26 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-static int	not_valid_identifier(char *function)
+int	not_valid_identifier(char *function)
 {
 	ft_putstr_fd(function, 2);
 	ft_putstr_fd(": not a valid identifier\n", 2);

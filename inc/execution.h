@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/16 15:54:06 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:30:57 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int			ft_export(t_tree *tree, t_data *data);
 int			ft_pwd(t_tree *tree, t_env *lst, int change);
 char		*update_pwd(char *new_path, t_env *lst, int change);
 int			ft_unset(t_tree *tree, t_data *data);
+int			not_valid_identifier(char *function);
 
 /* -------------------------------------------------------------------------- */
 /*                                  execution                                 */
