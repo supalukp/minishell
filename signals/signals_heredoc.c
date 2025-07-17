@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:23:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 09:55:20 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:30:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,33 @@ void	handle_heredoc_sigint(int sig)
 	write(STDOUT_FILENO, "\n", 1);
 }
 
-void	setup_heredoc_signal(void)
+static void	disable_printctrl(void)
 {
-	// struct sigaction	sa;
-	// // struct sigaction	sa_quit;
+	struct termios	term;
 
-	// sa.sa_handler = handle_heredoc_sigint;
-	// sigemptyset(&sa.sa_mask);
-	// sa.sa_flags = 0;
-	// sigaction(SIGINT, &sa, NULL);
-	// sa.sa_handler = SIG_IGN;
-	// sigemptyset(&sa.sa_mask);
-	// sa.sa_flags = 0;
-	// sigaction(SIGQUIT, &sa, NULL);
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+static void	enable_printctrl(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void	setup_signal_heredoc(void)
+{
 	signal(SIGINT, handle_heredoc_sigint);
 	signal(SIGQUIT, SIG_IGN);
+	disable_printctrl();
+}
+
+void	default_signal_heredoc(void)
+{
+	set_signal_to_default();
+	enable_printctrl();
 }

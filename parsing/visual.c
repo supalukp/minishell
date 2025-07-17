@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   visual.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:30:04 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/30 12:31:39 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/17 14:30:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-char *types_text[] = { "CMD_LINE", "PIPE","AND","OR","APPEND",\
-"HEREDOC","INFILE","OUTFILE","INVALID"};
+char	*types_text[] = {"CMD_LINE", "PIPE", "AND", "OR", "APPEND", "HEREDOC",
+		"INFILE", "OUTFILE", "INVALID"};
 
 void	print_files(t_file *file)
 {
 	printf("*    File name: |%s|\n", file->content);
-	printf("*    File type: %s\n", types_text[file->type] );
-	printf("*    File quoted: %d\n", file->quoted );
+	printf("*    File type: %s\n", types_text[file->type]);
+	printf("*    File quoted: %d\n", file->quoted);
 }
 
-void 	print_cmd_elements(t_cmd_element *cmd_element)
+void	print_cmd_elements(t_cmd_element *cmd_element)
 {
 	if (cmd_element->content == NULL)
 		printf("*    command content: NULL/\n");
@@ -40,8 +40,8 @@ void 	print_cmd_elements(t_cmd_element *cmd_element)
 
 void	print_node(t_tree *node)
 {
-	t_file *temp_file;
-	t_cmd_element *temp_cmd_element;
+	t_file			*temp_file;
+	t_cmd_element	*temp_cmd_element;
 
 	printf("***************************************************\n");
 	printf("* Content: |%s|\n", node->content);
@@ -49,12 +49,12 @@ void	print_node(t_tree *node)
 	if (node->left)
 		printf("* Left link: %s\n", types_text[node->left->type]);
 	if (node->right)
-		printf("* right link: %s\n",  types_text[node->right->type]);
+		printf("* right link: %s\n", types_text[node->right->type]);
 	if (node->cmd_line)
 	{
 		printf("*\n* COMMAND ELEMENTS:\n");
 		temp_cmd_element = node->cmd_line;
-		while(temp_cmd_element->next)
+		while (temp_cmd_element->next)
 		{
 			print_cmd_elements(temp_cmd_element);
 			temp_cmd_element = temp_cmd_element->next;
@@ -65,7 +65,7 @@ void	print_node(t_tree *node)
 	{
 		printf("*\n* FILES:\n");
 		temp_file = node->files;
-		while(temp_file->next)
+		while (temp_file->next)
 		{
 			print_files(temp_file);
 			temp_file = temp_file->next;
@@ -78,9 +78,9 @@ void	print_node(t_tree *node)
 void	print_recursive_tree(t_tree *node)
 {
 	print_node(node);
-	if(node->left)
+	if (node->left)
 		print_recursive_tree(node->left);
-	if(node->right)
+	if (node->right)
 		print_recursive_tree(node->right);
 }
 

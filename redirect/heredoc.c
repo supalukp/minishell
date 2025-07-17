@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:18:31 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 10:55:23 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:26:56 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,6 @@ static int	heredoc_get_line(char *delimiter, int fd_tty, int fd_write)
 	return (0);
 }
 
-static void disable_printctrl(void)
-{
-	struct termios term;
-	
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-}
-
-static void enable_printctrl(void)
-{
-	struct termios term;
-	
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-}
-
 int	redirect_heredoc(t_file *file, t_tree *node)
 {
 	int		fd_write;
@@ -66,8 +48,7 @@ int	redirect_heredoc(t_file *file, t_tree *node)
 	char	*tmpfile;
 
 	g_signal = 0;
-	setup_heredoc_signal();
-	disable_printctrl();
+	setup_signal_heredoc();
 	fd_write = open_tmpfile(&tmpfile);
 	if (fd_write == -1)
 		return (1);
@@ -83,7 +64,6 @@ int	redirect_heredoc(t_file *file, t_tree *node)
 	assign_heredoc_fd(node, fd_read);
 	unlink(tmpfile);
 	free(tmpfile);
-	set_signal_to_default();
-	enable_printctrl();
+	default_signal_heredoc();
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/29 16:51:08 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/17 14:45:06 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int		check_bracket_error(char *line);
 
 // readline_utils.c
 char	*build_prompt(int exit_status);
+
+// handle_line.c
+void	handle_line(char *line, t_data *request);
 
 // prelexer.c
 // char		*merge_quotes(const char *line);

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/16 16:17:02 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:07:59 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	resolve_path(char **args, char **env, char **path)
 		return (prepare_exec_path(args, path, env));
 	if (init_path(path, args, env))
 		return (127);
+	// if (ft_strlen(*path) > PATH_MAX)
+	// 	return (36);
 	return (0);
 }
 

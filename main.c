@@ -6,106 +6,13 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/17 11:48:38 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:45:51 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/headings.h"
 
 volatile sig_atomic_t	g_signal = 0;
-
-void	close_all_heredoc_fd(t_tree *tree)
-{
-	if (tree == NULL)
-		return ;
-	if (tree->type == PIPE || tree->type == OR || tree->type == AND)
-	{
-		close_all_heredoc_fd(tree->left);
-		close_all_heredoc_fd(tree->right);
-	}
-	else if (tree->type == CMD_LINE)
-	{
-		if (tree->fd_heredoc != -1)
-			close(tree->fd_heredoc);
-	}
-}
-
-int	traverse_heredoc(t_tree *tree, t_data *data)
-{
-	int		status;
-	t_tree	*node;
-	t_file	*file;
-	int		error;
-
-	error = 0;
-	node = tree;
-	if (node == NULL)
-		return (0);
-	if (node->type == PIPE || node->type == OR || node->type == AND)
-	{
-		status = traverse_heredoc(node->left, data);
-		if (status != 0)
-			return (status);
-		status = traverse_heredoc(node->right, data);
-		if (status != 0)
-			return (status);
-	}
-	else if (node->type == CMD_LINE)
-	{
-		command_line_maker(node, &error, data);
-		file = node->files;
-		while (file)
-		{
-			if (file->type == HEREDOC)
-			{
-				status = redirect_heredoc(file, node);
-				if (status != 0)
-				{
-					close_all_heredoc_fd(tree);
-					return (status);
-				}
-			}
-			file = file->next;
-		}
-	}
-	return (0);
-}
-
-void	handle_line(char *line, t_data *request)
-{
-	t_tree	*tree;
-	int		exit_status;
-
-	exit_status = error_checking(line, request);
-	if (exit_status != 0)
-	{
-		request->last_exit = exit_status;
-		return ;
-	}
-	if (only_space(line) || only_colon(line) || only_exclamation(line))
-		return ;
-	tree = mns_parse(line);
-	request->ast = tree;
-	if (request->ast)
-	{
-		// print_all(request);
-		exit_status = traverse_heredoc(request->ast, request);
-		if (exit_status != 0)
-		{
-			request->last_exit = exit_status;
-			clean_data(request);
-			return ;
-		}
-		request->last_exit = main_execution(request->ast, request);
-		close_save_fd(request->ast);
-		clean_data(request);
-	}
-}
-
-int	signal_event(void)
-{
-	return (0);
-}
 
 int	main(int ac, char **av, char **env)
 {
@@ -116,7 +23,6 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-
 	// if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 	// 	return (1);
 	rl_event_hook = signal_event;

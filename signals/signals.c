@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 09:25:01 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/25 08:48:37 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:19:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,9 @@ void	set_signal_to_ignore(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+int	signal_event(void)
+{
+	return (0);
 }

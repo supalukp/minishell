@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:50:54 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/30 12:30:02 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/17 14:29:06 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	update_oldpwd(char *old_path, t_env *lst,  int change)
+void	update_oldpwd(char *old_path, t_env *lst, int change)
 {
 	if (change)
 	{
@@ -73,8 +73,8 @@ int	ft_pwd(t_tree *tree, t_env *lst, int change)
 	if (res == NULL)
 	{
 		ft_putstr_fd("pwd: error retrieving current directory: \
-			getcwd: cannot access parent directories: \
-			No such file or directory\n", 2);
+		getcwd: cannot access parent directories: \
+		No such file or directory\n", 2);
 		return (1);
 	}
 	if (res)

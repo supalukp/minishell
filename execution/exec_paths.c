@@ -6,14 +6,14 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/16 16:55:02 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:04:39 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
 int	path_only_slash(char *path)
-{ 
+{
 	int	i;
 
 	if (ft_strlen(path) < 2)

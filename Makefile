@@ -59,6 +59,7 @@ HEADERS =	${INC_DIR}/execution.h \
 # **************************************************************************** #
 
 FILES = main.c \
+		${PARS_DIR}/handle_line.c \
 		${PARS_DIR}/error_check.c \
 		${PARS_DIR}/error_check_utils.c \
 		${PARS_DIR}/error_check_bracket.c \
@@ -108,6 +109,7 @@ FILES = main.c \
 		${EXEC_DIR}/error_msg.c \
 		${EXEC_DIR}/error_path_msg.c \
 		${REDIRECT_DIR}/heredoc.c \
+		${REDIRECT_DIR}/heredoc_traverse.c \
 		${REDIRECT_DIR}/heredoc_tmp_files.c \
 		${REDIRECT_DIR}/heredoc_utils.c \
 		${REDIRECT_DIR}/get_fd.c \
