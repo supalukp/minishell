@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:48:43 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/20 11:55:21 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/18 09:20:47 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_pipes
 	int						**pipefd;
 	pid_t					*pid;
 	t_pipe_cmds				*cmd_lst;
+	int						last_exit_status;
 }							t_pipes;
 
 typedef struct s_data

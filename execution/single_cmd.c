@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 14:07:59 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/18 09:17:00 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ int	fork_and_exec(t_data *data, t_stdio_backup *cmd)
 		child_execution(cmd->path, cmd->args, cmd->env, data);
 	}
 	else
-	{
 		set_signal_to_ignore();
-		// update_env_underscore(data->env, cmd->path);
-	}
 	free_matrix(cmd->env);
 	return (wait_and_clean(0, pid, cmd->args, cmd->path));
 }

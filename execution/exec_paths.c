@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 14:04:39 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/18 09:31:49 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ char	*find_executable(char **all_path, char *command)
 		add_slash = ft_strjoin(all_path[j], "/");
 		if (!add_slash)
 			return (free_matrix(all_path), NULL);
+		// if (ft_strlen(all_path[j]) + 1 + ft_strlen(command) >= PATH_MAX)
+		// {
+		// 	free(add_slash);
+		// 	continue;
+		// }
 		path_command = ft_strjoin(add_slash, command);
 		if (!path_command)
 			return (free_matrix(all_path), NULL);

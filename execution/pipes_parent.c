@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:14:54 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/16 16:42:59 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/18 09:16:45 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,13 @@ static int	wait_for_children(t_pipes *pipes)
 {
 	int		i;
 	int		status;
-	int		last_exit_status;
 	pid_t	pid;
 	pid_t	last_pid;
 	int		sig_printed;
 
 	i = 0;
 	sig_printed = 0;
-	last_exit_status = 0;
+	pipes->last_exit_status = 0;
 	last_pid = pipes->pid[pipes->process - 1];
 	while (i < pipes->process)
 	{
@@ -69,10 +68,10 @@ static int	wait_for_children(t_pipes *pipes)
 		if (pid == -1)
 			perror("waitpid");
 		handle_signal_status(status, &sig_printed);
-		update_exit_status(pid, last_pid, status, &last_exit_status);
+		update_exit_status(pid, last_pid, status, &pipes->last_exit_status);
 		i++;
 	}
-	return (last_exit_status);
+	return (pipes->last_exit_status);
 }
 
 int	process_parent(t_pipes *pipes)
