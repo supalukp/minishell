@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:06:42 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/18 09:25:08 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:02:49 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 volatile sig_atomic_t	g_signal = 0;
 
-void	setup_shell(t_data *request, char **env)
+static void	setup_shell(t_data *request, char **env)
 {
 	rl_event_hook = signal_event;
 	signal(SIGPIPE, SIG_IGN);
@@ -23,7 +23,7 @@ void	setup_shell(t_data *request, char **env)
 	g_signal = 0;
 }
 
-void	shell_loop(t_data *request)
+static void	shell_loop(t_data *request)
 {
 	char	*line;
 	char	*prompt;
@@ -48,7 +48,7 @@ void	shell_loop(t_data *request)
 	}
 }
 
-void	safe_exit(t_data *request)
+static void	safe_exit(t_data *request)
 {
 	write(1, "exit\n", 5);
 	free_env(request->env);
