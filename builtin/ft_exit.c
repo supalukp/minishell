@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:43:39 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/17 16:38:14 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:26:04 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ int	ft_exit(t_tree *tree, int exit_status)
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(tree->cmd_line->next->content, 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			return (255);
+			return (2);
 		}
 		else if (tree->cmd_line->next->next)
 		{
 			ft_putstr_fd("exit: too many arguments\n", 2);
 			if (!str_is_digit(tree->cmd_line->next->content))
-				return (255);
+				return (2);
 			else
-				return (127);
+				return (1);
 		}
-		write(2, "exit\n", 5);
+		write(1, "exit\n", 5);
 		exit_num = ft_atoi(tree->cmd_line->next->content) % 256;
 		return (exit_num);
 	}

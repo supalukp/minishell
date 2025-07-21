@@ -6,16 +6,26 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:39:46 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/16 13:40:20 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:36:20 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	filename_argument_required(void)
+int	dot_error_msg(int flag, char **path)
 {
-	write(2, ".: filename argument required\n", 30);
-	return (2);
+	if (flag == 2)
+	{
+		write(2, ".: filename argument required\n", 30);
+		return (2);
+	}
+	else if (flag == 127)
+	{
+		write(2, path[0], ft_strlen(path[0]));
+		write(2, " : command not found\n", 21);
+		return (127);
+	}
+	return (0);
 }
 
 int	no_file_or_directory(char **args)

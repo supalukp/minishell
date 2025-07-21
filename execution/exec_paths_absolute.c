@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:11:41 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/18 09:31:36 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:25:55 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,6 @@ int	handle_absolute_path(char **args, char **path, char **env)
 	check = check_access_absolute_path(args[0]);
 	if (check)
 		return (check);
-	// if (ft_strlen(args[0]) >= PATH_MAX)
-	// {
-	// 	stderr_msg(args[0]);
-	// 	stderr_msg(": File name too long\n");
-	// 	return (126);
-	// }
 	*path = ft_strdup(args[0]);
 	if (*path == NULL)
 		return (1);

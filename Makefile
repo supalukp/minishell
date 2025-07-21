@@ -8,7 +8,7 @@
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g3
-FLAGS += -fsanitize=address
+# FLAGS += -fsanitize=address
 
 # **************************************************************************** #
 # **********************************COLORS************************************ #
@@ -34,7 +34,9 @@ COLOUR_BRIGHT_CYAN=\033[1;36m
 # **************************************************************************** #
 # *******************************DIRECTORIES********************************** #
 # **************************************************************************** #
-
+LIB_DIR = libft
+LIBFT_NAME = libft.a
+LIBFT = $(LIB_DIR)/$(LIBFT_NAME)
 OBJ_DIR = build
 INC_DIR = inc
 PARS_DIR = parsing
@@ -52,7 +54,8 @@ VPATH = . ${PARS_DIR} ${EXEC_DIR} ${BUILTIN_DIR} ${ENV_DIR} ${REDIRECT_DIR} ${SI
 HEADERS =	${INC_DIR}/execution.h \
 			${INC_DIR}/headings.h \
 			${INC_DIR}/structures.h \
-			${INC_DIR}/signals.h
+			${INC_DIR}/signals.h \
+			${INC_DIR}/functions.h 
 
 # **************************************************************************** #
 # ********************************SRC FILES*********************************** #
@@ -61,6 +64,7 @@ HEADERS =	${INC_DIR}/execution.h \
 FILES = main.c \
 		${PARS_DIR}/handle_line.c \
 		${PARS_DIR}/error_check.c \
+		${PARS_DIR}/error_check_redirect.c \
 		${PARS_DIR}/error_check_utils.c \
 		${PARS_DIR}/error_check_bracket.c \
 		${PARS_DIR}/error_unsupported.c \
@@ -142,11 +146,17 @@ OBJ = $(patsubst %.c,build/%.o,$(notdir $(FILES)))
 # **********************************MAKE************************************** #
 # **************************************************************************** #
 
-all: $(NAME)
 
-$(NAME): $(OBJ) $(HEADERS) Makefile
-	@make -C libft --no-print-directory
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a -lreadline
+all:$(LIBFT) $(NAME) 
+
+$(LIBFT): $(shell find $(LIB_DIR) -type f -name "*.c") \
+	$(shell find $(LIB_DIR) -type f -name "*.h") \
+	$(LIB_DIR)/Makefile
+
+	$(MAKE) -C $(LIB_DIR) --no-print-directory
+
+$(NAME): $(OBJ) $(HEADERS) Makefile $(LIBFT)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -lreadline
 	@echo -n "$(COLOUR_BRIGHT_GREEN)Loading: "
 	@i=1; \
 	while [ $$i -le 25 ]; do \

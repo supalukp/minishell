@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:45:41 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 12:37:54 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:19:47 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,6 @@ int	open_quotes(char *line)
 		i++;
 	}
 	return (single_flag || double_flag);
-}
-
-int	no_files(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '<' || line[i] == '>')
-		{
-			if ((line[i] == '<' && line[i + 1] == '<') || (line[i] == '>'
-					&& line[i + 1] == '>'))
-				i += 2;
-			else
-				i += 1;
-			while (line[i] == ' ' || line[i] == '\t')
-				i++;
-			if (line[i] == '\0' || line[i] == '<' || line[i] == '>'
-				|| line[i] == '|' || line[i] == '&')
-				return (1);
-		}
-		else
-			i++;
-	}
-	return (0);
 }
 
 int	only_colon(const char *line)

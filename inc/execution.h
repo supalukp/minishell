@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 14:47:23 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:36:07 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int			external_single(t_tree *tree, t_data *data);
 // Error Message
 void		print_file_err(const char *filename, int errnum);
 int			command_not_found(char **args);
-int			filename_argument_required(void);
+int			dot_error_msg(int flag, char **args);
 int			no_file_or_directory(char **args);
 void		stderr_msg(const char *err_msg);
 void		error_free_pipes(const char *err_msg, t_pipes *pipes);

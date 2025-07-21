@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:35:34 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/18 11:01:20 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:02:32 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	remove_empt_exp(t_tree *cmd_line)
 	t_cmd_element	*tmp;
 
 	tmp = cmd_line->cmd_line;
+	if (tmp && tmp->content[0] == '\0' && !tmp->next)
+		return ;
 	while (tmp)
 	{
 		if (tmp->content[0] == '\0')

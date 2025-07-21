@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:04:06 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/17 14:55:11 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:18:59 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,13 @@ void	spec_dol(t_cmd_element *line, int *count, int code)
 	if (i == -1)
 		return ;
 	if (i == 0 && line->content && !line->content[i + 1] && line->next
-		&& line->next->quoted)
+		&& line->next->quoted && !line->quoted)
 		line->content[i] = '\0';
+	else if (i == 0 && line->content && !line->content[i + 1] && line->next
+		&& line->next->quoted)
+		(*count)++;
+	else if (i == 0 && line->content && line->content[i + 1] == ' ')
+		(*count)++;
 	else if (line->content[i + 1] && line->content[i + 1] == '?')
 	{
 		codestr = ft_itoa(code);

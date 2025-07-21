@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_files_get.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:25:45 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 19:46:57 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/21 16:02:24 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,13 @@ void	identify_redirections(t_tree *cmd_line, int *error)
 		if (*error)
 			return ;
 		redirection_state(cmd_line, &s_quote, &d_quote, i);
-		if (cmd_line->content[i] == '<' || cmd_line->content[i] == '>')
+		if (includedchar(cmd_line->content[i], "<>") && s_quote == false
+			&& d_quote == false)
 		{
-			if (s_quote == false && d_quote == false)
-			{
-				get_redirections(i, cmd_line, error);
-				if (*error)
-					return ;
-				i = 0;
-			}
+			get_redirections(i, cmd_line, error);
+			if (*error)
+				return ;
+			i = 0;
 		}
 		else
 			i++;
