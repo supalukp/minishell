@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/21 17:28:04 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 13:34:37 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	external_single(t_tree *tree, t_data *data)
 		return (close(cmd.stdin), close(cmd.stdout), 1);
 	if (dup_for_one_cmd(tree))
 		return (backup_std_io(cmd.stdin, cmd.stdout), 1);
-	if (tree->cmd_line == NULL)
+	if (tree->cmd_line == NULL || ft_strcmp(tree->cmd_line->content, "") == 0)
 		return (backup_std_io(cmd.stdin, cmd.stdout), 0);
 	if (init_args_env(&cmd.args, &cmd.env, tree, data))
 		return (backup_std_io(cmd.stdin, cmd.stdout), 1);

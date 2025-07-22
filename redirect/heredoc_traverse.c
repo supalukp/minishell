@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:41:43 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/18 09:09:12 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 13:12:34 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,44 +76,3 @@ int	traverse_heredoc(t_tree *tree, t_data *data)
 		return (handle_command_node(tree, data));
 	return (0);
 }
-
-// int	traverse_heredoc(t_tree *tree, t_data *data)
-// {
-// 	int		status;
-// 	t_tree	*node;
-// 	t_file	*file;
-// 	int		error;
-
-// 	error = 0;
-// 	node = tree;
-// 	if (node == NULL)
-// 		return (0);
-// 	if (node->type == PIPE || node->type == OR || node->type == AND)
-// 	{
-// 		status = traverse_heredoc(node->left, data);
-// 		if (status != 0)
-// 			return (status);
-// 		status = traverse_heredoc(node->right, data);
-// 		if (status != 0)
-// 			return (status);
-// 	}
-// 	else if (node->type == CMD_LINE)
-// 	{
-// 		command_line_maker(node, &error, data);
-// 		file = node->files;
-// 		while (file)
-// 		{
-// 			if (file->type == HEREDOC)
-// 			{
-// 				status = redirect_heredoc(file, node);
-// 				if (status != 0)
-// 				{
-// 					close_all_heredoc_fd(tree);
-// 					return (status);
-// 				}
-// 			}
-// 			file = file->next;
-// 		}
-// 	}
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:06:26 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 12:09:32 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 13:38:27 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 	int		check;
 
 	close_save_fd(tree);
+	if (ft_strcmp(tree->cmd_line->content, "") == 0)
+		return (0);
 	minishell_env = prepare_env_and_args(tree, data, &args);
 	if (!minishell_env)
 		return (1);

@@ -6,16 +6,11 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 09:25:01 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 15:19:55 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 13:11:23 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-
-// write(STDOUT_FILENO, "\n", 1);
-// rl_on_new_line();
-// rl_replace_line("", 0);
-// rl_redisplay();
 
 void	handle_sigint(int sig)
 {

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:23:15 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 11:24:52 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 13:12:07 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,36 +62,3 @@ char	*create_random_filename(void)
 	free(tmp_file);
 	return (filename);
 }
-
-// static char	*create_random_filename(void)
-// {
-// 	int		fd_tmp;
-// 	int		i;
-// 	char	*alnum;
-// 	char	rand_bytes[8];
-// 	char	*tmp_file;
-// 	char	*filename;
-
-// 	tmp_file = malloc(sizeof(char) * 9);
-// 	alnum = ft_strdup("abcdefghijklmnopqrstuvwxyz0123456789");
-// 	fd_tmp = open("/dev/random", O_RDONLY);
-// 	if (!fd_tmp)
-// 	{
-// 		free(tmp_file);
-// 		free(alnum);
-// 		return (NULL);
-// 	}
-// 	read(fd_tmp, rand_bytes, 8);
-// 	i = 0;
-// 	while (i < 8)
-// 	{
-// 		tmp_file[i] = alnum[rand_bytes[i] % ft_strlen(alnum)];
-// 		i++;
-// 	}
-// 	tmp_file[i] = '\0';
-// 	close(fd_tmp);
-// 	free(alnum);
-// 	filename = ft_strjoin("/tmp/.heredoc_", tmp_file);
-// 	free(tmp_file);
-// 	return (filename);
-// }
