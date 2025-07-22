@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/22 16:12:39 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:14:43 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	parse_separator(char *substr, t_tree *parent, int *error);
 
 // parsing.c
 t_tree	*mns_parse(char *line);
+t_type	has_operator(char *ss, t_type op);
 t_tree	*ast_maker(char *substr, int *error);
 
 // parenthesis.c
