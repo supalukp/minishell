@@ -6,13 +6,13 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:49:13 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/29 13:38:11 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:20:42 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	ast_breaker(char *substr, t_tree *node, int *error)
+static int	ast_breaker(char *substr, t_tree *node, int *error)
 {
 	if (has_operator(substr, OR))
 	{
@@ -35,7 +35,7 @@ int	ast_breaker(char *substr, t_tree *node, int *error)
 	return (0);
 }
 
-void	ast_cmd_line(char *substr, t_tree *node, int *error)
+static void	ast_cmd_line(char *substr, t_tree *node, int *error)
 {
 	node->content = ft_strtrim(substr, " ");
 	if (!node->content)
@@ -47,7 +47,7 @@ void	ast_cmd_line(char *substr, t_tree *node, int *error)
 	node->type = CMD_LINE;
 }
 
-void	ast_init_node(t_tree *node)
+static void	ast_init_node(t_tree *node)
 {
 	node->content = NULL;
 	node->fd_in = -1;

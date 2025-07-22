@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 16:48:54 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/22 11:29:37 by spunyapr         ###   ########.fr       */
+/*   Created: 2025/07/22 18:14:52 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/07/22 18:19:06 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	expansion_logic(int *i, t_cmd_element *line, int *slashed, int *count)
+static int	expansion_logic(int *i, t_cmd_element *line, int *sl, int *count)
 {
 	int		j;
 	char	*lc;
@@ -23,7 +23,7 @@ int	expansion_logic(int *i, t_cmd_element *line, int *slashed, int *count)
 		(*count)++;
 	if (*i > 0 && line->content[*i - 1] == '\\')
 	{
-		*slashed = 1;
+		*sl = 1;
 		(*count)++;
 		ft_memmove(&lc[*i - 1], &lc[*i], ft_strlen(&lc[*i]) + 1);
 		(*i)--;
@@ -39,7 +39,7 @@ int	expansion_logic(int *i, t_cmd_element *line, int *slashed, int *count)
 	return (j);
 }
 
-void	handle_exp(t_cmd_element *l, t_env *lst, int i, int packed)
+static void	handle_exp(t_cmd_element *l, t_env *lst, int i, int packed)
 {
 	char	*searchword;
 	char	*rtnvalue;

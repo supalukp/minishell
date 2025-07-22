@@ -6,13 +6,13 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:37:08 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/25 23:46:50 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:30:50 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	exchange_tild(t_cmd_element *el, char *new, int i, int len)
+static void	exchange_tild(t_cmd_element *el, char *new, int i, int len)
 {
 	char	*rtnstr;
 	int		j;
@@ -35,7 +35,7 @@ void	exchange_tild(t_cmd_element *el, char *new, int i, int len)
 	el->content = rtnstr;
 }
 
-void	tild_logic(t_cmd_element *element, char *rtnvalue, int len)
+static void	tild_logic(t_cmd_element *element, char *rtnvalue, int len)
 {
 	int		i;
 	char	*ec;

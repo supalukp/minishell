@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 14:33:11 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/29 13:40:16 by syukna           ###   ########.fr       */
+/*   Created: 2025/07/22 18:13:39 by spunyapr          #+#    #+#             */
+/*   Updated: 2025/07/22 18:18:58 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	clean_cmd_line(t_cmd_element *cmd_element)
+static void	clean_cmd_line(t_cmd_element *cmd_element)
 {
 	t_cmd_element	*first;
 	t_cmd_element	*second;
@@ -30,7 +30,7 @@ void	clean_cmd_line(t_cmd_element *cmd_element)
 	free(first);
 }
 
-void	clean_redirections(t_file *file)
+static void	clean_redirections(t_file *file)
 {
 	t_file	*first;
 	t_file	*second;
@@ -48,7 +48,7 @@ void	clean_redirections(t_file *file)
 	free(first);
 }
 
-void	clean_node(t_tree *node)
+static void	clean_node(t_tree *node)
 {
 	if (node->cmd_line)
 		clean_cmd_line(node->cmd_line);

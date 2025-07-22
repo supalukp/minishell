@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:25:13 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/21 17:28:18 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:18:04 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void							handle_sigint(int sig);
 void							init_signal(void);
 void							set_signal_to_default(void);
 void							set_signal_to_ignore(void);
-void							handle_heredoc_sigint(int sig);
 void							default_signal_heredoc(void);
 void							setup_signal_heredoc(void);
 int								signal_event(void);

@@ -6,13 +6,13 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:56:55 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 20:41:22 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:55:17 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-char	*get_element(char *line, int quoted, int len)
+static char	*get_element(char *line, int quoted, int len)
 {
 	char	*rtnstr;
 	int		i;
@@ -34,26 +34,26 @@ char	*get_element(char *line, int quoted, int len)
 	return (rtnstr);
 }
 
-void	handle_ele(t_tree *cmd_line, t_cmd_element *element, int len, int gap)
+static void	handle_ele(t_tree *cl, t_cmd_element *element, int len, int gap)
 {
 	t_cmd_element	*eltmp;
 
-	if (cmd_line->content[len + gap] && cmd_line->content[len + gap] != ' ')
+	if (cl->content[len + gap] && cl->content[len + gap] != ' ')
 		element->space_after = 0;
 	else
 		element->space_after = 1;
-	if (!cmd_line->cmd_line)
-		cmd_line->cmd_line = element;
+	if (!cl->cmd_line)
+		cl->cmd_line = element;
 	else
 	{
-		eltmp = cmd_line->cmd_line;
+		eltmp = cl->cmd_line;
 		while (eltmp->next)
 			eltmp = eltmp->next;
 		eltmp->next = element;
 	}
 }
 
-void	add_cmd_element(t_tree *cmd_line, int quoted, int len, int *error)
+static void	add_cmd_element(t_tree *cmd_line, int quoted, int len, int *error)
 {
 	t_cmd_element	*element;
 	int				gap;
@@ -78,7 +78,7 @@ void	add_cmd_element(t_tree *cmd_line, int quoted, int len, int *error)
 	handle_ele(cmd_line, element, len, gap);
 }
 
-void	handle_cmd_element(t_tree *cmd_line, int quoted, int *error)
+static void	handle_cmd_element(t_tree *cmd_line, int quoted, int *error)
 {
 	int	len;
 

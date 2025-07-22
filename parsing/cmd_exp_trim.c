@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exp_trim.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:50:29 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/22 11:30:00 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:31:04 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	skip_and_copy(const char *src, char *dst, int *i, int *j)
+static void	skip_and_copy(const char *src, char *dst, int *i, int *j)
 {
 	int	in_word;
 

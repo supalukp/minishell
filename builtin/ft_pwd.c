@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:50:54 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 14:29:06 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:55:31 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	update_oldpwd(char *old_path, t_env *lst, int change)
+static void	update_oldpwd(char *old_path, t_env *lst, int change)
 {
 	if (change)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_parenthesis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:13:37 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 16:21:47 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:21:37 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	is_letters(char letter, char *substr)
 	return (0);
 }
 
-void	par_letter(char *substr, int *par, char *str_without)
+static void	par_letter(char *substr, int *par, char *str_without)
 {
 	int	i;
 	int	j;

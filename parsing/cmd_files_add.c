@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:28:09 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/29 13:38:41 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:34:00 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,32 @@ void	add_cmd_file(char *ctt, t_type type, t_tree *ln, int *error)
 	}
 }
 
+char	*get_redirection_file(int index, char *cmd_line, int *error)
+{
+	int		i;
+	int		j;
+	char	*file_name;
+
+	i = 0;
+	j = 0;
+	while (cmd_line[i + index] == ' ')
+		index++;
+	while (cmd_line[i + index] != ' ' && cmd_line[i + index] != '\0')
+		i++;
+	file_name = ft_calloc(i + 1, sizeof(char));
+	if (!file_name)
+	{
+		free(cmd_line);
+		return (*error = 1, NULL);
+	}
+	while (j < i)
+	{
+		file_name[j] = cmd_line[index + j];
+		j++;
+	}
+	return (file_name);
+}
+
 void	get_redirections(int index, t_tree *cmd_line, int *error)
 {
 	int		i;
@@ -63,30 +89,4 @@ void	get_redirections(int index, t_tree *cmd_line, int *error)
 		return ;
 	}
 	add_cmd_file(filename, filetype, cmd_line, error);
-}
-
-char	*get_redirection_file(int index, char *cmd_line, int *error)
-{
-	int		i;
-	int		j;
-	char	*file_name;
-
-	i = 0;
-	j = 0;
-	while (cmd_line[i + index] == ' ')
-		index++;
-	while (cmd_line[i + index] != ' ' && cmd_line[i + index] != '\0')
-		i++;
-	file_name = ft_calloc(i + 1, sizeof(char));
-	if (!file_name)
-	{
-		free(cmd_line);
-		return (*error = 1, NULL);
-	}
-	while (j < i)
-	{
-		file_name[j] = cmd_line[index + j];
-		j++;
-	}
-	return (file_name);
 }

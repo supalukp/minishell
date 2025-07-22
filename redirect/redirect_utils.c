@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:29:18 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 08:30:31 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:13:52 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	safe_close(int *fd)
+static void	safe_close(int *fd)
 {
 	if (*fd != -1)
 	{

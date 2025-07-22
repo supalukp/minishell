@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:54:22 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/21 17:26:03 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:25:09 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	path_only_slash(char *path)
+static int	path_only_slash(char *path)
 {
 	int	i;
 
@@ -45,29 +45,7 @@ int	prepare_exec_path(char **args, char **path, char **env)
 	return (0);
 }
 
-char	*get_path(char *command, char **envp)
-{
-	int		i;
-	char	**all_path;
-
-	i = 0;
-	if (!command || !envp)
-		return (NULL);
-	while (envp[i] != NULL)
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			all_path = ft_split(ft_strchr(envp[i], '=') + 1, ':');
-			if (!all_path)
-				return (NULL);
-			return (find_executable(all_path, command));
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-char	*find_executable(char **all_path, char *command)
+static char	*find_executable(char **all_path, char *command)
 {
 	int		j;
 	char	*add_slash;
@@ -92,5 +70,27 @@ char	*find_executable(char **all_path, char *command)
 		j++;
 	}
 	free_matrix(all_path);
+	return (NULL);
+}
+
+char	*get_path(char *command, char **envp)
+{
+	int		i;
+	char	**all_path;
+
+	i = 0;
+	if (!command || !envp)
+		return (NULL);
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			all_path = ft_split(ft_strchr(envp[i], '=') + 1, ':');
+			if (!all_path)
+				return (NULL);
+			return (find_executable(all_path, command));
+		}
+		i++;
+	}
 	return (NULL);
 }

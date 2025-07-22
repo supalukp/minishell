@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_traverse.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:41:43 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 13:12:34 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:12:04 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	close_all_heredoc_fd(t_tree *tree)
 	}
 }
 
-int	handle_logical_nodes(t_tree *node, t_data *data)
+static int	handle_logical_nodes(t_tree *node, t_data *data)
 {
 	int	status;
 
@@ -41,7 +41,7 @@ int	handle_logical_nodes(t_tree *node, t_data *data)
 	return (0);
 }
 
-int	handle_command_node(t_tree *node, t_data *data)
+static int	handle_command_node(t_tree *node, t_data *data)
 {
 	int		status;
 	t_file	*file;

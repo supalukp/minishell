@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:23:23 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 14:30:55 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:18:00 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	handle_heredoc_sigint(int sig)
+static void	handle_heredoc_sigint(int sig)
 {
 	g_signal = sig;
 	write(STDOUT_FILENO, "\n", 1);

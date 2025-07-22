@@ -6,7 +6,7 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:44:08 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 20:40:45 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:27:44 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	get_element_len(char *line, int quoted)
 	return (i);
 }
 
-void	define_end_letter(int quoted, char	*end_letter, size_t	*rmlen)
+static void	define_end_letter(int quoted, char	*end_letter, size_t	*rmlen)
 {
 	if (quoted == 2)
 	{
@@ -59,7 +59,7 @@ void	define_end_letter(int quoted, char	*end_letter, size_t	*rmlen)
 	}
 }
 
-size_t	remove_cmd_element_len(t_tree *cmd_line, int quoted)
+static size_t	remove_cmd_element_len(t_tree *cmd_line, int quoted)
 {
 	size_t	rmlen;
 	char	end_letter;

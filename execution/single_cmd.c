@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:43:35 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 13:34:37 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:41:21 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	resolve_path(char **args, char **env, char **path)
 	return (0);
 }
 
-int	fork_and_exec(t_data *data, t_stdio_backup *cmd)
+static int	fork_and_exec(t_data *data, t_stdio_backup *cmd)
 {
 	pid_t	pid;
 

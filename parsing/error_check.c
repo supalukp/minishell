@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:00:06 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 13:44:03 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:45:02 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_cmd_before_pipes(char *line, int i)
 	return (0);
 }
 
-int	pipe_no_args(char *line)
+static int	pipe_no_args(char *line)
 {
 	int	i;
 	int	len;
@@ -80,7 +80,7 @@ int	check_semi(char *line)
 	return (0);
 }
 
-int	check_basic_errors(char *line, t_data *data)
+static int	check_basic_errors(char *line, t_data *data)
 {
 	if (only_space(line) || only_colon(line))
 		return (data->last_exit);

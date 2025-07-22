@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:42:44 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 17:42:46 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:29:30 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	free_file_list(t_file *file)
+static void	free_file_list(t_file *file)
 {
 	t_file	*tmp;
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_valid_key.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:32:16 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 11:30:26 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:52:00 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	not_valid_identifier(char *function)
+static int	not_valid_identifier(char *function)
 {
 	ft_putstr_fd(function, 2);
 	ft_putstr_fd(": not a valid identifier\n", 2);
