@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:06:26 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 15:46:50 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:22:46 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,7 @@ int	external_cmd_process(t_tree *tree, t_data *data)
 		return (1);
 	check = prepare_exec(args, &paths, minishell_env);
 	if (check)
-	{
-		free_matrix(args);
-		free_matrix(minishell_env);
-		return (check);
-	}
+		return (free_matrix(args), free_matrix(minishell_env), check);
 	if (args[0][0] == '\0')
 	{
 		free_pipe_cmd(minishell_env, args, paths);

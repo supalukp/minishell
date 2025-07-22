@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:16:30 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 16:03:17 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:30:10 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,13 @@ static int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst,
 	exit_status = 0;
 	close_unused_pipes(i, pipes);
 	if (save_fd_io(cmd_lst->cmd))
-	{
-		close_all_pipes(pipes);
-		close_save_fd(cmd_lst->cmd);
-		return (1);
-	}
+		return (close_all_pipes(pipes), close_save_fd(cmd_lst->cmd), 1);
 	if (dup_for_pipes(i, cmd_lst->cmd, pipes))
 		return (close_save_fd(cmd_lst->cmd), 1);
 	close_all_heredoc_fd(data->ast);
-	if (cmd_lst->cmd->cmd_line == NULL)
+	if (!cmd_lst->cmd->cmd_line)
 		return (free_data_pipes(data, pipes), 0);
-	if (is_builtin(cmd_lst->cmd) == true)
+	if (is_builtin(cmd_lst->cmd))
 	{
 		signal(SIGPIPE, SIG_IGN);
 		exit_status = exec_builtin(cmd_lst->cmd, data);
