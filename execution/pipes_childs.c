@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:16:30 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 16:30:10 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 18:39:05 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static int	process_child(int i, t_pipes *pipes, t_pipe_cmds *cmd_lst,
 		exit_status = external_cmd_process(cmd_lst->cmd, data);
 		if (exit_status)
 			free_data_pipes(data, pipes);
+		if (exit_status == 42)
+			exit_status = 0;
 	}
 	return (exit_status);
 }
