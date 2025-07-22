@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_spec_expansions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:04:06 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/21 16:18:59 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:41:40 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	exchange_dollar_values(t_cmd_element *el, char *new, int i, int len)
+static void	exchange_dollar_values(t_cmd_element *el, char *new, int i, int len)
 {
 	char	*rtnstr;
 	int		j;

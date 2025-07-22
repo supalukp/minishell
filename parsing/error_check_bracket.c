@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error_check_bracket.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:36:52 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 12:37:18 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:51:49 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	check_bracket_open(const char *line)
+static int	check_bracket_open(const char *line)
 {
 	int	i;
 
@@ -36,25 +36,7 @@ int	check_bracket_open(const char *line)
 	return (0);
 }
 
-int	check_bracket_error(char *line)
-{
-	int	bracket;
-
-	bracket = check_bracket(line);
-	if (bracket == 1)
-	{
-		stderr_msg("minishell: open bracket for expansion\n");
-		return (1);
-	}
-	else if (bracket == 2)
-	{
-		stderr_msg("minishell: bad substitution\n");
-		return (1);
-	}
-	return (0);
-}
-
-int	check_bracket(const char *line)
+static int	check_bracket(const char *line)
 {
 	int	i;
 
@@ -76,6 +58,24 @@ int	check_bracket(const char *line)
 			}
 		}
 		i++;
+	}
+	return (0);
+}
+
+int	check_bracket_error(char *line)
+{
+	int	bracket;
+
+	bracket = check_bracket(line);
+	if (bracket == 1)
+	{
+		stderr_msg("minishell: open bracket for expansion\n");
+		return (1);
+	}
+	else if (bracket == 2)
+	{
+		stderr_msg("minishell: bad substitution\n");
+		return (1);
 	}
 	return (0);
 }

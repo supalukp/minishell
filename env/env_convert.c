@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_convert.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:59:04 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 16:06:23 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:43:59 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	count_env_not_null_value(t_env *env_lst)
+static int	count_env_not_null_value(t_env *env_lst)
 {
 	int	count;
 

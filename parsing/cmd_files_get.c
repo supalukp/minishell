@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_files_get.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:25:45 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/21 16:02:24 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:54:44 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	get_new_redirectionless_str(int index, t_tree *cmd_line)
+static int	get_new_redirectionless_str(int index, t_tree *cmd_line)
 {
 	int		i;
 	char	*cc;
@@ -72,16 +72,16 @@ t_type	define_redirection_type(int index, char *cmd_line)
 	return (INVALID);
 }
 
-void	redirection_state(t_tree *cmd_line, bool *s_quote, bool *d_quote, int i)
+static void	redirection_state(t_tree *cl, bool *s_quote, bool *d_quote, int i)
 {
-	if (cmd_line->content[i] == '\'')
+	if (cl->content[i] == '\'')
 	{
 		if (*s_quote == false)
 			*s_quote = true;
 		else
 			*s_quote = false;
 	}
-	if (cmd_line->content[i] == '\"')
+	if (cl->content[i] == '\"')
 	{
 		if (*d_quote == false)
 			*d_quote = true;

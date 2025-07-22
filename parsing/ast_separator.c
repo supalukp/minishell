@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ast_separator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 13:25:49 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/19 14:34:31 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:23:09 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-size_t	parse_len_first(char *ss, t_type op)
+static size_t	parse_len_first(char *ss, t_type op)
 {
 	size_t	i;
 	int		par;
@@ -51,7 +51,7 @@ char	*parse_get_first(char *substr, t_type operator, int *error)
 	return (subfirst);
 }
 
-size_t	parse_pos_second(char *ss, t_type op)
+static size_t	parse_pos_second(char *ss, t_type op)
 {
 	size_t	i;
 	int		pos;
@@ -77,7 +77,7 @@ size_t	parse_pos_second(char *ss, t_type op)
 	return (pos + 1);
 }
 
-char	*parse_get_second(char *substr, t_type operator, int *error)
+static char	*parse_get_second(char *substr, t_type operator, int *error)
 {
 	size_t		pos;
 	char		*subsecond;

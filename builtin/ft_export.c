@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:34:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 16:06:06 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:54:18 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	process_export(char *args, t_data *data)
+static int	process_export(char *args, t_data *data)
 {
 	int	flag;
 
@@ -26,7 +26,7 @@ int	process_export(char *args, t_data *data)
 	return (flag);
 }
 
-int	create_key_value(t_cmd_element *args, t_data *data)
+static int	create_key_value(t_cmd_element *args, t_data *data)
 {
 	int	flag;
 
@@ -41,7 +41,7 @@ int	create_key_value(t_cmd_element *args, t_data *data)
 	return (flag);
 }
 
-int	create_only_key(t_cmd_element *args, t_data *data)
+static int	create_only_key(t_cmd_element *args, t_data *data)
 {
 	int	flag;
 

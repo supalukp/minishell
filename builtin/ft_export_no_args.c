@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_no_args.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:20 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 10:28:42 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:51:00 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	sort_env_lst(int count_env, t_env **env_lst)
 	}
 }
 
-t_env	**ascii_env_lst(t_data *data)
+static t_env	**ascii_env_lst(t_data *data)
 {
 	int		i;
 	int		count_env;

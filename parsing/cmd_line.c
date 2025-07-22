@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:35:34 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/21 16:02:32 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:41:05 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	rem_empty_single_exp(t_tree *node, t_cmd_element *after)
+static void	rem_empty_single_exp(t_tree *node, t_cmd_element *after)
 {
 	t_cmd_element	*prev;
 
@@ -33,7 +33,7 @@ void	rem_empty_single_exp(t_tree *node, t_cmd_element *after)
 	free(after);
 }
 
-void	remove_empt_exp(t_tree *cmd_line)
+static void	remove_empt_exp(t_tree *cmd_line)
 {
 	t_cmd_element	*tmp;
 

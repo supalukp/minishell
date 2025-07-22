@@ -6,13 +6,13 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:16:35 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/29 13:38:17 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:24:14 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	ast_op_state(int *par, bool *q1, bool *q2, char letter)
+static void	ast_op_state(int *par, bool *q1, bool *q2, char letter)
 {
 	if (letter == '(')
 		*par += 1;

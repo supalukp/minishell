@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_exec_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:06:26 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 15:46:50 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:33:33 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-static int	prepare_exec(char **args, char **path, char **env)
+int	prepare_exec(char **args, char **path, char **env)
 {
 	if (args[0][0] == '/' || args[0][0] == '.')
 		return (prepare_exec_path(args, path, env));

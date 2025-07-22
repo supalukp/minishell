@@ -6,13 +6,13 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:35:41 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/30 12:51:40 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:38:21 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	remove_quotes_red(t_file *file)
+static void	remove_quotes_red(t_file *file)
 {
 	int	len;
 

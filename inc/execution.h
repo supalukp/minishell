@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 16:07:43 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:18:47 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int			get_infile(char *filename);
 int			get_outfile(char *filename);
 int			get_append(char *filename);
 int			redirect_heredoc(t_file *file, t_tree *node);
-void		safe_close(int *fd);
 void		close_save_fd(t_tree *node);
 int			failed_dup(int fd);
 int			dup_for_pipes(int i, t_tree *node, t_pipes *pipes);
@@ -70,21 +69,16 @@ int			is_exist_variable(char *args, t_data *data);
 int			change_value_variable(char *args, t_data *data);
 int			create_new_variable(char *args, t_data *data);
 int			no_argument(t_tree *tree);
-t_env		**ascii_env_lst(t_data *data);
 int			print_export_no_option(t_data *data);
 int			have_equal(char *str);
 int			is_plus_equal(char *args);
 int			not_valid_name(char *args, char *function);
 int			invalid_option(t_cmd_element *args, char *function);
-int			process_export(char *args, t_data *data);
-int			create_key_value(t_cmd_element *args, t_data *data);
-int			create_only_key(t_cmd_element *args, t_data *data);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_export(t_tree *tree, t_data *data);
 int			ft_pwd(t_tree *tree, t_env *lst, int change);
 char		*update_pwd(char *new_path, t_env *lst, int change);
 int			ft_unset(t_tree *tree, t_data *data);
-int			not_valid_identifier(char *function);
 
 /* -------------------------------------------------------------------------- */
 /*                                  execution                                 */
@@ -98,7 +92,6 @@ char		**combine_cmdline(t_cmd_element *args);
 char		*get_program_name(char *path);
 int			prepare_exec_path(char **args, char **path, char **env);
 char		*get_path(char *command, char **envp);
-char		*find_executable(char **all_path, char *command);
 int			handle_relative_path(char **args, char **path);
 int			handle_absolute_path(char **args, char **path, char **env);
 
@@ -131,7 +124,6 @@ void		error_free_pipes(const char *err_msg, t_pipes *pipes);
 int			perror_free_pipes(const char *err_msg, t_pipes *pipes);
 
 // Free
-void		free_file_list(t_file *file);
 void		free_ast(t_tree *node);
 void		free_matrix(char **matrix);
 void		free_program(t_data *data);

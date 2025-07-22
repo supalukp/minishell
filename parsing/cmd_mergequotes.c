@@ -6,13 +6,13 @@
 /*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 13:22:38 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/18 19:53:15 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:41:21 by syukna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void	quotes_merger(t_cmd_element *cmd)
+static void	quotes_merger(t_cmd_element *cmd)
 {
 	char			*newstr;
 	t_cmd_element	*tmpcmd;
