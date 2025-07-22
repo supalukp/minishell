@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_remove_redi.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:05:29 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/29 15:27:12 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 16:11:45 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	get_new_redirectionless_str(int index, t_tree *cmd_line)
 	i = 0;
 	while (is_letters(cmd_line->content[index + i], "< >"))
 		i++;
-	while (cmd_line->content[index + i] != '\0' && \
-		cmd_line->content[index + i] != ' ')
+	while (cmd_line->content[index + i] != '\0' && cmd_line->content[index
+		+ i] != ' ')
 		i++;
 	return (i);
 }

@@ -6,18 +6,11 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:34:42 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/18 18:13:31 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:06:06 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
-
-/*
-Rules for valid variable names:
-- Must start with a letter or underscore (`_`)
-- Can contain letters, digits, or underscores
-- Cannot contain spaces, dashes, or special characte
-*/
 
 int	process_export(char *args, t_data *data)
 {

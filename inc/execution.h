@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:31:56 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/21 11:36:07 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:07:43 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_env		*create_env_node(char *env_variable);
 void		print_env(t_env *lst);
 void		free_env(t_env *env_lst);
 int			count_env_node(t_env *env_lst);
-void		update_env_underscore(t_env *env_lst, char *cmd_path);
 
 /* -------------------------------------------------------------------------- */
 /*                                 redirection                                */

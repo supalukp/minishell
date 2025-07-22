@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:25:45 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/21 16:18:26 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:09:33 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,30 +99,3 @@ void	define_quoted(t_tree *cmd_line, int i, bool *s_quote, bool *d_quote)
 			*d_quote = false;
 	}
 }
-
-// void	identify_redirections(t_tree *cmd_line, int *error)
-// {
-// 	size_t	i;
-// 	bool	s_quote;
-// 	bool	d_quote;
-
-// 	i = 0;
-// 	s_quote = false;
-// 	d_quote = false;
-// 	while (cmd_line->content[i])
-// 	{
-// 		if (*error)
-// 			return ;
-// 		define_quoted(cmd_line, i, &s_quote, &d_quote);
-// 		if (includedchar(cmd_line->content[i], "<>") && \
-// 			s_quote == false && d_quote == false)
-// 		{
-// 			get_redirections(i, cmd_line, error);
-// 			if (*error)
-// 				return ;
-// 			i = 0;
-// 		}
-// 		else
-// 			i++;
-// 	}
-// }

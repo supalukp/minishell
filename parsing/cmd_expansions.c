@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_expansions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:11:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/29 16:49:29 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 16:12:04 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	exchange_expansion_values(t_cmd_element *el, char *new, int i, int len)
 
 void	expansion_loop(t_cmd_element *cmd, int *count, t_env *lst, t_data *req)
 {
-	while (includedchar('$', cmd->content) && cmd->quoted != 1 \
+	while (includedchar('$', cmd->content) && cmd->quoted != 1
 		&& *count < counterchar(cmd->content, '$'))
 	{
 		spec_dol(cmd, count, req->last_exit);

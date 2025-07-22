@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:59:04 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/19 10:39:19 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:06:23 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,33 +74,3 @@ char	**convert_env_lst_double_arrays(t_env *env_lst)
 	res[i] = NULL;
 	return (res);
 }
-
-// char	**convert_env_lst_double_arrays(t_env *env_lst)
-// {
-// 	int		count;
-// 	int		i;
-// 	char	**res;
-// 	t_env	*tmp;
-
-// 	if (!env_lst)
-// 		return (NULL);
-// 	count = count_env_not_null_value(env_lst);
-// 	res = malloc(sizeof(char *) * (count + 1));
-// 	if (!res)
-// 		return (NULL);
-// 	tmp = env_lst;
-// 	i = 0;
-// 	while (tmp && i < count)
-// 	{
-// 		if (!tmp->env_name || !tmp->env_variable)
-// 		{
-// 			tmp = tmp->next;
-// 			continue ;
-// 		}
-// 		res[i] = join_key_value(tmp);
-// 		tmp = tmp->next;
-// 		i++;
-// 	}
-// 	res[i] = NULL;
-// 	return (res);
-// }

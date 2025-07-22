@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:50:16 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/22 10:17:36 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:05:44 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,41 +90,3 @@ int	ft_echo(t_tree *tree)
 	free_matrix(cmd);
 	return (0);
 }
-
-// int	ft_echo(t_tree *tree)
-// {
-// 	int		i;
-// 	int		j;
-// 	bool	noline_flag;
-// 	char	**cmd;
-
-// 	if (!tree)
-// 		return (0);
-// 	cmd = combine_cmdline(tree->cmd_line);
-// 	noline_flag = false;
-// 	i = 1;
-// 	while (cmd[i] != NULL && option_n(cmd[i]))
-// 	{
-// 		noline_flag = true;
-// 		i++;
-// 	}
-// 	while (cmd[i])
-// 	{
-// 		j = 0;
-// 		while (cmd[i][j])
-// 		{
-// 			if (cmd[i][j] == '\\' && tree->cmd_line->next->quoted != 2
-// 				&& tree->cmd_line->next->quoted != 1)
-// 				j++;
-// 			printf("%c", cmd[i][j]);
-// 			j++;
-// 		}
-// 		if (cmd[i + 1] != NULL)
-// 			printf(" ");
-// 		i++;
-// 	}
-// 	if (noline_flag == false)
-// 		printf("\n");
-// 	free_matrix(cmd);
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:47:57 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/17 14:45:06 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:12:39 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,12 @@ char	*build_prompt(int exit_status);
 // handle_line.c
 void	handle_line(char *line, t_data *request);
 
-// prelexer.c
-// char		*merge_quotes(const char *line);
-// char		*handle_quotes(const char *line, int *i);
-// char		*wrap_merged(char *merged, char quote, int count);
-// char		*extract_quoted(const char *line, int *i);
-int		have_pipes(t_tree *tree);
-// int			is_quote(char character);
-// char		*ft_strncpy(char *dest, const char *src, size_t n);
-// void		append_str(char **dest, const char *src);
-
 // separator.c
 void	parse_separator(char *substr, t_tree *parent, int *error);
 
 // parsing.c
 t_tree	*mns_parse(char *line);
-t_type	has_operator(char *line, t_type operator);
 t_tree	*ast_maker(char *substr, int *error);
-
-// visual.c
-void	print_files(t_file *file);
-void	print_node(t_tree *node);
-void	print_all(t_data *request);
 
 // parenthesis.c
 int		contains_letter(char *substr, char letter);
@@ -92,12 +76,11 @@ void	clean_recursive_tree(t_tree *node);
 
 // expansions.c
 int		add_expansions(t_tree *node, t_env *lst, t_data *request);
-void	remove_cmd(t_tree *node, t_cmd_element *after);
 int		current_pos_dollar(char *line, int count);
 int		expand_score(t_tree *node, t_env *lst);
 void	replace_expansion(t_cmd_element *l, t_env *lst, int *count);
 void	handle_exp(t_cmd_element *l, t_env *lst, int i, int packed);
-int		expansion_logic(int	*i, t_cmd_element *line, int *slashed, int *count);
+int		expansion_logic(int *i, t_cmd_element *line, int *slashed, int *count);
 char	*find_expansion_match(const char *search, t_env *lst);
 void	add_tild(t_cmd_element *element, t_env *lst);
 void	spec_dol(t_cmd_element *line, int *count, int code);
