@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:20 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/06/20 08:56:32 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:28:42 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,13 @@ int	print_export_no_option(t_data *data)
 	i = 0;
 	while (ascii_lst[i])
 	{
-		if (ft_strcmp(ascii_lst[i]->env_name, "_") == 0)
-			i++;
+		printf("export ");
+		printf("%s", ascii_lst[i]->env_name);
+		if (ascii_lst[i]->env_variable)
+			printf("=\"%s\"\n", ascii_lst[i]->env_variable);
 		else
-		{
-			printf("export ");
-			printf("%s", ascii_lst[i]->env_name);
-			if (ascii_lst[i]->env_variable)
-				printf("=\"%s\"\n", ascii_lst[i]->env_variable);
-			else
-				printf("\n");
-			i++;
-		}
+			printf("\n");
+		i++;
 	}
 	free(ascii_lst);
 	return (0);

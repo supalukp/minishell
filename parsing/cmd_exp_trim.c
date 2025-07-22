@@ -6,36 +6,36 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:50:29 by syukna            #+#    #+#             */
-/*   Updated: 2025/07/21 17:39:22 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:30:00 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-void    skip_and_copy(const char *src, char *dst, int *i, int *j)
+void	skip_and_copy(const char *src, char *dst, int *i, int *j)
 {
-    int    in_word;
+	int	in_word;
 
-    in_word = 0;
-    if (*i > 0)
-        dst[(*j)++] = ' ';
-    while (src[*i])
-    {
-        if (src[*i] == ' ')
-        {
-            if (in_word)
-                dst[(*j)++] = ' ';
-            in_word = 0;
-        }
-        else
-        {
-            dst[(*j)++] = src[*i];
-            in_word = 1;
-        }
-        (*i)++;
-    }
-    if (*i >= 1 && src[*i - 1] == ' ')
-        dst[(*j)++] = ' ';
+	in_word = 0;
+	if (*i > 0)
+		dst[(*j)++] = ' ';
+	while (src[*i])
+	{
+		if (src[*i] == ' ')
+		{
+			if (in_word)
+				dst[(*j)++] = ' ';
+			in_word = 0;
+		}
+		else
+		{
+			dst[(*j)++] = src[*i];
+			in_word = 1;
+		}
+		(*i)++;
+	}
+	if (*i >= 1 && src[*i - 1] == ' ')
+		dst[(*j)++] = ' ';
 }
 
 void	trim_space(t_cmd_element *cmd)
@@ -60,17 +60,3 @@ void	trim_space(t_cmd_element *cmd)
 	free(cmd->content);
 	cmd->content = new_str;
 }
-
-
-
-// int main (void)
-// {
-
-// 	int *i = 0;
-// 	int *j = 0;
-// 	char src[] = "    A         B    ";
-// 	char *dst = malloc(sizeof(char) * 10);
-
-// 	skip_and_copy(src, dst, i, j);
-// 	printf("%s\n", dst);
-// }

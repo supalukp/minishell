@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:50:16 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 11:16:35 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:17:36 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ static void	print_echo_argument(char *arg, t_tree *tree)
 	{
 		if (arg[j] == '\\' && tree->cmd_line->next->quoted != 2
 			&& tree->cmd_line->next->quoted != 1)
+			j++;
+		if (arg[j] == '\t')
+			printf(" ");
+		while (arg[j] == '\t')
 			j++;
 		printf("%c", arg[j]);
 		j++;

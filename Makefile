@@ -87,7 +87,6 @@ FILES = main.c \
 		${PARS_DIR}/cmd_exp_utils.c \
 		${PARS_DIR}/cmd_spec_expansions.c \
 		${PARS_DIR}/cmd_mergequotes.c \
-		${PARS_DIR}/visual.c \
 		${PARS_DIR}/clean.c \
 		${EXEC_DIR}/free_tree.c \
 		${EXEC_DIR}/execution.c \

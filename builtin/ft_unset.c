@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:48:52 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 11:30:06 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:01:06 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,15 @@ int	unset_not_valid_name(char *args, char *function)
 
 	i = 0;
 	flag = 0;
+	(void)function;
 	if (args[i] == '=' || args[i] == '?')
 		return (0);
 	while (args[i] && args[i] != '=' && !(args[i] == '+' && args[i + 1] == '='))
 	{
 		if (i == 0 && (args[i] != '_' && !ft_isalpha(args[i])))
-			return (not_valid_identifier(function));
+			return (0);
 		else if (args[i] != '_' && !ft_isalnum(args[i]))
-			return (not_valid_identifier(function));
+			return (0);
 		else
 			i++;
 	}

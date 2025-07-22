@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exp_replace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syukna <syukna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:48:54 by syukna            #+#    #+#             */
-/*   Updated: 2025/06/30 12:53:33 by syukna           ###   ########.fr       */
+/*   Updated: 2025/07/22 11:29:37 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/headings.h"
 
-int	expansion_logic(int	*i, t_cmd_element *line, int *slashed, int *count)
+int	expansion_logic(int *i, t_cmd_element *line, int *slashed, int *count)
 {
 	int		j;
 	char	*lc;
@@ -56,27 +56,30 @@ void	handle_exp(t_cmd_element *l, t_env *lst, int i, int packed)
 	free(searchword);
 	i--;
 	if (slashed != 1 && rtnvalue)
-		exchange_expansion_values(l, rtnvalue, i,
-			ft_strlen(l->content) - j + ft_strlen(rtnvalue));
+		exchange_expansion_values(l, rtnvalue, i, ft_strlen(l->content) - j
+			+ ft_strlen(rtnvalue));
 	else
 	{
-		exchange_expansion_values(l, "", i,
-			ft_strlen(l->content) - j);
+		exchange_expansion_values(l, "", i, ft_strlen(l->content) - j);
 	}
 }
 
 void	replace_expansion(t_cmd_element *l, t_env *lst, int *count)
 {
-	int		i;
-	int		j;
-	int		slashed;
+	int	i;
+	int	j;
+	int	slashed;
 
 	slashed = 0;
 	i = current_pos_dollar(l->content, *count);
 	if (i == -1 || *count >= counterchar(l->content, '$'))
 		return ;
 	if (l->content[i + 1] && includedchar(l->content[i + 1], "? "))
+	{
+		if (l->content[i + 1] == ' ')
+			(*count)++;
 		return ;
+	}
 	if (!l->content[i + 1] || !ft_isalpha(l->content[i + 1]))
 	{
 		(*count)++;
