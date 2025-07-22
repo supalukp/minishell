@@ -6,7 +6,7 @@
 /*   By: spunyapr <spunyapr@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 13:11:00 by spunyapr          #+#    #+#             */
-/*   Updated: 2025/07/17 10:09:10 by spunyapr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:15:42 by spunyapr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	child_execution(char *paths, char **args, char **env, t_data *data)
 {
-	(void)data;
 	if (args[0][0] == '\0')
 	{
 		write(2, " ", 1);
